@@ -158,9 +158,9 @@ export default function SkillsSection() {
             <li
               key={skill.name}
               className="flex border h-16 bg-blue-950/40 border-neutral-950 rounded-xl justify-center text-gray-100 cursor-default
-                         transition duration-300 ease-in-out hover:bg-blue-950/60"
+                         transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60"
             >
-              <div className="flex w-full h-full items-center justify-center gap-2 hover:scale-150 transition duration-300 ease-in-out">
+              <div className="flex w-full h-full items-center justify-center gap-2 focus:scale-150 hover:scale-150 transition duration-300 ease-in-out">
                 {skill.icon}
                 {skill.name}
               </div>

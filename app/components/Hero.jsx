@@ -140,7 +140,7 @@ export default function Hero() {
             href="https://facebook.com/me.priyo"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[27px] hover:text-blue-600 hover:scale-150 transition duration-300 ease-in-out cursor-pointer"
+            className="text-[27px] hover:text-blue-600  hover:scale-150 focus:scale-150 focus:text-blue-600 transition duration-300 ease-in-out cursor-pointer"
           >
             <FaFacebook />
           </a>
@@ -148,7 +148,7 @@ export default function Hero() {
             href="https://x.com/arman_priyo"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-neutral-300 hover:scale-150 transition duration-300 ease-in-out cursor-pointer"
+            className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
           >
             <FaSquareXTwitter />
           </a>
@@ -156,7 +156,7 @@ export default function Hero() {
             href="https://linkedin.com/in/priyoarman"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-blue-500 hover:scale-150 transition duration-300 ease-in-out cursor-pointer"
+            className="hover:text-blue-500 hover:scale-150 focus:scale-150 focus:text-blue-500 transition duration-300 ease-in-out cursor-pointer"
           >
             <FaLinkedin />
           </a>
@@ -164,7 +164,7 @@ export default function Hero() {
             href="https://github.com/priyoarman"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-neutral-300 hover:scale-150 transition duration-300 ease-in-out cursor-pointer"
+            className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
           >
             <FaGithub />
           </a>

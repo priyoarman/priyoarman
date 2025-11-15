@@ -7,9 +7,9 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="max-w-7xl h-dvh bg-gray-950 mx-auto px-4 py-28 text-center"
+      className="max-w-7xl min-h-dvh bg-gray-950 mx-auto px-4 py:20 lg:py-28 text-center"
     >
-      <h2 className="text-4xl font-bold pb-4 text-center">Get In Touch</h2>
+      <h2 className="text-3xl md:text-4xl font-bold pb-4 text-center">Get In Touch</h2>
 
       <p className="flex flex-col justify-center items-center text-lg text-neutral-300 text-center mx-auto pb-4 max-w-2xl">
         Have a project in mind? Lets create something amazing together.
@@ -37,7 +37,7 @@ export default function ContactSection() {
         <div>
           <label
             htmlFor="name"
-            className="block text-gray-300 text-sm font-bold mb-2"
+            className="sr-only"
           ></label>
           <input
             type="text"
@@ -52,7 +52,7 @@ export default function ContactSection() {
         <div>
           <label
             htmlFor="email"
-            className="block text-gray-300 text-sm font-bold mb-2"
+            className="sr-only"
           ></label>
           <input
             type="email"
@@ -67,7 +67,7 @@ export default function ContactSection() {
         <div>
           <label
             htmlFor="message"
-            className="block text-gray-300 text-sm font-bold mb-2"
+            className="sr-only"
           ></label>
           <textarea
             id="message"

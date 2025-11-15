@@ -102,7 +102,7 @@ export default function Projects() {
       <h2 className="text-4xl text-gray-100 font-bold pt-4">
         Featured Projects
       </h2>
-      <div className="bg-gray-950 w-dvw flex items-center justify-center font-sans text-white overflow-hidden">
+      <div className="bg-gray-950 w-full flex items-center justify-center font-sans text-white overflow-hidden">
         <div className="relative w-full max-w-4xl h-[540px]">
           <div className="relative w-full h-full">
             {slides.map((slide, index) => (

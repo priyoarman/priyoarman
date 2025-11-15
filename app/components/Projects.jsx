@@ -99,7 +99,7 @@ export default function Projects() {
       id="projects"
       className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-28 text-center"
     >
-      <h2 className="text-4xl text-gray-100 font-bold pt-4">
+      <h2 className="text-3xl md:text-4xl text-gray-100 font-bold pt-4">
         Featured Projects
       </h2>
       <div className="bg-gray-950 w-full flex items-center justify-center font-sans text-white overflow-hidden">

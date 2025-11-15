@@ -149,7 +149,7 @@ export default function SkillsSection() {
       id="skills"
       className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-28 text-center"
     >
-      <h2 className="text-4xl text-gray-100 font-bold py-4 pb-8">
+      <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 pb-8">
         Skills & Technologies
       </h2>
       <div className="text-gray-400 text-sm md:text-lg px-4 md:px-8 py-4">

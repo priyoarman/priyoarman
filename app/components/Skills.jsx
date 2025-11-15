@@ -147,7 +147,7 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-28 text-center"
+      className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-12 md:py-28 text-center"
     >
       <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 pb-8">
         Skills & Technologies
@@ -157,7 +157,7 @@ export default function SkillsSection() {
           {skillsList.map((skill) => (
             <li
               key={skill.name}
-              className="flex border h-16 bg-blue-950/40 border-neutral-950 rounded-xl justify-center text-gray-100 cursor-default
+              className="flex border h-13 md:h-16 bg-blue-950/40 border-neutral-950 rounded-xl justify-center text-gray-100 cursor-default
                          transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60"
             >
               <div className="flex w-full h-full items-center justify-center gap-2 focus:scale-150 hover:scale-150 transition duration-300 ease-in-out">

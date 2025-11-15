@@ -7,7 +7,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="max-w-7xl min-h-dvh bg-gray-950 mx-auto px-4 py:20 lg:py-28 text-center"
+      className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-12 md:py-28 text-center"
     >
       <h2 className="text-3xl md:text-4xl font-bold pb-4 text-center">Get In Touch</h2>
 

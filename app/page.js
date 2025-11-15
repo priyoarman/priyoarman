@@ -8,7 +8,7 @@ import Contact from "./components/Contact";
 
 export default function Home() {
   return (
-    <div className="scroll-auto">
+    <div>
       <NavBar/>
       <Hero/>
       <Skills/>

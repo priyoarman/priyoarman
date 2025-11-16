@@ -6,6 +6,7 @@ import { FaFacebook } from "react-icons/fa6";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import FadeIn from "./FadeIn";
 
 export default function Hero() {
   const h1Ref = useRef(null);
@@ -99,12 +100,13 @@ export default function Hero() {
   ];
 
   return (
-    <div className="flex flex-col min-h-dvh items-center bg-gray-950">
+      <div className="flex flex-col min-h-dvh items-center bg-gray-950">
       <section
-        id="hero"
+        id="home"
         className="flex-1 flex flex-col justify-center items-center text-center px-4 pt-6"
       >
-        <h1
+        <FadeIn delay={200}>
+          <h1
           ref={h1Ref}
           className="text-5xl md:text-6xl font-bold cursor-default hover:scale-105 transition duration-300 ease-in-out"
           style={gradientBackgroundStyle}
@@ -125,8 +127,10 @@ export default function Hero() {
         >
           Arman Hossain
         </h1>
-
-        <Typewriter
+        </FadeIn>
+        
+        <FadeIn delay={300}>
+          <Typewriter
           words={typewriterWords}
           colors={typewriterColors}
           typingSpeed={100}
@@ -134,8 +138,10 @@ export default function Hero() {
           pause={1000}
           className="text-lg md:text-xl my-4 transition duration-300 ease-in-out"
         />
-
-        <div className="flex flex-row gap-4 text-3xl pt-2">
+        </FadeIn>
+        
+        <FadeIn delay={400}>
+          <div className="flex flex-row gap-4 text-3xl pt-2">
           <a
             href="https://facebook.com/me.priyo"
             target="_blank"
@@ -169,14 +175,17 @@ export default function Hero() {
             <FaGithub />
           </a>
         </div>
+        </FadeIn>
+        
       </section>
-
-      <a
+        <a
         href="#skills"
-        className="text-3xl text-gray-50/40 rounded-[100%] px-3 pb-6 shadow-gray-50 animate-[bounce_3s] [animation-iteration-count:infinite] transition duration-300 ease-in-out hover:cursor-pointer"
+        className="text-3xl text-gray-50/40 rounded-[100%] px-3 mb-4 shadow-gray-50 animate-[bounce_3s] [animation-iteration-count:infinite] transition duration-300 ease-in-out hover:cursor-pointer"
       >
         ↓
       </a>
+      
     </div>
+    
   );
 }

@@ -19,6 +19,7 @@ import {TbApi} from "react-icons/tb";
 import {BiLogoPostgresql} from "react-icons/bi";
 import {VscAzure} from "react-icons/vsc";
 import {IoLogoJavascript, IoLogoCss3} from "react-icons/io5";
+import FadeIn from "./FadeIn";
 
 const skillsList = [
   {
@@ -149,13 +150,21 @@ export default function SkillsSection() {
       id="skills"
       className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-12 md:py-28 text-center"
     >
-      <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 pb-8">
+      <FadeIn delay={100}>
+        <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 pb-8">
         Skills & Technologies
       </h2>
-      <div className="text-gray-400 text-sm md:text-lg px-4 md:px-8 py-4">
+      </FadeIn>
+      <FadeIn delay={200}>
+        <div className="text-gray-400 text-sm md:text-lg px-4 md:px-8 py-4">
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {skillsList.map((skill) => (
-            <li
+          {skillsList.map((skill, index) => (
+            <FadeIn
+              key={skill.name}
+              direction={index % 2 === 0 ? "left" : "right"}
+              
+              delay={index * 30}
+            ><li
               key={skill.name}
               className="flex border h-13 md:h-16 bg-blue-950/40 border-neutral-950 rounded-xl justify-center text-gray-100 cursor-default
                          transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60"
@@ -165,9 +174,12 @@ export default function SkillsSection() {
                 {skill.name}
               </div>
             </li>
+            </FadeIn>
           ))}
         </ul>
       </div>
+      </FadeIn>
+      
     </section>
   );
 }

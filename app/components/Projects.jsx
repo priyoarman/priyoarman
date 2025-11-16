@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {useState} from "react";
 import Link from "next/link";
 import ProjectCard from "./ProjectCard";
-import socialImg from "../assets/Portfolio-Project-1-SS1.png"
-import ecomImg from "../assets/ashop-home-dark.png"
-import bsnLandingImg from "../assets/aaveq-home.png"
-import stpLandingImg from "../assets/waveriders-home.png"
+import socialImg from "../assets/Portfolio-Project-1-SS1.png";
+import ecomImg from "../assets/ashop-home-dark.png";
+import bsnLandingImg from "../assets/aaveq-home.png";
+import stpLandingImg from "../assets/waveriders-home.png";
+import FadeIn from "./FadeIn";
 
 const slides = [
   {
@@ -47,13 +48,13 @@ const slides = [
   },
 ];
 
-const ChevronLeftIcon = ({ className = "w-6 h-6", ...props }) => (
+const ChevronLeftIcon = ({className = "w-6 h-6", ...props}) => (
   <svg className={className} {...props}>
     <polyline points="15 18 9 12 15 6"></polyline>
   </svg>
 );
 
-const ChevronRightIcon = ({ className = "w-6 h-6", ...props }) => (
+const ChevronRightIcon = ({className = "w-6 h-6", ...props}) => (
   <svg className={className} {...props}>
     <polyline points="9 18 15 12 9 6"></polyline>
   </svg>
@@ -99,46 +100,49 @@ export default function Projects() {
       id="projects"
       className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-12 md:py-28 text-center"
     >
-      <h2 className="text-3xl md:text-4xl text-gray-100 font-bold pt-4">
-        Featured Projects
-      </h2>
-      <div className="bg-gray-950 w-full flex items-center justify-center font-sans text-white overflow-hidden">
-        <div className="relative w-full max-w-4xl h-[540px]">
-          <div className="relative w-full h-full">
-            {slides.map((slide, index) => (
-              <div
-                key={slide.id}
-                className={`absolute top-0 w-full h-full transition-all duration-500 ease-in-out ${getSlidePosition(
-                  index
-                )}`}
-              >
-
-                <div className="flex flex-col md:flex-row items-center justify-center w-full h-full p-8 md:p-16 rounded-lg shadow-2xl">
-                  <ProjectCard
-                    project={slide}
-                    className="w-full max-w-3xl h-full"
-                  />
+      <FadeIn>
+        <h2 className="text-3xl md:text-4xl text-gray-100 font-bold pt-4">
+          Featured Projects
+        </h2>
+      </FadeIn>
+      <FadeIn delay={500}>
+        <div className="bg-gray-950 w-full flex items-center justify-center font-sans text-white overflow-hidden">
+          <div className="relative w-full max-w-4xl h-[540px]">
+            <div className="relative w-full h-full">
+              {slides.map((slide, index) => (
+                <div
+                  key={slide.id}
+                  className={`absolute top-0 w-full h-full transition-all duration-500 ease-in-out ${getSlidePosition(
+                    index
+                  )}`}
+                >
+                  <div className="flex flex-col md:flex-row items-center justify-center w-full h-full p-8 md:p-16 rounded-lg shadow-2xl">
+                    <ProjectCard
+                      project={slide}
+                      className="w-full max-w-3xl h-full"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-          <button
-            onClick={goToPrev}
-            className="absolute top-1/2 -translate-y-1/2 left-0 md:-left-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
-            aria-label="Previous slide"
-          >
-            <ChevronLeftIcon className="md:pt-1 md:pl-0.5 w-6 h-6 md:w-8 md:h-8" />
-          </button>
-          <button
-            onClick={goToNext}
-            className="absolute top-1/2 -translate-y-1/2 right-0 md:-right-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
-            aria-label="Next slide"
-          >
-            <ChevronRightIcon className="md:pt-1 md:pl-1 mx-auto w-6 h-6 md:w-8 md:h-8" />
-          </button>
+            <button
+              onClick={goToPrev}
+              className="absolute top-1/2 -translate-y-1/2 left-0 md:-left-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
+              aria-label="Previous slide"
+            >
+              <ChevronLeftIcon className="md:pt-1 md:pl-0.5 w-6 h-6 md:w-8 md:h-8" />
+            </button>
+            <button
+              onClick={goToNext}
+              className="absolute top-1/2 -translate-y-1/2 right-0 md:-right-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
+              aria-label="Next slide"
+            >
+              <ChevronRightIcon className="md:pt-1 md:pl-1 mx-auto w-6 h-6 md:w-8 md:h-8" />
+            </button>
+          </div>
         </div>
-      </div>
+      </FadeIn>
     </section>
   );
 }

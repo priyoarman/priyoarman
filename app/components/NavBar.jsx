@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const links = [
-    { href: "#hero", label: "Home" },
+    { href: "#home", label: "Home" },
     { href: "#skills", label: "Skills" },
     { href: "#projects", label: "Projects" },
     { href: "#contact", label: "Contact" },
@@ -37,7 +37,7 @@ export default function NavBar() {
           onClick={() => setOpen((s) => !s)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
-          className="md:hidden p-2"
+          className="md:hidden py-2"
         >
           {open ? (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>

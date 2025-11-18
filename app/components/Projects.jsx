@@ -1,7 +1,6 @@
 "use client";
 
 import React, {useState} from "react";
-import Link from "next/link";
 import ProjectCard from "./ProjectCard";
 import socialImg from "../assets/Portfolio-Project-1-SS1.png";
 import ecomImg from "../assets/ashop-home-dark.png";
@@ -84,12 +83,12 @@ export default function Projects() {
 
     const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides;
     if (index === prevIndex) {
-      return "transform -translate-x-1/2 md:-translate-x-1/3 scale-90 opacity-40 z-10 blur-sm";
+      return "transform -translate-x-1/2 md:-translate-x-1/3 scale-90 opacity-0 md:opacity-40 z-10 blur-sm";
     }
 
     const nextIndex = (activeIndex + 1) % totalSlides;
     if (index === nextIndex) {
-      return "transform translate-x-1/2 md:translate-x-1/3 scale-90 opacity-40 z-10 blur-sm";
+      return "transform translate-x-1/2 md:translate-x-1/3 scale-90 opacity-0 md:opacity-40 z-10 blur-sm";
     }
 
     return "transform translate-x-0 opacity-0 z-0 scale-75 blur-md";
@@ -98,7 +97,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="max-w-7xl bg-gray-950 mx-auto min-h-dvh px-4 py-12 md:py-28 text-center"
+      className="max-w-7xl bg-gray-900 mx-auto min-h-dvh py-12 md:py-28 text-center"
     >
       <FadeIn>
         <h2 className="text-3xl md:text-4xl text-gray-100 font-bold pt-4">
@@ -106,13 +105,13 @@ export default function Projects() {
         </h2>
       </FadeIn>
       <FadeIn delay={500}>
-        <div className="bg-gray-950 w-full flex items-center justify-center font-sans text-white overflow-hidden">
+        <div className="bg-gray-900 w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
           <div className="relative w-full max-w-4xl h-[540px]">
             <div className="relative w-full h-full">
               {slides.map((slide, index) => (
                 <div
                   key={slide.id}
-                  className={`absolute top-0 w-full h-full transition-all duration-500 ease-in-out ${getSlidePosition(
+                  className={`absolute top-0 w-full h-full transition-all duration-400 ease-in-out ${getSlidePosition(
                     index
                   )}`}
                 >
@@ -128,14 +127,14 @@ export default function Projects() {
 
             <button
               onClick={goToPrev}
-              className="absolute top-1/2 -translate-y-1/2 left-0 md:-left-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
+              className="absolute top-1/2 -translate-y-1/2 left-1 md:-left-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
               aria-label="Previous slide"
             >
               <ChevronLeftIcon className="md:pt-1 md:pl-0.5 w-6 h-6 md:w-8 md:h-8" />
             </button>
             <button
               onClick={goToNext}
-              className="absolute top-1/2 -translate-y-1/2 right-0 md:-right-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
+              className="absolute top-1/2 -translate-y-1/2 right-1 md:-right-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
               aria-label="Next slide"
             >
               <ChevronRightIcon className="md:pt-1 md:pl-1 mx-auto w-6 h-6 md:w-8 md:h-8" />

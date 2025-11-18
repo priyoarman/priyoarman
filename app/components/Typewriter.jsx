@@ -7,7 +7,7 @@ export default function Typewriter({
   colors = ["text-gray-300"],
   typingSpeed = 100,
   deletingSpeed = 50,
-  pause = 3000,
+  pause = 1000,
   className = "",
 }) {
   const [index, setIndex] = useState(0);

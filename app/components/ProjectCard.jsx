@@ -6,19 +6,19 @@ export default function ProjectCard({ project, className = "" }) {
 
   return (
     <div
-      className={`relative rounded-2xl shadow-lg overflow-hidden h-[420px] mx-4 hover:scale-105 transition duration-300 ease-in-out ${className}`}
+      className={`relative rounded-2xl shadow-lg overflow-hidden h-[420px] w-full hover:scale-105 transition duration-300 ease-in-out ${className}`}
     >
       {image && (
         <div className="relative w-full h-full">
           <Image src={image} alt={title} fill className="object-cover" />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-linear-to-t from-black via-gray-50/10 to-transparent"
+            className="absolute inset-0 bg-linear-to-t from-gray-600 via-gray-50/10 to-transparent"
           />
         </div>
       )}
 
-      <div className="absolute inset-0 z-10 p-6 flex flex-col h-full bg-gray-950/60">
+      <div className="absolute inset-0 z-10 p-6 flex flex-col h-full bg-gray-900/50">
         <div className="mt-auto">
           <h3 className="text-xl font-semibold text-white mb-2 text-start">
             {title}

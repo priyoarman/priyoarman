@@ -85,22 +85,20 @@ export default function Hero() {
 
   const typewriterWords = [
     "Full Stack Developer",
-    "UI/UX Enthusiast",
+    "Frontend Engineer",
     "React & Next.js Developer",
     "WordPress & Shopify Developer",
-    "Frontend Engineer",
   ];
 
   const typewriterColors = [
-    "text-green-500",
-    "text-fuchsia-500",
-    "text-sky-400",
-    "text-indigo-400",
-    "text-yellow-500",
+    "text-green-400",
+    "text-yellow-400",
+    "text-sky-500",
+    "text-pink-500",
   ];
 
   return (
-      <div className="flex flex-col min-h-dvh items-center bg-gray-950">
+      <div className="flex flex-col min-h-dvh items-center bg-gray-900">
       <section
         id="home"
         className="flex-1 flex flex-col justify-center items-center text-center px-4 pt-6"
@@ -133,9 +131,9 @@ export default function Hero() {
           <Typewriter
           words={typewriterWords}
           colors={typewriterColors}
-          typingSpeed={100}
-          deletingSpeed={50}
-          pause={1000}
+          typingSpeed={60}
+          deletingSpeed={40}
+          pause={1500}
           className="text-lg md:text-xl my-4 transition duration-300 ease-in-out"
         />
         </FadeIn>

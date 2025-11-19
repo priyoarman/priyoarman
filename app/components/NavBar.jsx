@@ -8,12 +8,13 @@ export default function NavBar() {
     { href: "#home", label: "Home" },
     { href: "#skills", label: "Skills" },
     { href: "#projects", label: "Projects" },
+    { href: "#background", label: "Background" },
     { href: "#contact", label: "Contact" },
   ];
 
   const navClasses = `
     fixed top-2 z-50 mt-2
-    bg-[#141414]/20 backdrop-blur-md border border-neutral-800
+    bg-[#141414]/20 backdrop-blur-md border border-gray-900/10
     rounded-4xl md:rounded-full px-4 py-2 md:px-18 md:py-5 left-2 right-2
     md:w-fit md:left-1/2 md:-translate-x-1/2 md:right-auto
     ${open ? 'mx-4 w-auto' : 'w-fit ml-auto mx-4'}

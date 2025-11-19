@@ -98,10 +98,10 @@ export default function Hero() {
   ];
 
   return (
-      <div className="flex flex-col min-h-dvh items-center bg-gray-900">
+      <div className="flex flex-col min-h-dvh w-full overflow-hidden items-center bg-gray-900">
       <section
         id="home"
-        className="flex-1 flex flex-col justify-center items-center text-center px-4 pt-6"
+        className="flex-1 flex flex-col w-full justify-center items-center text-center px-4 pt-6"
       >
         <FadeIn delay={200}>
           <h1
@@ -131,9 +131,9 @@ export default function Hero() {
           <Typewriter
           words={typewriterWords}
           colors={typewriterColors}
-          typingSpeed={60}
-          deletingSpeed={40}
-          pause={1500}
+          typingSpeed={50}
+          deletingSpeed={30}
+          pause={2000}
           className="text-lg md:text-xl my-4 transition duration-300 ease-in-out"
         />
         </FadeIn>

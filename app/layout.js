@@ -8,9 +8,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth overflow-x-hidden">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <body className="overflow-x-hidden">
+      <body className="overflow-x-hidden antialiased w-full">
         {children}
       </body>
     </html>

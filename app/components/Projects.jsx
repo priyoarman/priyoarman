@@ -97,14 +97,14 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="max-w-7xl bg-gray-900 mx-auto min-h-dvh py-12 md:py-28 text-center"
+      className="max-w-7xl bg-gray-900 mx-auto min-h-dvh w-full overflow-hidden py-12 md:py-28 text-center"
     >
-      <FadeIn>
-        <h2 className="text-3xl md:text-4xl text-gray-100 font-bold pt-4">
+      <FadeIn delay={200}>
+        <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 md:pb-0">
           Featured Projects
         </h2>
       </FadeIn>
-      <FadeIn delay={500}>
+      <FadeIn delay={300}>
         <div className="bg-gray-900 w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
           <div className="relative w-full max-w-4xl h-[540px]">
             <div className="relative w-full h-full">
@@ -115,7 +115,7 @@ export default function Projects() {
                     index
                   )}`}
                 >
-                  <div className="flex flex-col md:flex-row items-center justify-center w-full h-full p-8 md:p-16 rounded-lg shadow-2xl">
+                  <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-0.5 py-6 md:px-16 md:pb-18 md:pt-10 rounded-lg shadow-2xl">
                     <ProjectCard
                       project={slide}
                       className="w-full max-w-3xl h-full"

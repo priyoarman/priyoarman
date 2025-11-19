@@ -13,17 +13,17 @@ export default function ProjectCard({ project, className = "" }) {
           <Image src={image} alt={title} fill className="object-cover" />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-linear-to-t from-gray-600 via-gray-50/10 to-transparent"
+            className="absolute inset-0 bg-linear-to-t from-gray-800 via-gray-800/20 to-transparent"
           />
         </div>
       )}
 
-      <div className="absolute inset-0 z-10 p-6 flex flex-col h-full bg-gray-900/50">
+      <div className="absolute inset-0 z-10 p-6 flex flex-col h-full bg-gray-900/40">
         <div className="mt-auto">
-          <h3 className="text-xl font-semibold text-white mb-2 text-start">
+          <h3 className="text-xl font-semibold text-gray-50  mb-2 text-start">
             {title}
           </h3>
-          <p className="text-gray-300 text-md text-start mb-4">
+          <p className="text-gray-100 text-md text-start mb-4">
             {description}
           </p>
 

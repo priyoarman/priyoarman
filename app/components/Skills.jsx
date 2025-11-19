@@ -148,14 +148,14 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="max-w-7xl bg-gray-900 mx-auto min-h-dvh px-4 py-12 md:py-28 text-center"
+      className="max-w-7xl bg-gray-900 mx-auto min-h-dvh w-full overflow-hidden px-4 py-12 md:py-28 text-center"
     >
-      <FadeIn delay={100}>
+      <FadeIn delay={200}>
         <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 pb-8">
         Skills & Technologies
       </h2>
       </FadeIn>
-      <FadeIn delay={200}>
+      <FadeIn delay={300}>
         <div className="text-gray-400 text-sm md:text-lg px-4 md:px-8 py-4">
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {skillsList.map((skill, index) => (
@@ -166,7 +166,7 @@ export default function SkillsSection() {
               delay={index * 30}
             ><li
               key={skill.name}
-              className="flex border h-13 md:h-16 bg-blue-950/40 border-neutral-950 rounded-xl justify-center text-gray-100 cursor-default
+              className="flex border-2 h-13 md:h-16 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default
                          transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60"
             >
               <div className="flex w-full h-full items-center justify-center gap-2 focus:scale-150 hover:scale-150 transition duration-300 ease-in-out">

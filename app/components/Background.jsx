@@ -240,7 +240,7 @@ const Background = () => {
                           University of Southern Denmark
                         </h2>
                         <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          Bachelor of Science
+                          MA in Product Management
                         </p>
                       </div>
                     </div>

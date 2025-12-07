@@ -98,7 +98,7 @@ export default function Hero() {
   ];
 
   return (
-      <div className="flex flex-col min-h-dvh w-full overflow-hidden items-center bg-gray-900">
+      <div className="flex flex-col min-h-dvh w-full overflow-hidden items-center">
       <section
         id="home"
         className="flex-1 flex flex-col w-full justify-center items-center text-center px-4 pt-6"

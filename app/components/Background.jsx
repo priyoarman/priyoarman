@@ -240,7 +240,7 @@ const Background = () => {
                           University of Southern Denmark
                         </h2>
                         <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          MA in Product Management
+                          Bachelor of Science
                         </p>
                       </div>
                     </div>
@@ -249,7 +249,7 @@ const Background = () => {
                         <FaLocationDot /> Odense
                       </h2>
                       <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2023 - Jan 2026
+                          Sep 2023 - Jun 2026
                         </p>
                     </div>
                   </div>

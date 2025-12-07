@@ -97,7 +97,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="max-w-7xl bg-gray-900 mx-auto min-h-dvh w-full overflow-hidden py-12 md:py-28 text-center"
+      className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden py-12 md:py-28 text-center"
     >
       <FadeIn delay={200}>
         <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 md:pb-0">

@@ -12,7 +12,8 @@ To be honest, my JavaScript is currently much more functional than my Danish, bu
 
 ## 🛠️ Tech Stack
 
-* **Frontend:** JavaScript (ES6+), TypeScript, React, Next.js, Tailwind CSS, HTML5/CSS3
+* **Languages:** JavaScript (ES6+), TypeScript, HTML5, CSS3
+* **Frontend:** React, Next.js, Tailwind CSS
 * **Backend:** Node.js, Express.js
 * **Databases:** MongoDB, PostgreSQL, MySQL, SQLite
 * **DevOps & Tools:** Git, GitHub Actions, Vercel, AWS, Azure, Postman, GraphQL, Jest

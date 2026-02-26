@@ -26,6 +26,6 @@ You can visit my [portfolio here.](https://priyoarman.vercel.app/)
 
 ## 📫 Let's Connect!
 
-* **Portfolio Form:** [priyoarman.vercel.app](https://www.google.com/search?q=https://priyoarman.vercel.app)
-* **LinkedIn:** [linkedin.com/in/priyoarman](https://www.google.com/search?q=https://linkedin.com/in/priyoarman)
-* **Email:** priyoarman1996@gmail.com
+* **Portfolio Form:** [priyoarman.vercel.app](https://priyoarman.vercel.app)
+* **LinkedIn:** [priyoarman](https://linkedin.com/in/priyoarman)
+* **Email:** [priyoarman1996@gmail.com](mailto:priyoarman1996@gmail.com)

@@ -1,12 +1,13 @@
 ### Hi there, I'm Arman 👋
 
-I'm a Full Stack Developer based in Denmark, with a focus on React, TypeScript, and Node.js. I love to write code to build workflows that actual humans (and not just robots) enjoy using.
+I'm a Full Stack Developer based in Denmark, with a focus on React, TypeScript, and Node.js. I love to write code with a focus on understanding why the code needs to exist for the user.
 
 You can visit my [portfolio here.](https://priyoarman.vercel.app/)
 
-## 🔭 What I'm currently up to:
+## 🔭 What I'm currently doing:
 
-* 🎓 **Studying:** Backend Specialization at HackYourFuture Denmark.
+* 🎓 **Studying:** Backend Specialisation at HackYourFuture Denmark.
+* 👨‍💻 **Working:** I build full-stack apps & websites for clients from different countries on Upwork & Fiverr.
 * 🌱 **Teaching:** Volunteering as a Frontend/React Mentor at ReDI School of Digital Integration in Denmark.
 * 💼 **Looking for:** A software developer position where I can contribute clean code and bring some office *hygge*.
 

@@ -7,7 +7,7 @@ You can visit my [portfolio here.](https://priyoarman.vercel.app/)
 ## 🔭 What I'm currently doing:
 
 * 🎓 **Studying:** Backend Specialisation at HackYourFuture Denmark.
-* 👨‍💻 **Working:** I build full-stack apps & websites for clients from different countries on Upwork & Fiverr.
+* 👨‍💻 **Working:** Building contract based full-stack apps & websites for clients from different countries through Upwork & Fiverr.
 * 🌱 **Teaching:** Volunteering as a Frontend/React Mentor at ReDI School of Digital Integration in Denmark.
 * 🔍 **Looking for:** A software developer position where I can contribute clean code and bring some office *hygge*.
 

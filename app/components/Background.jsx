@@ -249,7 +249,7 @@ const Background = () => {
                         <FaLocationDot /> Odense
                       </h2>
                       <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2023 - Jun 2026
+                          Sep 2023 - Feb 2027
                         </p>
                     </div>
                   </div>

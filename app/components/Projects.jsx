@@ -24,7 +24,7 @@ const slides = [
     description:
       "Features: Product listing, Categorising, Search filter, Shopping cart and Checkout flow",
     image: ecomImg,
-    viewProjectLink: "https://anothershop.vercel.app",
+    viewProjectLink: "https://anothershop.vercel.app/",
     githubLink: "https://github.com/priyoarman/anothershop",
   },
   {

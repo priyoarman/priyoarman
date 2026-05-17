@@ -47,7 +47,7 @@ const Background = () => {
                     </div>
                     <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
                       <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
-                        <FaLocationDot /> Aarhus
+                        <FaLocationDot /> Copenhagen
                       </h2>
                       <p className="hidden md:flex text-gray-400 md:text-[17px]">
                           Sep 2025 - Present

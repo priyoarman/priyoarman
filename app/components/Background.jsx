@@ -88,7 +88,7 @@ const Background = () => {
                         <FaLocationDot /> Odense
                       </h2>
                       <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Jan 2025 - Jun 2025
+                          Sep 2025 - Feb 2026
                         </p>
                     </div>
                   </div>
@@ -126,7 +126,7 @@ const Background = () => {
                         <FaLocationDot /> Remote
                       </h2>
                       <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2024 - Present
+                          Jun 2025 - Present
                         </p>
                     </div>
                   </div>
@@ -249,7 +249,7 @@ const Background = () => {
                         <FaLocationDot /> Odense
                       </h2>
                       <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2023 - Feb 2027
+                          Sep 2023 - Present
                         </p>
                     </div>
                   </div>

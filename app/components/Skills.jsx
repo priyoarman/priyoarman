@@ -58,7 +58,7 @@ const skillsList = [
       <SiExpress className="text-2xl mt-0.5 text-neutral-100 animate-[pulse_3s_infinite]" />
     ),
   },
-  /* {
+  {
     name: "WebSocket",
     icon: (
       <SiSocketdotio className="text-2xl text-neutral-100 animate-[spin_3s_infinite]" />
@@ -69,7 +69,7 @@ const skillsList = [
     icon: (
       <TbApi className="text-3xl text-blue-600 animate-[pulse_3s_infinite]" />
     ),
-  }, */
+  },
   {
     name: "MongoDB",
     icon: (

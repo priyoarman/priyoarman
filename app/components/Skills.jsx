@@ -58,7 +58,7 @@ const skillsList = [
       <SiExpress className="text-2xl mt-0.5 text-neutral-100 animate-[pulse_3s_infinite]" />
     ),
   },
-  {
+  /* {
     name: "WebSocket",
     icon: (
       <SiSocketdotio className="text-2xl text-neutral-100 animate-[spin_3s_infinite]" />
@@ -69,7 +69,7 @@ const skillsList = [
     icon: (
       <TbApi className="text-3xl text-blue-600 animate-[pulse_3s_infinite]" />
     ),
-  },
+  }, */
   {
     name: "MongoDB",
     icon: (
@@ -100,7 +100,7 @@ const skillsList = [
       <FaAws className="text-2xl text-orange-400/80 mt-0.5 animate-[pulse_3s_infinite]" />
     ),
   },
-  {
+  /* {
     name: "Azure",
     icon: (
       <VscAzure className="text-2xl text-sky-600 animate-[pulse_3s_infinite]" />
@@ -111,7 +111,7 @@ const skillsList = [
     icon: (
       <SiKubernetes className="text-2xl text-blue-600 animate-[spin_3s_infinite]" />
     ),
-  },
+  }, */
   {
     name: "Docker",
     icon: (
@@ -130,7 +130,7 @@ const skillsList = [
       <IoLogoJavascript className="text-2xl text-yellow-400 rounded-lg animate-[pulse_3s_infinite]" />
     ),
   },
-  {
+  /* {
     name: "HTML",
     icon: (
       <FaHtml5 className="text-2xl text-orange-500 animate-[pulse_3s_infinite]" />
@@ -141,7 +141,7 @@ const skillsList = [
     icon: (
       <IoLogoCss3 className="text-2xl text-blue-600 animate-[pulse_3s_infinite]" />
     ),
-  },
+  },*/
 ];
 
 export default function SkillsSection() {

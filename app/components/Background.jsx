@@ -24,7 +24,7 @@ const Background = () => {
             </FadeIn>
             <ul className="flex flex-col gap-4">
               <FadeIn delay={400} direction={"left"}>
-                <li className="flex flex-col border-2 py-2 gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
                   <div className="flex flex-row w-full h-full justify-between px-4">
                     <div className="flex flex-row gap-3">
                       <div className="relative w-11 h-11 mt-1 rounded-4xl">
@@ -37,8 +37,8 @@ const Background = () => {
                       </div>
 
                       <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
-                          ReDI School Denmark
+                        <h2 className="flex font-bold gap-1 text-gray-50 text-lg md:text-xl">
+                          ReDI School<span className="hidden md:flex"> Denmark</span>
                         </h2>
                         <p className="flex text-gray-300 text-sm md:text-[17px]">
                           Volunteer Teacher
@@ -55,14 +55,14 @@ const Background = () => {
                     </div>
                   </div>
                   <div className="flex mx-4 text-gray-400">
-                    <p className="flex justify-start text-start text-xs md:text-sm">
+                    <p className="hidden md:flex justify-start text-start md:text-sm">
                       Job: To teach React and Frontend Development using hands-on projects
                     </p>
                   </div>
                 </li>
               </FadeIn>
               <FadeIn delay={500} direction={"left"}>
-                <li className="flex flex-col border-2 py-2 gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
                   <div className="flex flex-row w-full h-full justify-between px-4">
                     <div className="flex flex-row gap-3">
                       <div className="relative w-11 h-11 mt-1 rounded-4xl">
@@ -93,14 +93,14 @@ const Background = () => {
                     </div>
                   </div>
                   <div className="flex mx-4 text-gray-400">
-                    <p className="flex justify-start text-start text-xs md:text-sm">
+                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
                       Job: To translate Figma design to a mobile-first frontend, deploy, and maintain
                     </p>
                   </div>
                 </li>
               </FadeIn>
               <FadeIn delay={600} direction={"left"}>
-                <li className="flex flex-col border-2 py-2 gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
                   <div className="flex flex-row w-full h-full justify-between px-4">
                     <div className="flex flex-row gap-3">
                       <div className="relative w-11 h-11 mt-1 rounded-4xl">
@@ -131,7 +131,7 @@ const Background = () => {
                     </div>
                   </div>
                   <div className="flex mx-4 text-gray-400">
-                    <p className="flex justify-start text-start text-xs md:text-sm">
+                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
                       Jobs: To build responsive websites and apps with HTML, CSS, JS, and React
                     </p>
                   </div>
@@ -147,7 +147,7 @@ const Background = () => {
             </FadeIn>
             <ul className="flex flex-col gap-4">
               <FadeIn delay={400} direction={"right"}>
-                <li className="flex flex-col border-2 py-2 gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
                   <div className="flex flex-row w-full h-full justify-between px-4">
                     <div className="flex flex-row gap-3">
                       <div className="relative w-11 h-11 mt-1 rounded-4xl">
@@ -163,8 +163,8 @@ const Background = () => {
                         <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
                           HackYourFuture
                         </h2>
-                        <p className="flex text-gray-300 text-[11px] md:text-[17px]">
-                          Web Development Bootcamp
+                        <p className="flex text-gray-300 text-sm md:text-[17px]">
+                          Backend Specialization
                         </p>
                       </div>
                     </div>
@@ -178,14 +178,14 @@ const Background = () => {
                     </div>
                   </div>
                   <div className="flex mx-4 text-gray-400">
-                    <p className="flex justify-start text-start text-xs md:text-sm">
+                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
                       Capstone Projects: Online Banking System, Ride-Sharing Application Backend
                     </p>
                   </div>
                 </li>
               </FadeIn>
               <FadeIn delay={500} direction={"right"}>
-                <li className="flex flex-col border-2 py-2 gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
                   <div className="flex flex-row w-full h-full justify-between px-4">
                     <div className="flex flex-row gap-3">
                       <div className="relative w-11 h-11 mt-1 rounded-4xl">
@@ -198,8 +198,8 @@ const Background = () => {
                       </div>
 
                       <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold text-gray-50 text-[12px] md:text-xl">
-                          ReDI School of Digital Integration
+                        <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
+                          ReDI School Germany
                         </h2>
                         <p className="flex text-gray-300 text-sm md:text-[17px]">
                           Full Stack Development
@@ -216,16 +216,16 @@ const Background = () => {
                     </div>
                   </div>
                   <div className="flex mx-4 text-gray-400">
-                    <p className="flex justify-start text-start text-xs md:text-sm">
-                      Capstone Projects: Social Media App, E-commerce Frontend
+                    <p className="hidden md:flex justify-start text-start md:text-sm">
+                      Job: To teach React and Frontend Development using hands-on projects
                     </p>
                   </div>
                 </li>
               </FadeIn>
               <FadeIn delay={600} direction={"right"}>
-                <li className="flex flex-col border-2 py-2 gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
                   <div className="flex flex-row w-full h-full justify-between px-4">
-                    <div className="flex flex-row gap-3">
+                    <div className="flex flex-row gap-2">
                       <div className="relative w-12 h-12 mt-1 rounded-4xl">
                         <Image
                           src="/sdu.jpeg"
@@ -236,8 +236,11 @@ const Background = () => {
                       </div>
 
                       <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold text-gray-50 text-[12px] md:text-xl">
+                        <h2 className="hidden md:flex font-bold text-gray-50 text-xl">
                           University of Southern Denmark
+                        </h2>
+                        <h2 className="flex md:hidden font-bold text-gray-50 text-lg md:text-xl">
+                          Syddansk Universitet
                         </h2>
                         <p className="flex text-gray-300 text-sm md:text-[17px]">
                           Bachelor of Science
@@ -254,7 +257,7 @@ const Background = () => {
                     </div>
                   </div>
                   <div className="flex mx-4 text-gray-400">
-                    <p className="flex justify-start text-start text-xs md:text-sm">
+                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
                       Coursework: Ethnographic interviews, SPSS analysis, Thesis on digital integration
                     </p>
                   </div>

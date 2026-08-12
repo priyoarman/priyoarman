@@ -16,14 +16,14 @@ const slides = [
     description:
       "A full-stack travel app that uses AI to help users find and compare flights through natural language. Built with Node.js, Express, PostgreSQL, and Groq AI, integrating the Duffel API for real-time flight data. Presented at Microsoft Copenhagen as HackYourFuture's capstone project.",
     image: tripweaveImg,
-    viewProjectLink: "https://tripweave.render.app",
+    viewProjectLink: "https://trip-weave-wbh3.onrender.com/",
     githubLink: "https://github.com/abikrithika/trip-weave",
   },
   {
     id: 2,
     title: "E-Commerce Platform with RAG Chatbot",
     description:
-      "An e-commerce with categorising, search filter, cart, checkout and payment flow with a Retrieval-Augmented Generation (RAG) AI chatbot. Built with React, Tailwind CSS, OpenAI, it retrieves relevant product data before generating accurate, context-aware responses.",
+      "An e-commerce with categorising, search filter, cart, checkout and payment flow with a Retrieval-Augmented Generation (RAG) AI chatbot. Built with React, Tailwind CSS, Groq AI, OpenAI, it retrieves relevant product data before generating accurate, context-aware responses.",
     image: ecomImg,
     viewProjectLink: "https://anothershop.vercel.app/",
     githubLink: "https://github.com/priyoarman/anothershop",
@@ -113,6 +113,10 @@ export default function Projects() {
 
   const handlePointerDown = (event) => {
     if (event.button !== undefined && event.button !== 0) {
+      return;
+    }
+
+    if (event.target.closest("a")) {
       return;
     }
 

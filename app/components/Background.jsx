@@ -74,7 +74,7 @@ const Background = () => {
       title: "University of Southern Denmark",
       subtitle: "Bachelor of Science",
       location: "Odense",
-      date: "Sep 2024 - Present",
+      date: "Feb 2024 - Present",
       description:
         "Coursework: Ethnographic interviews, SPSS analysis, Thesis on digital integration",
       direction: "right",

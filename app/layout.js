@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "Arman Hossain",
-  description: "Portfolio built with Next.js",
+  description: "Arman Hossain - Full-Stack Developer based in Denmark",
   viewport: "width=device-width, initial-scale=1",
 };
 

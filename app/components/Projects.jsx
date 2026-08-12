@@ -37,24 +37,24 @@ const slides = [
     viewProjectLink: "https://redilink.vercel.app",
     githubLink: "https://github.com/priyoarman/redilink",
   },
-  {
-    id: 4,
-    title: "Business Landing Page",
-    description:
-      "Features: Content migration, SEO, Performance tweaks, Deployment, Maintenance",
-    image: bsnLandingImg,
-    viewProjectLink: "https://aaveqrobotics.com/",
-    githubLink: "https://github.com/priyoarman/aaveqrobotics-website",
-  },
-  {
-    id: 5,
-    title: "Startup Landing Page",
-    description:
-      "Features: Simple landing page, Content management, Navigation, Theme toggler",
-    image: stpLandingImg,
-    viewProjectLink: "https://codepen.io/priyoarman/full/VYvBxyB",
-    githubLink: "https://codepen.io/priyoarman/pen/VYvBxyB",
-  },
+  // {
+  //   id: 4,
+  //   title: "Business Landing Page",
+  //   description:
+  //     "Features: Content migration, SEO, Performance tweaks, Deployment, Maintenance",
+  //   image: bsnLandingImg,
+  //   viewProjectLink: "https://aaveqrobotics.com/",
+  //   githubLink: "https://github.com/priyoarman/aaveqrobotics-website",
+  // },
+  // {
+  //   id: 5,
+  //   title: "Startup Landing Page",
+  //   description:
+  //     "Features: Simple landing page, Content management, Navigation, Theme toggler",
+  //   image: stpLandingImg,
+  //   viewProjectLink: "https://codepen.io/priyoarman/full/VYvBxyB",
+  //   githubLink: "https://codepen.io/priyoarman/pen/VYvBxyB",
+  // },
 ];
 
 const createCursor = (svgMarkup) =>

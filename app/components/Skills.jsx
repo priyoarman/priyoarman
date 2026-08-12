@@ -20,6 +20,7 @@ import {TbApi} from "react-icons/tb";
 import {BiLogoPostgresql} from "react-icons/bi";
 import { GrMysql } from "react-icons/gr";
 import {VscAzure} from "react-icons/vsc";
+import { RiVercelFill } from "react-icons/ri";
 import {IoLogoJavascript, IoLogoCss3} from "react-icons/io5";
 import FadeIn from "./FadeIn";
 
@@ -73,6 +74,12 @@ const skillsList = [
     ),
   },
   {
+    name: "MongoDB",
+    icon: (
+      <SiMongodb className="text-2xl text-green-600 animate-[pulse_3s_infinite]" />
+    ),
+  },
+  {
     name: "PostgreSQL",
     icon: (
       <BiLogoPostgresql className="text-3xl text-blue-600 animate-[pulse_3s_infinite]" />
@@ -85,15 +92,9 @@ const skillsList = [
     ),
   },
   {
-    name: "MongoDB",
+    name: "Prisma",
     icon: (
-      <SiMongodb className="text-2xl text-green-600 animate-[pulse_3s_infinite]" />
-    ),
-  },
-  {
-    name: "Git",
-    icon: (
-      <FaGitAlt className="text-2xl text-orange-500/80 mt-0.5 animate-[pulse_3s_infinite]" />
+      <SiPrisma className="text-2xl text-blue-600 animate-[pulse_3s_infinite]" />
     ),
   },
   {
@@ -121,15 +122,15 @@ const skillsList = [
     ),
   },
   {
-    name: "Shopify",
+    name: "Vercel",
     icon: (
-      <FaShopify className="text-2xl text-green-600 animate-[pulse_3s_infinite]" />
+      <RiVercelFill className="text-2xl text-neutral-100 animate-[pulse_3s_infinite]" />
     ),
   },
   {
-    name: "WordPress",
+    name: "Git",
     icon: (
-      <FaWordpress className="text-2xl text-neutral-100 animate-[pulse_3s_infinite]" />
+      <FaGitAlt className="text-2xl text-orange-500/80 mt-0.5 animate-[pulse_3s_infinite]" />
     ),
   },
   /* {

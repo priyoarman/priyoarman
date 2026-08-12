@@ -97,18 +97,6 @@ const skillsList = [
     ),
   },
   {
-    name: "Shopify",
-    icon: (
-      <FaShopify className="text-2xl text-green-600 animate-[pulse_3s_infinite]" />
-    ),
-  },
-  {
-    name: "WordPress",
-    icon: (
-      <FaWordpress className="text-2xl text-neutral-100 animate-[pulse_3s_infinite]" />
-    ),
-  },
-  {
     name: "AWS",
     icon: (
       <FaAws className="text-2xl text-orange-400/80 mt-0.5 animate-[pulse_3s_infinite]" />
@@ -130,6 +118,18 @@ const skillsList = [
     name: "Docker",
     icon: (
       <SiDocker className="text-2xl text-blue-600 animate-[pulse_3s_infinite]" />
+    ),
+  },
+  {
+    name: "Shopify",
+    icon: (
+      <FaShopify className="text-2xl text-green-600 animate-[pulse_3s_infinite]" />
+    ),
+  },
+  {
+    name: "WordPress",
+    icon: (
+      <FaWordpress className="text-2xl text-neutral-100 animate-[pulse_3s_infinite]" />
     ),
   },
   /* {

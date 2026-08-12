@@ -43,12 +43,12 @@ export default function Hero() {
       currentStop1.current = lerp(
         currentStop1.current,
         30 + gradientSpread * 20,
-        0.1
+        0.1,
       );
       currentStop2.current = lerp(
         currentStop2.current,
         70 + gradientSpread * 20,
-        0.1
+        0.1,
       );
 
       const targetHue = (((currentAngle.current + 180) * 360) / 360) % 360;
@@ -56,11 +56,14 @@ export default function Hero() {
 
       const color1 = `hsl(${currentHue.current.toFixed(2)}, 70%, 60%)`;
       const color2 = `hsl(${((currentHue.current + 60) % 360).toFixed(
-        2
+        2,
       )}, 70%, 60%)`;
 
       requestAnimationFrame(() => {
-        el.style.setProperty("--gradient-angle", `${currentAngle.current + 90}deg`);
+        el.style.setProperty(
+          "--gradient-angle",
+          `${currentAngle.current + 90}deg`,
+        );
         el.style.setProperty("--gradient-stop-1", `${currentStop1.current}%`);
         el.style.setProperty("--gradient-stop-2", `${currentStop2.current}%`);
         el.style.setProperty("--gradient-color-1", color1);
@@ -84,108 +87,101 @@ export default function Hero() {
   };
 
   const typewriterWords = [
-    "Full Stack Developer",
-    "Frontend Developer",
-    "React & Next.js Developer",
-    "Junior Backend Developer",
-    "AI Integration Developer",
+    "Full-Stack Developer",
+    "AI Integration Specialist",
+    "React & Next.js Engineer",
   ];
 
   const typewriterColors = [
     "text-blue-400",
-    "text-yellow-400",
-    "text-sky-500",
-    "text-green-400",
-    "text-pink-500",
+    "text-purple-400",
+    "text-cyan-400",
   ];
 
   return (
-      <div className="flex flex-col min-h-dvh w-full overflow-hidden items-center">
+    <div className="flex flex-col min-h-dvh w-full overflow-hidden items-center">
       <section
         id="home"
         className="flex-1 flex flex-col w-full justify-center items-center text-center px-4 pt-6"
       >
         <FadeIn delay={200}>
           <h1
-          ref={h1Ref}
-          className="text-5xl md:text-6xl font-bold cursor-default hover:scale-105 transition duration-300 ease-in-out"
-          style={gradientBackgroundStyle}
-          onMouseEnter={() => {
-            isHoverRef.current = true;
-            const el = h1Ref.current;
-            if (el) {
-              el.style.setProperty("--gradient-angle", "90deg");
-              el.style.setProperty("--gradient-stop-1", "30%");
-              el.style.setProperty("--gradient-stop-2", "70%");
-              el.style.setProperty("--gradient-color-1", "hsl(200,70%,60%)");
-              el.style.setProperty("--gradient-color-2", "hsl(260,70%,60%)");
-            }
-          }}
-          onMouseLeave={() => {
-            isHoverRef.current = false;
-          }}
-        >
-          Arman Hossain
-        </h1>
+            ref={h1Ref}
+            className="text-5xl md:text-6xl font-bold cursor-default hover:scale-105 transition duration-300 ease-in-out"
+            style={gradientBackgroundStyle}
+            onMouseEnter={() => {
+              isHoverRef.current = true;
+              const el = h1Ref.current;
+              if (el) {
+                el.style.setProperty("--gradient-angle", "90deg");
+                el.style.setProperty("--gradient-stop-1", "30%");
+                el.style.setProperty("--gradient-stop-2", "70%");
+                el.style.setProperty("--gradient-color-1", "hsl(200,70%,60%)");
+                el.style.setProperty("--gradient-color-2", "hsl(260,70%,60%)");
+              }
+            }}
+            onMouseLeave={() => {
+              isHoverRef.current = false;
+            }}
+          >
+            Arman Hossain
+          </h1>
         </FadeIn>
-        
+
         <FadeIn delay={300}>
           <Typewriter
-          words={typewriterWords}
-          colors={typewriterColors}
-          typingSpeed={50}
-          deletingSpeed={30}
-          pause={2000}
-          className="text-lg md:text-xl my-4 transition duration-300 ease-in-out"
-        />
+            words={typewriterWords}
+            colors={typewriterColors}
+            typingSpeed={50}
+            deletingSpeed={30}
+            pause={2000}
+            className="text-lg md:text-xl my-4 transition duration-300 ease-in-out"
+          />
         </FadeIn>
-        
+
         <FadeIn delay={400}>
           <div className="flex flex-row gap-4 text-3xl pt-2">
-          <a
+            {/* <a
             href="https://facebook.com/me.priyo"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[27px] hover:text-blue-600  hover:scale-150 focus:scale-150 focus:text-blue-600 transition duration-300 ease-in-out cursor-pointer"
           >
             <FaFacebook />
-          </a>
-          <a
-            href="https://x.com/arman_priyo"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
-          >
-            <FaSquareXTwitter />
-          </a>
-          <a
-            href="https://linkedin.com/in/priyoarman"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-500 hover:scale-150 focus:scale-150 focus:text-blue-500 transition duration-300 ease-in-out cursor-pointer"
-          >
-            <FaLinkedin />
-          </a>
-          <a
-            href="https://github.com/priyoarman"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
-          >
-            <FaGithub />
-          </a>
-        </div>
+          </a> */}
+            <a
+              href="https://linkedin.com/in/priyoarman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-500 hover:scale-150 focus:scale-150 focus:text-blue-500 transition duration-300 ease-in-out cursor-pointer"
+            >
+              <FaLinkedin />
+            </a>
+            <a
+              href="https://github.com/priyoarman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
+            >
+              <FaGithub />
+            </a>
+            <a
+              href="https://x.com/arman_priyo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
+            >
+              <FaSquareXTwitter />
+            </a>
+          </div>
         </FadeIn>
-        
       </section>
-        <a
+      <a
         href="#skills"
         className="text-3xl text-gray-50/40 rounded-[100%] px-3 mb-4 shadow-gray-50 animate-[bounce_3s] [animation-iteration-count:infinite] transition duration-300 ease-in-out hover:cursor-pointer"
       >
         ↓
       </a>
-      
     </div>
-    
   );
 }

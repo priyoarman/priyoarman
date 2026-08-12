@@ -1,9 +1,87 @@
 import React from "react";
 import FadeIn from "./FadeIn";
-import {FaLocationDot} from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
 import Image from "next/image";
 
 const Background = () => {
+  const experiences = [
+    {
+      id: "redi-dk",
+      img: "/ReDI.png",
+      imgAlt: "ReDI",
+      title: "ReDI School",
+      subtitle: "Volunteer Teacher",
+      location: "Copenhagen",
+      date: "Sep 2025 - Present",
+      description:
+        "Job: To teach React and Frontend Development using hands-on projects",
+      direction: "left",
+    },
+    {
+      id: "aaveq",
+      img: "/aaveq_robotics_logo.jpeg",
+      imgAlt: "Aaveq Robotics",
+      title: "Aaveq Robotics ApS",
+      subtitle: "Frontend Developer Intern",
+      location: "Odense",
+      date: "Sep 2025 - Feb 2026",
+      description:
+        "Job: To translate Figma design to a mobile-first frontend, deploy, and maintain",
+      direction: "left",
+    },
+    {
+      id: "upwork",
+      img: "/up-work.png",
+      imgAlt: "Upwork",
+      title: "Upwork",
+      subtitle: "Freelance Web Developer",
+      location: "Remote",
+      date: "Sep 2024 - Present",
+      description:
+        "Jobs: To build responsive websites and apps with HTML, CSS, JS, and React",
+      direction: "left",
+    },
+  ];
+
+  const education = [
+    {
+      id: "hyf",
+      img: "/hyfdanmark.avif",
+      imgAlt: "HackYourFuture",
+      title: "HackYourFuture",
+      subtitle: "Backend Specialization",
+      location: "Copenhagen",
+      date: "Sep 2025 - Jul 2026",
+      description:
+        "Capstone Projects: Event Booking App, AI assisted Travel Booking Backend",
+      direction: "right",
+    },
+    {
+      id: "redi-de",
+      img: "/ReDI.png",
+      imgAlt: "ReDI",
+      title: "ReDI School Germany",
+      subtitle: "Full Stack Development",
+      location: "Hamburg",
+      date: "Feb 2025 - Jul 2025",
+      description: "Capstone Projects: Social Media Application, E-Commerce with RAG Chatbot",
+      direction: "right",
+    },
+    {
+      id: "sdu",
+      img: "/sdu.jpeg",
+      imgAlt: "SDU",
+      title: "University of Southern Denmark",
+      subtitle: "Bachelor of Science",
+      location: "Odense",
+      date: "Sep 2024 - Present",
+      description:
+        "Coursework: Ethnographic interviews, SPSS analysis, Thesis on digital integration",
+      direction: "right",
+      imgSize: "w-12 h-12",
+    },
+  ];
+
   return (
     <section
       id="background"
@@ -19,250 +97,114 @@ const Background = () => {
           <li>
             <FadeIn delay={300}>
               <h2 className="text-xl md:text-2xl text-gray-100 font-bold pb-4">
-                Volunteering & Experiences
+                Experiences & Volunteering
               </h2>
             </FadeIn>
+
             <ul className="flex flex-col gap-4">
-              <FadeIn delay={400} direction={"left"}>
-                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
-                  <div className="flex flex-row w-full h-full justify-between px-4">
-                    <div className="flex flex-row gap-3">
-                      <div className="relative w-11 h-11 mt-1 rounded-4xl">
-                        <Image
-                          src="/ReDI.png"
-                          fill
-                          alt="ReDI"
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
+              {experiences.map((item, idx) => (
+                <FadeIn
+                  key={item.id}
+                  delay={400 + idx * 100}
+                  direction={item.direction}
+                >
+                  <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                    <div className="flex flex-row w-full h-full justify-between px-4">
+                      <div className="flex flex-row gap-3">
+                        <div
+                          className={`relative ${item.imgSize ? item.imgSize : "w-11 h-11"} mt-1 rounded-4xl`}
+                        >
+                          <Image
+                            src={item.img}
+                            fill
+                            alt={item.imgAlt}
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
 
-                      <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold gap-1 text-gray-50 text-lg md:text-xl">
-                          ReDI School<span className="hidden md:flex"> Denmark</span>
+                        <div className="flex flex-col items-start justify-start text-start">
+                          <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
+                            {item.title}
+                          </h2>
+                          <p className="flex text-gray-300 text-sm md:text-[17px]">
+                            {item.subtitle}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
+                        <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
+                          <FaLocationDot /> {item.location}
                         </h2>
-                        <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          Volunteer Teacher
+                        <p className="hidden md:flex text-gray-400 md:text-[17px]">
+                          {item.date}
                         </p>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
-                      <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
-                        <FaLocationDot /> Copenhagen
-                      </h2>
-                      <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2025 - Present
-                        </p>
+                    <div className="flex mx-4 text-gray-400">
+                      <p className="hidden md:flex justify-start text-start md:text-sm">
+                        {item.description}
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex mx-4 text-gray-400">
-                    <p className="hidden md:flex justify-start text-start md:text-sm">
-                      Job: To teach React and Frontend Development using hands-on projects
-                    </p>
-                  </div>
-                </li>
-              </FadeIn>
-              <FadeIn delay={500} direction={"left"}>
-                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
-                  <div className="flex flex-row w-full h-full justify-between px-4">
-                    <div className="flex flex-row gap-3">
-                      <div className="relative w-11 h-11 mt-1 rounded-4xl">
-                        <Image
-                          src="/aaveq_robotics_logo.jpeg"
-                          fill
-                          alt="ReDI"
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-
-                      <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
-                          Aaveq Robotics ApS
-                        </h2>
-                        <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          Frontend Developer Intern
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
-                      <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
-                        <FaLocationDot /> Odense
-                      </h2>
-                      <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2025 - Feb 2026
-                        </p>
-                    </div>
-                  </div>
-                  <div className="flex mx-4 text-gray-400">
-                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
-                      Job: To translate Figma design to a mobile-first frontend, deploy, and maintain
-                    </p>
-                  </div>
-                </li>
-              </FadeIn>
-              <FadeIn delay={600} direction={"left"}>
-                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
-                  <div className="flex flex-row w-full h-full justify-between px-4">
-                    <div className="flex flex-row gap-3">
-                      <div className="relative w-11 h-11 mt-1 rounded-4xl">
-                        <Image
-                          src="/up-work.png"
-                          fill
-                          alt="Upwork"
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-
-                      <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
-                          Upwork
-                        </h2>
-                        <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          Freelance Web Developer
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
-                      <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
-                        <FaLocationDot /> Remote
-                      </h2>
-                      <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Jun 2025 - Present
-                        </p>
-                    </div>
-                  </div>
-                  <div className="flex mx-4 text-gray-400">
-                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
-                      Jobs: To build responsive websites and apps with HTML, CSS, JS, and React
-                    </p>
-                  </div>
-                </li>
-              </FadeIn>
+                  </li>
+                </FadeIn>
+              ))}
             </ul>
           </li>
+
           <li>
             <FadeIn delay={300}>
               <h2 className="text-xl md:text-2xl text-gray-100 font-bold pb-4">
                 Education & Training
               </h2>
             </FadeIn>
+
             <ul className="flex flex-col gap-4">
-              <FadeIn delay={400} direction={"right"}>
-                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
-                  <div className="flex flex-row w-full h-full justify-between px-4">
-                    <div className="flex flex-row gap-3">
-                      <div className="relative w-11 h-11 mt-1 rounded-4xl">
-                        <Image
-                          src="/hyfdanmark.avif"
-                          fill
-                          alt="HackYourFuture"
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
+              {education.map((item, idx) => (
+                <FadeIn
+                  key={item.id}
+                  delay={400 + idx * 100}
+                  direction={item.direction}
+                >
+                  <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
+                    <div className="flex flex-row w-full h-full justify-between px-4">
+                      <div className="flex flex-row gap-3">
+                        <div
+                          className={`relative ${item.imgSize ? item.imgSize : "w-11 h-11"} mt-1 rounded-4xl`}
+                        >
+                          <Image
+                            src={item.img}
+                            fill
+                            alt={item.imgAlt}
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
 
-                      <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
-                          HackYourFuture
+                        <div className="flex flex-col items-start justify-start text-start">
+                          <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
+                            {item.title}
+                          </h2>
+                          <p className="flex text-gray-300 text-sm md:text-[17px]">
+                            {item.subtitle}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
+                        <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
+                          <FaLocationDot /> {item.location}
                         </h2>
-                        <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          Backend Specialization
+                        <p className="hidden md:flex text-gray-400 md:text-[17px]">
+                          {item.date}
                         </p>
                       </div>
                     </div>
-                    <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
-                      <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
-                        <FaLocationDot /> Copenhagen
-                      </h2>
-                      <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2025 - Present
-                        </p>
+                    <div className="flex mx-4 text-gray-400">
+                      <p className="hidden md:flex justify-start text-start md:text-sm">
+                        {item.description}
+                      </p>
                     </div>
-                  </div>
-                  <div className="flex mx-4 text-gray-400">
-                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
-                      Capstone Projects: Online Banking System, Ride-Sharing Application Backend
-                    </p>
-                  </div>
-                </li>
-              </FadeIn>
-              <FadeIn delay={500} direction={"right"}>
-                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
-                  <div className="flex flex-row w-full h-full justify-between px-4">
-                    <div className="flex flex-row gap-3">
-                      <div className="relative w-11 h-11 mt-1 rounded-4xl">
-                        <Image
-                          src="/ReDI.png"
-                          fill
-                          alt="ReDI"
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-
-                      <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="flex font-bold text-gray-50 text-lg md:text-xl">
-                          ReDI School Germany
-                        </h2>
-                        <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          Full Stack Development
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
-                      <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
-                        <FaLocationDot /> Hamburg
-                      </h2>
-                      <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Feb 2025 - Jul 2025
-                        </p>
-                    </div>
-                  </div>
-                  <div className="flex mx-4 text-gray-400">
-                    <p className="hidden md:flex justify-start text-start md:text-sm">
-                      Job: To teach React and Frontend Development using hands-on projects
-                    </p>
-                  </div>
-                </li>
-              </FadeIn>
-              <FadeIn delay={600} direction={"right"}>
-                <li className="flex flex-col border-2 md:py-2 gap-2 md:gap-4 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default hover:scale-105 transition duration-300 ease-in-out">
-                  <div className="flex flex-row w-full h-full justify-between px-4">
-                    <div className="flex flex-row gap-2">
-                      <div className="relative w-12 h-12 mt-1 rounded-4xl">
-                        <Image
-                          src="/sdu.jpeg"
-                          fill
-                          alt="SDU"
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-
-                      <div className="flex flex-col items-start justify-start text-start">
-                        <h2 className="hidden md:flex font-bold text-gray-50 text-xl">
-                          University of Southern Denmark
-                        </h2>
-                        <h2 className="flex md:hidden font-bold text-gray-50 text-lg md:text-xl">
-                          Syddansk Universitet
-                        </h2>
-                        <p className="flex text-gray-300 text-sm md:text-[17px]">
-                          Bachelor of Science
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end justify-end text-end px-0 mx-0">
-                      <h2 className="flex flex-row gap-1 justify-center text-center items-center text-gray-400 text-md md:text-lg pt-1 md:pt-0">
-                        <FaLocationDot /> Odense
-                      </h2>
-                      <p className="hidden md:flex text-gray-400 md:text-[17px]">
-                          Sep 2023 - Present
-                        </p>
-                    </div>
-                  </div>
-                  <div className="flex mx-4 text-gray-400">
-                    <p className="hidden md:flex justify-start text-start text-xs md:text-sm">
-                      Coursework: Ethnographic interviews, SPSS analysis, Thesis on digital integration
-                    </p>
-                  </div>
-                </li>
-              </FadeIn>
+                  </li>
+                </FadeIn>
+              ))}
             </ul>
           </li>
         </ul>

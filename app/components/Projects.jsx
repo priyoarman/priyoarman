@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import ProjectCard from "./ProjectCard";
+import tripweaveImg from "../assets/TripWeave-1.jpg";
 import socialImg from "../assets/Portfolio-Project-1-SS1.png";
 import ecomImg from "../assets/ashop-home-dark.png";
 import bsnLandingImg from "../assets/aaveq-home.png";
@@ -11,24 +12,33 @@ import FadeIn from "./FadeIn";
 const slides = [
   {
     id: 1,
-    title: "Social Media Application",
+    title: "TripWeave - AI-Powered Flight Search App",
     description:
-      "Features: User Authentication, Interactivity (Post, Like, Comment), Real time news API fetch",
-    image: socialImg,
-    viewProjectLink: "https://redilink.vercel.app",
-    githubLink: "https://github.com/priyoarman/redilink",
+      "A full-stack travel app that uses AI to help users find and compare flights through natural language. Built with Node.js, Express, PostgreSQL, and Groq AI, integrating the Duffel API for real-time flight data. Presented at Microsoft Copenhagen as HackYourFuture's capstone project.",
+    image: tripweaveImg,
+    viewProjectLink: "https://tripweave.render.app",
+    githubLink: "https://github.com/abikrithika/trip-weave",
   },
   {
     id: 2,
-    title: "E-Commerce Platform",
+    title: "E-Commerce Platform with RAG Chatbot",
     description:
-      "Features: Product listing, Categorising, Search filter, Shopping cart and Checkout flow",
+      "An e-commerce with categorising, search filter, cart, checkout and payment flow with a Retrieval-Augmented Generation (RAG) AI chatbot. Built with React, Tailwind CSS, OpenAI, it retrieves relevant product data before generating accurate, context-aware responses.",
     image: ecomImg,
     viewProjectLink: "https://anothershop.vercel.app/",
     githubLink: "https://github.com/priyoarman/anothershop",
   },
   {
     id: 3,
+    title: "RediLink - Social Media Application",
+    description:
+      "A full-stack social media platform with user authentication via NextAuth, OAuth login, post creation, likes, comments, and real-time news feed integration. Built with Next.js, MongoDB, and Tailwind CSS. Presented at Jakala in Hamburg as a part of ReDI Graduation Programme.",
+    image: socialImg,
+    viewProjectLink: "https://redilink.vercel.app",
+    githubLink: "https://github.com/priyoarman/redilink",
+  },
+  {
+    id: 4,
     title: "Business Landing Page",
     description:
       "Features: Content migration, SEO, Performance tweaks, Deployment, Maintenance",
@@ -37,7 +47,7 @@ const slides = [
     githubLink: "https://github.com/priyoarman/aaveqrobotics-website",
   },
   {
-    id: 4,
+    id: 5,
     title: "Startup Landing Page",
     description:
       "Features: Simple landing page, Content management, Navigation, Theme toggler",

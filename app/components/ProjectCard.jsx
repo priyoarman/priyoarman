@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function ProjectCard({ project, className = "" }) {
+export default function ProjectCard({
+  project,
+  className = "",
+  onControlHoverChange,
+}) {
   const { title, description, image, viewProjectLink, githubLink } = project;
 
   return (
@@ -23,9 +27,7 @@ export default function ProjectCard({ project, className = "" }) {
           <h3 className="text-xl font-semibold text-gray-50  mb-2 text-start">
             {title}
           </h3>
-          <p className="text-gray-100 text-md text-start mb-4">
-            {description}
-          </p>
+          <p className="text-gray-100 text-md text-start mb-4">{description}</p>
 
           <div className="flex gap-2 mt-auto">
             {viewProjectLink && (
@@ -33,6 +35,8 @@ export default function ProjectCard({ project, className = "" }) {
                 href={viewProjectLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                onMouseEnter={() => onControlHoverChange?.(true)}
+                onMouseLeave={() => onControlHoverChange?.(false)}
                 className="px-4 py-2 bg-neutral-700/30 text-white text-sm font-medium rounded-4xl hover:bg-neutral-700/70 transition-colors"
               >
                 View Project
@@ -43,6 +47,8 @@ export default function ProjectCard({ project, className = "" }) {
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
+                onMouseEnter={() => onControlHoverChange?.(true)}
+                onMouseLeave={() => onControlHoverChange?.(false)}
                 className="px-4 py-2 bg-gray-700/30 text-gray-300 text-sm font-medium rounded-4xl hover:bg-gray-700/70 transition-colors"
               >
                 GitHub

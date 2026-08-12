@@ -14,9 +14,11 @@ import {
   SiMongodb,
   SiKubernetes,
   SiDocker,
+  SiPrisma
 } from "react-icons/si";
 import {TbApi} from "react-icons/tb";
 import {BiLogoPostgresql} from "react-icons/bi";
+import { GrMysql } from "react-icons/gr";
 import {VscAzure} from "react-icons/vsc";
 import {IoLogoJavascript, IoLogoCss3} from "react-icons/io5";
 import FadeIn from "./FadeIn";
@@ -59,7 +61,7 @@ const skillsList = [
     ),
   },
   {
-    name: "WebSocket",
+    name: "Socket.IO",
     icon: (
       <SiSocketdotio className="text-2xl text-neutral-100 animate-[spin_3s_infinite]" />
     ),
@@ -71,15 +73,27 @@ const skillsList = [
     ),
   },
   {
+    name: "PostgreSQL",
+    icon: (
+      <BiLogoPostgresql className="text-3xl text-blue-600 animate-[pulse_3s_infinite]" />
+    ),
+  },
+  {
+    name: "Mysql",
+    icon: (
+      <GrMysql className="text-2xl text-orange-400 animate-[pulse_3s_infinite]" />
+    ),
+  },
+  {
     name: "MongoDB",
     icon: (
       <SiMongodb className="text-2xl text-green-600 animate-[pulse_3s_infinite]" />
     ),
   },
   {
-    name: "PostgreSQL",
+    name: "Git",
     icon: (
-      <BiLogoPostgresql className="text-3xl text-blue-600 animate-[pulse_3s_infinite]" />
+      <FaGitAlt className="text-2xl text-orange-500/80 mt-0.5 animate-[pulse_3s_infinite]" />
     ),
   },
   {
@@ -116,18 +130,6 @@ const skillsList = [
     name: "Docker",
     icon: (
       <SiDocker className="text-2xl text-blue-600 animate-[pulse_3s_infinite]" />
-    ),
-  },
-  {
-    name: "Git",
-    icon: (
-      <FaGitAlt className="text-2xl text-orange-500/80 mt-0.5 animate-[pulse_3s_infinite]" />
-    ),
-  },
-  {
-    name: "JavaScript",
-    icon: (
-      <IoLogoJavascript className="text-2xl text-yellow-400 rounded-lg animate-[pulse_3s_infinite]" />
     ),
   },
   /* {

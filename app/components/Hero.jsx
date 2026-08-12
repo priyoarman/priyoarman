@@ -85,15 +85,17 @@ export default function Hero() {
 
   const typewriterWords = [
     "Full Stack Developer",
-    "Frontend Engineer",
+    "Frontend Developer",
     "React & Next.js Developer",
-    "WordPress & Shopify Developer",
+    "Junior Backend Developer",
+    "AI Integration Developer",
   ];
 
   const typewriterColors = [
-    "text-green-400",
+    "text-blue-400",
     "text-yellow-400",
     "text-sky-500",
+    "text-green-400",
     "text-pink-500",
   ];
 

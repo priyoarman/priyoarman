@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ProjectCard from "./ProjectCard";
 import socialImg from "../assets/Portfolio-Project-1-SS1.png";
 import ecomImg from "../assets/ashop-home-dark.png";
@@ -47,31 +47,130 @@ const slides = [
   },
 ];
 
-const ChevronLeftIcon = ({className = "w-6 h-6", ...props}) => (
-  <svg className={className} {...props}>
-    <polyline points="15 18 9 12 15 6"></polyline>
-  </svg>
+const createCursor = (svgMarkup) =>
+  `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkup)}") 16 16, pointer`;
+
+const pauseCursor = createCursor(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="9" y="7" width="5" height="18" rx="1.5" fill="white"/><rect x="18" y="7" width="5" height="18" rx="1.5" fill="white"/></svg>',
 );
 
-const ChevronRightIcon = ({className = "w-6 h-6", ...props}) => (
-  <svg className={className} {...props}>
-    <polyline points="9 18 15 12 9 6"></polyline>
-  </svg>
+const playCursor = createCursor(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M12 8.5L23 16L12 23.5V8.5Z" fill="white"/></svg>',
 );
 
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [manualPaused, setManualPaused] = useState(false);
+  const [hoverPaused, setHoverPaused] = useState(false);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const gestureRef = useRef({
+    pointerId: null,
+    startX: 0,
+    hasDragged: false,
+  });
+  const isPaused = manualPaused || hoverPaused || isDragging;
+
+  useEffect(() => {
+    if (isPaused) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((prevIndex) =>
+        prevIndex === slides.length - 1 ? 0 : prevIndex + 1,
+      );
+    }, 4500);
+
+    return () => window.clearInterval(intervalId);
+  }, [isPaused]);
 
   const goToPrev = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
+      prevIndex === 0 ? slides.length - 1 : prevIndex - 1,
     );
   };
 
   const goToNext = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
+      prevIndex === slides.length - 1 ? 0 : prevIndex + 1,
     );
+  };
+
+  const togglePlayback = () => {
+    setManualPaused((previous) => !previous);
+  };
+
+  const handlePointerDown = (event) => {
+    if (event.button !== undefined && event.button !== 0) {
+      return;
+    }
+
+    gestureRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      hasDragged: false,
+    };
+
+    setIsDragging(true);
+    setDragOffset(0);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event) => {
+    if (gestureRef.current.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const deltaX = event.clientX - gestureRef.current.startX;
+
+    if (!gestureRef.current.hasDragged && Math.abs(deltaX) > 6) {
+      gestureRef.current.hasDragged = true;
+    }
+
+    if (gestureRef.current.hasDragged) {
+      setDragOffset(deltaX);
+    }
+  };
+
+  const finishDrag = (event) => {
+    if (gestureRef.current.pointerId !== event.pointerId) {
+      return;
+    }
+
+    const deltaX = event.clientX - gestureRef.current.startX;
+    const shouldAdvance = Math.abs(deltaX) > 70;
+
+    if (shouldAdvance) {
+      if (deltaX < 0) {
+        goToNext();
+      } else {
+        goToPrev();
+      }
+    }
+
+    gestureRef.current = {
+      pointerId: null,
+      startX: 0,
+      hasDragged: false,
+    };
+
+    setIsDragging(false);
+    setDragOffset(0);
+  };
+
+  const handleClick = (event) => {
+    if (gestureRef.current.hasDragged) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    if (event.target.closest("a")) {
+      return;
+    }
+
+    togglePlayback();
   };
 
   const getSlidePosition = (index) => {
@@ -83,12 +182,12 @@ export default function Projects() {
 
     const prevIndex = (activeIndex - 1 + totalSlides) % totalSlides;
     if (index === prevIndex) {
-      return "transform -translate-x-1/2 md:-translate-x-1/3 scale-90 opacity-0 md:opacity-40 z-10 blur-sm";
+      return "transform -translate-x-1/2 md:-translate-x-1/3 scale-80 opacity-0 md:opacity-20 z-10 blur-sm";
     }
 
     const nextIndex = (activeIndex + 1) % totalSlides;
     if (index === nextIndex) {
-      return "transform translate-x-1/2 md:translate-x-1/3 scale-90 opacity-0 md:opacity-40 z-10 blur-sm";
+      return "transform translate-x-1/2 md:translate-x-1/3 scale-80 opacity-0 md:opacity-20 z-10 blur-sm";
     }
 
     return "transform translate-x-0 opacity-0 z-0 scale-75 blur-md";
@@ -97,7 +196,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden py-12 md:py-28 text-center"
+      className="max-w-7xl mx-auto min-h-[85dvh] w-full overflow-hidden py-10 md:py-28 text-center"
     >
       <FadeIn delay={200}>
         <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 md:pb-0">
@@ -106,39 +205,45 @@ export default function Projects() {
       </FadeIn>
       <FadeIn delay={300}>
         <div className="bg-gray-900 w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
-          <div className="relative w-full max-w-4xl h-[540px]">
-            <div className="relative w-full h-full">
+          <div
+            className="relative w-full max-w-4xl h-[520px]"
+            style={{ cursor: isPaused ? playCursor : pauseCursor }}
+            onClick={handleClick}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={finishDrag}
+            onPointerCancel={finishDrag}
+            onPointerLeave={finishDrag}
+          >
+            <div
+              className="relative w-full h-full"
+              style={{ touchAction: "pan-y" }}
+            >
               {slides.map((slide, index) => (
                 <div
                   key={slide.id}
                   className={`absolute top-0 w-full h-full transition-all duration-400 ease-in-out ${getSlidePosition(
-                    index
+                    index,
                   )}`}
+                  style={
+                    index === activeIndex
+                      ? {
+                          transform: `translateX(${dragOffset}px)`,
+                          transition: isDragging ? "none" : undefined,
+                        }
+                      : undefined
+                  }
                 >
                   <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-0.5 py-6 md:px-16 md:pb-18 md:pt-10 rounded-lg shadow-2xl">
                     <ProjectCard
                       project={slide}
                       className="w-full max-w-3xl h-full"
+                      onControlHoverChange={setHoverPaused}
                     />
                   </div>
                 </div>
               ))}
             </div>
-
-            <button
-              onClick={goToPrev}
-              className="absolute top-1/2 -translate-y-1/2 left-1 md:-left-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
-              aria-label="Previous slide"
-            >
-              <ChevronLeftIcon className="md:pt-1 md:pl-0.5 w-6 h-6 md:w-8 md:h-8" />
-            </button>
-            <button
-              onClick={goToNext}
-              className="absolute top-1/2 -translate-y-1/2 right-1 md:-right-16 z-30 p-3 bg-gray-100/20 rounded-full text-white transition-all duration-300 hover:bg-gray-100/50 hover:scale-110"
-              aria-label="Next slide"
-            >
-              <ChevronRightIcon className="md:pt-1 md:pl-1 mx-auto w-6 h-6 md:w-8 md:h-8" />
-            </button>
           </div>
         </div>
       </FadeIn>

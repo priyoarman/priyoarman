@@ -88,7 +88,7 @@ export default function Hero() {
 
   const typewriterWords = [
     "Full-Stack Developer",
-    "AI Integration Specialist",
+    "AI Integration Assistant",
     "React & Next.js Engineer",
   ];
 

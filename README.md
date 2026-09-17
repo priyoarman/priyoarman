@@ -21,7 +21,7 @@ You can visit my [portfolio here.](https://priyoarman.dk/)
 
 ## 🚀 Featured Projects
 
-* **[mig33](https://github.com/priyoarman/mig33):** A scalable social platform featuring real-time interactions, secure NextAuth (Credentials/Google/GitHub), and content upload. Built with Next.js, Tailwind, and MongoDB. *(Live: [redilink.vercel.app](https://mig33.vercel.app))*
+* **[mig33](https://github.com/priyoarman/mig33):** A scalable social platform featuring real-time interactions, secure NextAuth (Credentials/Google/GitHub), and content upload. Built with Next.js, Tailwind, and MongoDB. *(Live: [mig33.vercel.app](https://mig33.vercel.app))*
 * **[anothershop](https://github.com/priyoarman/anothershop):** A highly accessible, responsive shopping cart and checkout built with React, Context API, and Tailwind CSS. *(Live: [anothershop.vercel.app](https://anothershop.vercel.app))*
 * **[Aaveq Robotics](https://github.com/TidosDK/aaveqrobotics):** A corporate landing page with custom theming and technical SEO optimization that grew site visits by 20%. *(Live: [aaveqrobotics.com](https://aaveqrobotics.com))*
 

@@ -27,6 +27,6 @@ You can visit my [portfolio here.](https://priyoarman.dk/)
 
 ## 📫 Let's Connect!
 
-* **Contact Form:** [priyoarman.vercel.app](https://priyoarman.dk/#contact)
+* **Contact Form:** [priyoarman.dk](https://priyoarman.dk/#contact)
 * **LinkedIn:** [priyoarman](https://linkedin.com/in/priyoarman)
 * **Email:** [priyoarman1996@gmail.com](mailto:priyoarman1996@gmail.com)

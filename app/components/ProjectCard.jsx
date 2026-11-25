@@ -33,12 +33,12 @@ export default function ProjectCard({
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-linear-to-t from-gray-800 via-gray-800/20 to-transparent"
+            className="absolute inset-0 bg-linear-to-t from-gray-950 from-15% via-gray-950/85 via-50% to-gray-950/20"
           />
         </div>
       )}
 
-      <div className="absolute inset-0 z-10 p-6 flex flex-col h-full bg-gray-900/40">
+      <div className="absolute inset-0 z-10 p-6 flex flex-col h-full">
         <div className="mt-auto">
           <h3 className="text-xl font-semibold text-gray-50  mb-2 text-start">
             {title}

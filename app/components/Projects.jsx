@@ -268,7 +268,7 @@ export default function Projects() {
                       : undefined
                   }
                 >
-                  <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-0.5 py-6 md:px-16 md:pb-18 md:pt-10 rounded-lg shadow-2xl">
+                  <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-0.5 py-6 md:px-16 md:pb-18 md:pt-10">
                     <ProjectCard
                       project={slide}
                       className="w-full max-w-3xl h-full"

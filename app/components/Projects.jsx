@@ -6,6 +6,10 @@ import sayvoyaImg from "../assets/sayvoya.png";
 import socialImg from "../assets/mig33.png";
 import ecomImg from "../assets/anothershop02.png";
 import jobradarImg from "../assets/jobradar.png";
+import sayvoyaMobileImg from "../assets/sayvoya-mobile.png";
+import socialMobileImg from "../assets/mig33-mobile.png";
+import ecomMobileImg from "../assets/anothershop-mobile.png";
+import jobradarMobileImg from "../assets/jobradar-mobile.jpg";
 import bsnLandingImg from "../assets/aaveq-home.png";
 import stpLandingImg from "../assets/waveriders-home.png";
 import FadeIn from "./FadeIn";
@@ -17,6 +21,7 @@ const slides = [
     description:
       "AI travel assistant that finds and compares real-time flights in plain language. Built with Next.js, Express, PostgreSQL and Groq AI. Presented at Microsoft Copenhagen.",
     image: sayvoyaImg,
+    mobileImage: sayvoyaMobileImg,
     viewProjectLink: "https://sayvoya.onrender.com/",
     githubLink: "https://github.com/priyoarman/sayvoya",
   },
@@ -26,6 +31,7 @@ const slides = [
     description:
       "Online shop with search, filters, cart and checkout, plus a RAG chatbot that answers from real product data. Built with React, Tailwind CSS, Groq AI and OpenAI.",
     image: ecomImg,
+    mobileImage: ecomMobileImg,
     viewProjectLink: "https://anothershop.vercel.app/",
     githubLink: "https://github.com/priyoarman/anothershop",
   },
@@ -35,6 +41,7 @@ const slides = [
     description:
       "Social media app with OAuth login, posts, likes, comments and a live news feed. Built with Next.js, MongoDB, NextAuth and Tailwind CSS. Presented at Jakala in Hamburg.",
     image: socialImg,
+    mobileImage: socialMobileImg,
     viewProjectLink: "https://mig33.vercel.app/install",
     githubLink: "https://github.com/priyoarman/mig33",
   },
@@ -44,6 +51,7 @@ const slides = [
     description:
       "Reads Danish tech companies' job feeds every 3 hours, filters new jobs by title and emails me the matches. Built with Node.js, TypeScript, Postgres and GitHub Actions.",
     image: jobradarImg,
+    mobileImage: jobradarMobileImg,
     viewProjectLink:
       "https://github.com/priyoarman/job-radar-dk/actions/workflows/pipeline.yml",
     githubLink: "https://github.com/priyoarman/job-radar-dk",

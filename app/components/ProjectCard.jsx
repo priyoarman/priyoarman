@@ -6,7 +6,8 @@ export default function ProjectCard({
   className = "",
   onControlHoverChange,
 }) {
-  const { title, description, image, viewProjectLink, githubLink } = project;
+  const { title, description, image, mobileImage, viewProjectLink, githubLink } =
+    project;
 
   return (
     <div
@@ -14,7 +15,22 @@ export default function ProjectCard({
     >
       {image && (
         <div className="relative w-full h-full">
-          <Image src={image} alt={title} fill className="object-cover" />
+          {mobileImage && (
+            <Image
+              src={mobileImage}
+              alt={title}
+              fill
+              sizes="100vw"
+              className="object-cover object-top md:hidden"
+            />
+          )}
+          <Image
+            src={image}
+            alt={title}
+            fill
+            sizes="(min-width: 768px) 768px, 100vw"
+            className={`object-cover ${mobileImage ? "hidden md:block" : ""}`}
+          />
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-linear-to-t from-gray-800 via-gray-800/20 to-transparent"

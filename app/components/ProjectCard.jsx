@@ -35,10 +35,9 @@ export default function ProjectCard({
             aria-hidden="true"
             className="absolute inset-0 bg-linear-to-t from-gray-950 from-15% via-gray-950/85 via-50% to-gray-950/20 light:from-[#f6f0e6]/85 light:from-0% light:via-[#f6f0e6]/55 light:via-35% light:to-transparent light:to-60%"
           />
-          {/* Light mode: frosted blur behind the text only, so the top of the image stays crisp */}
           <div
             aria-hidden="true"
-            className="absolute inset-0 hidden light:block backdrop-blur-[6px] [mask-image:linear-gradient(to_top,black_40%,transparent_62%)]"
+            className="absolute inset-0 hidden light:block backdrop-blur-[6px] mask-[linear-gradient(to_top,black_40%,transparent_62%)]"
           />
         </div>
       )}

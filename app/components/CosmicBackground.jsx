@@ -30,17 +30,17 @@ function makeNebula(w, h, dpr) {
   g.scale(dpr, dpr);
 
   const base = g.createLinearGradient(0, 0, w, h);
-  base.addColorStop(0, "#070b18");
-  base.addColorStop(0.5, "#0b1024");
-  base.addColorStop(1, "#090716");
+  base.addColorStop(0, "#04060f");
+  base.addColorStop(0.5, "#070a18");
+  base.addColorStop(1, "#06040f");
   g.fillStyle = base;
   g.fillRect(0, 0, w, h);
 
   const clouds = [
-    [0.15, 0.25, 0.55, "88,60,180", 0.16],
-    [0.85, 0.7, 0.6, "40,90,190", 0.14],
-    [0.6, 0.15, 0.35, "150,60,160", 0.08],
-    [0.3, 0.85, 0.45, "30,110,160", 0.08],
+    [0.15, 0.25, 0.55, "88,60,180", 0.12],
+    [0.85, 0.7, 0.6, "40,90,190", 0.1],
+    [0.6, 0.15, 0.35, "150,60,160", 0.06],
+    [0.3, 0.85, 0.45, "30,110,160", 0.06],
   ];
   const span = Math.max(w, h);
   for (const [cx, cy, rr, col, a] of clouds) {

@@ -5,6 +5,7 @@ import ProjectCard from "./ProjectCard";
 import sayvoyaImg from "../assets/sayvoya.png";
 import socialImg from "../assets/mig33.png";
 import ecomImg from "../assets/anothershop.png";
+import jobradarImg from "../assets/jobradar.png";
 import bsnLandingImg from "../assets/aaveq-home.png";
 import stpLandingImg from "../assets/waveriders-home.png";
 import FadeIn from "./FadeIn";
@@ -37,8 +38,19 @@ const slides = [
     viewProjectLink: "https://mig33.vercel.app/install",
     githubLink: "https://github.com/priyoarman/mig33",
   },
+  {
+    id: 4,
+    title: "Job Radar DK - A Personal Job Alert System",
+    description:
+      "Every 3 hours it reads the public job feeds of Danish tech companies, saves new jobs to Postgres, filters them by title, and emails me a short summary of new matches. It never applies to anything: every application is reviewed and sent by hand.",
+    image: jobradarImg,
+    viewProjectLink:
+      "https://github.com/priyoarman/job-radar-dk/actions/workflows/pipeline.yml",
+    githubLink: "https://github.com/priyoarman/job-radar-dk",
+  },
+
   // {
-  //   id: 4,
+  //   id: 5,
   //   title: "Business Landing Page",
   //   description:
   //     "Features: Content migration, SEO, Performance tweaks, Deployment, Maintenance",
@@ -47,7 +59,7 @@ const slides = [
   //   githubLink: "https://github.com/priyoarman/aaveqrobotics-website",
   // },
   // {
-  //   id: 5,
+  //   id: 6,
   //   title: "Startup Landing Page",
   //   description:
   //     "Features: Simple landing page, Content management, Navigation, Theme toggler",

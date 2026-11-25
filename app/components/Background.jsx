@@ -35,7 +35,7 @@ const Background = () => {
       location: "Remote",
       date: "Sep 2024 - Present",
       description:
-        "Job: To build responsive websites and apps with TypeScript, React, and Tailwind CSS",
+        "Job: To build responsive websites & apps with TypeScript, React & Tailwind CSS",
     },
   ];
 

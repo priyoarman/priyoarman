@@ -29,7 +29,7 @@ const BackgroundCarousel = ({ items, label }) => {
 
   return (
     <div
-      className="relative w-full max-w-md md:max-w-[min(28rem,calc(100dvh-15rem))] mx-auto"
+      className="relative w-full max-w-md md:max-w-[min(28rem,calc(100dvh-17rem))] mx-auto"
       role="region"
       aria-roledescription="carousel"
       aria-label={label}

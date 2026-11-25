@@ -77,13 +77,13 @@ const Background = () => {
   return (
     <section
       id="background"
-      className="max-w-7xl mx-auto h-dvh w-full overflow-hidden px-4 pt-20 md:pt-24 pb-6 md:pb-8 flex items-start md:items-center text-center"
+      className="max-w-7xl mx-auto h-dvh w-full overflow-hidden px-4 pt-20 md:pt-28 pb-6 md:pb-8 flex items-start text-center"
     >
       <div className="w-full px-0 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
           <div>
             <FadeIn delay={300}>
-              <h2 className="text-2xl md:text-3xl text-gray-100 font-bold pb-6">
+              <h2 className="text-2xl md:text-3xl text-gray-100 font-bold pb-6 md:pt-4">
                 Experiences<span className="hidden md:inline"> & Volunteering</span>
               </h2>
             </FadeIn>
@@ -97,7 +97,7 @@ const Background = () => {
 
           <div>
             <FadeIn delay={300}>
-              <h2 className="text-2xl md:text-3xl text-gray-100 font-bold pb-6">
+              <h2 className="text-2xl md:text-3xl text-gray-100 font-bold pb-6 md:pt-4">
                 Education<span className="hidden md:inline"> & Training</span>
               </h2>
             </FadeIn>

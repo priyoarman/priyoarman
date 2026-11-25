@@ -9,10 +9,10 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden pt-12 md:pt-28 text-center"
+      className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden px-4 md:px-0 pt-20 pb-6 md:pb-0 md:pt-28 text-center"
     >
       <FadeIn delay={200}>
-        <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4">
+        <h2 className="text-2xl md:text-4xl text-gray-100 font-bold pb-6 md:py-4">
           Get In Touch
         </h2>
       </FadeIn>
@@ -24,7 +24,7 @@ export default function ContactSection() {
         </div>
       </FadeIn>
 
-      <FadeIn delay={300} className="flex flex-col md:flex-row gap-1 justify-center items-center pt-8 pb-6 text-lg text-neutral-300 text-center mx-auto max-w-lg">
+      <FadeIn delay={300} className="flex flex-col md:flex-row gap-1 justify-center items-center pt-4 pb-6 md:pt-8 text-lg text-neutral-300 text-center mx-auto max-w-lg">
         <a
           href="tel:+4552687679"
           target="_blank"

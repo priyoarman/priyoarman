@@ -41,7 +41,7 @@ const BackgroundCarousel = ({ items, label }) => {
         {items.map((item, idx) => (
           <div
             key={item.id}
-            className="snap-center shrink-0 w-full h-[calc((100dvh-15rem)/2)] md:h-auto md:aspect-square"
+            className="snap-center shrink-0 w-full h-[calc((100dvh-17rem)/2)] md:h-auto md:aspect-square"
             aria-roledescription="slide"
             aria-label={`${idx + 1} of ${items.length}`}
           >

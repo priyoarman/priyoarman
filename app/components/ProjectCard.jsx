@@ -11,7 +11,7 @@ export default function ProjectCard({
 
   return (
     <div
-      className={`relative rounded-2xl shadow-lg overflow-hidden h-[420px] w-full hover:scale-105 transition duration-300 ease-in-out ${className}`}
+      className={`relative rounded-2xl shadow-lg overflow-hidden h-full w-full hover:scale-105 transition duration-300 ease-in-out ${className}`}
     >
       {image && (
         <div className="relative w-full h-full">

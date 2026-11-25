@@ -230,17 +230,17 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="max-w-7xl mx-auto min-h-[85dvh] w-full overflow-hidden py-10 md:py-28 text-center"
+      className="max-w-7xl mx-auto min-h-dvh md:min-h-[85dvh] w-full overflow-hidden pt-20 pb-6 md:py-28 text-center"
     >
       <FadeIn delay={200}>
-        <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 md:pb-0">
+        <h2 className="text-2xl md:text-4xl text-gray-100 font-bold pb-6 md:py-4 md:pb-0">
           Featured Projects
         </h2>
       </FadeIn>
       <FadeIn delay={300}>
         <div className="bg-gray-900 w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
           <div
-            className="relative w-full max-w-4xl h-[520px]"
+            className="relative w-full max-w-4xl h-[calc(100dvh-10.5rem)] max-h-[680px] md:h-[520px] md:max-h-none"
             style={{ cursor: isPaused ? playCursor : pauseCursor }}
             onClick={handleClick}
             onPointerDown={handlePointerDown}
@@ -268,7 +268,7 @@ export default function Projects() {
                       : undefined
                   }
                 >
-                  <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-0.5 py-6 md:px-16 md:pb-18 md:pt-10">
+                  <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-0.5 py-2 md:px-16 md:pb-18 md:pt-10">
                     <ProjectCard
                       project={slide}
                       className="w-full max-w-3xl h-full"

@@ -151,16 +151,16 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden px-4 py-12 md:py-28 text-center"
+      className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden px-4 pt-20 pb-6 md:py-28 text-center"
     >
       <FadeIn delay={200}>
-        <h2 className="text-3xl md:text-4xl text-gray-100 font-bold py-4 pb-8">
+        <h2 className="text-2xl md:text-4xl text-gray-100 font-bold pb-6 md:py-4 md:pb-8">
         Skills & Technologies
       </h2>
       </FadeIn>
       <FadeIn delay={300}>
-        <div className="text-gray-400 text-sm md:text-lg px-4 md:px-8 py-4">
-        <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <div className="text-gray-400 text-sm md:text-lg px-4 md:px-8 md:py-4">
+        <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {skillsList.map((skill, index) => (
             <FadeIn
               key={skill.name}

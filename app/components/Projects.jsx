@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ProjectCard from "./ProjectCard";
 import sayvoyaImg from "../assets/sayvoya.png";
 import socialImg from "../assets/mig33.png";
-import ecomImg from "../assets/anothershop.png";
+import ecomImg from "../assets/anothershop02.png";
 import jobradarImg from "../assets/jobradar.png";
 import bsnLandingImg from "../assets/aaveq-home.png";
 import stpLandingImg from "../assets/waveriders-home.png";

@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import ProjectCard from "./ProjectCard";
-import tripweaveImg from "../assets/TripWeave-1.jpg";
-import socialImg from "../assets/Portfolio-Project-1-SS1.png";
-import ecomImg from "../assets/ashop-home-dark.png";
+import sayvoyaImg from "../assets/sayvoya.png";
+import socialImg from "../assets/mig33.png";
+import ecomImg from "../assets/anothershop.png";
 import bsnLandingImg from "../assets/aaveq-home.png";
 import stpLandingImg from "../assets/waveriders-home.png";
 import FadeIn from "./FadeIn";
@@ -12,16 +12,16 @@ import FadeIn from "./FadeIn";
 const slides = [
   {
     id: 1,
-    title: "TripWeave - AI-Powered Flight Search App",
+    title: "Sayvoya - AI-Powered Travel Assistant",
     description:
-      "A full-stack travel app that uses AI to help users find and compare flights through natural language. Built with Node.js, Express, PostgreSQL, and Groq AI, integrating the Duffel API for real-time flight data. Presented at Microsoft Copenhagen as HackYourFuture's capstone project.",
-    image: tripweaveImg,
-    viewProjectLink: "https://trip-weave-wbh3.onrender.com/",
-    githubLink: "https://github.com/abikrithika/trip-weave",
+      "A full-stack travel app that uses AI to help users find and compare flights through natural language. Built with Next.js, Node.js, Express, PostgreSQL, and Groq AI, integrating the Duffel API and LiteAPI for real-time flight data. Presented at Microsoft Copenhagen as HackYourFuture's capstone project.",
+    image: sayvoyaImg,
+    viewProjectLink: "https://sayvoya.onrender.com/",
+    githubLink: "https://github.com/priyoarman/sayvoya",
   },
   {
     id: 2,
-    title: "E-Commerce Platform with RAG Chatbot",
+    title: "E-Commerce App with RAG Chatbot",
     description:
       "An e-commerce with categorising, search filter, cart, checkout and payment flow with a Retrieval-Augmented Generation (RAG) AI chatbot. Built with React, Tailwind CSS, Groq AI, OpenAI, it retrieves relevant product data before generating accurate, context-aware responses.",
     image: ecomImg,
@@ -30,12 +30,12 @@ const slides = [
   },
   {
     id: 3,
-    title: "RediLink - Social Media Application",
+    title: "mig33 - A Social Media App",
     description:
       "A full-stack social media platform with user authentication via NextAuth, OAuth login, post creation, likes, comments, and real-time news feed integration. Built with Next.js, MongoDB, and Tailwind CSS. Presented at Jakala in Hamburg as a part of ReDI Graduation Programme.",
     image: socialImg,
-    viewProjectLink: "https://redilink.vercel.app",
-    githubLink: "https://github.com/priyoarman/redilink",
+    viewProjectLink: "https://mig33.vercel.app/install",
+    githubLink: "https://github.com/priyoarman/mig33",
   },
   // {
   //   id: 4,

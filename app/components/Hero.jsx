@@ -88,8 +88,8 @@ export default function Hero() {
 
   const typewriterWords = [
     "Full-Stack Developer",
-    "AI Integration Assistant",
-    "React & Next.js Engineer",
+    "AI Integration Engineer",
+    "React & Next.js Developer",
   ];
 
   const typewriterColors = [
@@ -150,20 +150,20 @@ export default function Hero() {
             <FaFacebook />
           </a> */}
             <a
-              href="https://linkedin.com/in/priyoarman"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-blue-500 hover:scale-150 focus:scale-150 focus:text-blue-500 transition duration-300 ease-in-out cursor-pointer"
-            >
-              <FaLinkedin />
-            </a>
-            <a
               href="https://github.com/priyoarman"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
             >
               <FaGithub />
+            </a>
+            <a
+              href="https://linkedin.com/in/priyoarman"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-blue-500 hover:scale-150 focus:scale-150 focus:text-blue-500 transition duration-300 ease-in-out cursor-pointer"
+            >
+              <FaLinkedin />
             </a>
             <a
               href="https://x.com/arman_priyo"

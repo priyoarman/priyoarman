@@ -9,8 +9,8 @@ const Background = () => {
       id: "redi-dk",
       img: "/ReDI.png",
       imgAlt: "ReDI",
-      title: "ReDI School",
-      subtitle: "Volunteer Teacher",
+      title: "ReDI School Denmark",
+      subtitle: "Teaching Assistant",
       location: "Copenhagen",
       date: "Sep 2025 - Present",
       description:
@@ -22,7 +22,7 @@ const Background = () => {
       img: "/aaveq_robotics_logo.jpeg",
       imgAlt: "Aaveq Robotics",
       title: "Aaveq Robotics ApS",
-      subtitle: "Frontend Developer Intern",
+      subtitle: "Intern - Frontend Developer",
       location: "Odense",
       date: "Sep 2025 - Feb 2026",
       description:
@@ -34,7 +34,7 @@ const Background = () => {
       img: "/up-work.png",
       imgAlt: "Upwork",
       title: "Upwork",
-      subtitle: "Freelance Web Developer",
+      subtitle: "Freelance Developer",
       location: "Remote",
       date: "Sep 2024 - Present",
       description:
@@ -74,7 +74,7 @@ const Background = () => {
       title: "University of Southern Denmark",
       subtitle: "Bachelor of Science",
       location: "Odense",
-      date: "Feb 2024 - Present",
+      date: "Feb 2024 - Aug 2026",
       description:
         "Coursework: Ethnographic interviews, SPSS analysis, Thesis on digital integration",
       direction: "right",

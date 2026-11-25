@@ -41,12 +41,12 @@ const BackgroundCarousel = ({ items, label }) => {
         {items.map((item, idx) => (
           <div
             key={item.id}
-            className="snap-center shrink-0 w-full aspect-square"
+            className="snap-center shrink-0 w-full h-[calc((100dvh-15rem)/2)] md:h-auto md:aspect-square"
             aria-roledescription="slide"
             aria-label={`${idx + 1} of ${items.length}`}
           >
-            <div className="flex flex-col h-full items-center justify-center gap-2 md:gap-3 p-6 md:p-8 border-2 bg-blue-950/40 border-gray-800/20 rounded-2xl text-gray-100 cursor-default">
-              <div className="relative w-16 h-16 md:w-20 md:h-20">
+            <div className="flex flex-col h-full items-center justify-center gap-1 md:gap-3 px-12 py-4 md:p-8 border-2 bg-blue-950/40 border-gray-800/20 rounded-2xl text-gray-100 cursor-default">
+              <div className="relative w-10 h-10 md:w-20 md:h-20 shrink-0">
                 <Image
                   src={item.img}
                   fill
@@ -54,19 +54,19 @@ const BackgroundCarousel = ({ items, label }) => {
                   className="object-cover rounded-xl"
                 />
               </div>
-              <h3 className="font-bold text-gray-50 text-xl md:text-2xl">
+              <h3 className="font-bold text-gray-50 text-lg md:text-2xl">
                 {item.title}
               </h3>
-              <p className="text-gray-300 text-base md:text-lg">
+              <p className="text-gray-300 text-sm md:text-lg">
                 {item.subtitle}
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-400 text-sm md:text-base">
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-400 text-xs md:text-base">
                 <span className="flex items-center gap-1">
                   <FaLocationDot /> {item.location}
                 </span>
                 <span>{item.date}</span>
               </div>
-              <p className="text-gray-400 text-sm md:text-base max-w-xs">
+              <p className="text-gray-400 text-xs md:text-base max-w-xs line-clamp-2 md:line-clamp-none">
                 {item.description}
               </p>
             </div>
@@ -91,7 +91,7 @@ const BackgroundCarousel = ({ items, label }) => {
         <FaChevronRight />
       </button>
 
-      <div className="flex justify-center gap-2 pt-4">
+      <div className="flex justify-center gap-2 pt-2 md:pt-4">
         {items.map((item, idx) => (
           <button
             key={item.id}

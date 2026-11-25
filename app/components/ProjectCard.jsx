@@ -39,7 +39,7 @@ export default function ProjectCard({
                 onMouseLeave={() => onControlHoverChange?.(false)}
                 className="px-4 py-2 bg-neutral-700/30 text-white text-sm font-medium rounded-4xl hover:bg-neutral-700/70 transition-colors"
               >
-                View Project
+                See Live
               </Link>
             )}
             {githubLink && (

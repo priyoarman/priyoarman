@@ -238,7 +238,7 @@ export default function Projects() {
         </h2>
       </FadeIn>
       <FadeIn delay={300}>
-        <div className="bg-gray-900 light:bg-transparent w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
+        <div className="w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
           <div
             className="relative w-full max-w-4xl h-[calc(100dvh-10.5rem)] max-h-[680px] md:h-[520px] md:max-h-none"
             style={{ cursor: isPaused ? playCursor : pauseCursor }}

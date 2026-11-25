@@ -169,8 +169,8 @@ export default function SkillsSection() {
               delay={index * 30}
             ><li
               key={skill.name}
-              className="flex border-2 h-13 md:h-16 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 light:bg-[#f6f0e6]/70 light:border-[#d4c6b2]/60 light:text-gray-800 cursor-default
-                         transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60 light:hover:bg-[#f6f0e6] light:focus:bg-[#f6f0e6]"
+              className="flex border-2 h-13 md:h-16 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 light:bg-[#e3effa]/35 light:border-white/40 light:backdrop-blur-sm light:text-gray-800 cursor-default
+                         transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60 light:hover:bg-[#e3effa]/55 light:focus:bg-[#e3effa]/55"
             >
               <div className="flex w-full h-full items-center justify-center gap-2 focus:scale-150 hover:scale-150 transition duration-300 ease-in-out">
                 {skill.icon}

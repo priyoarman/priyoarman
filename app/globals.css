@@ -3,13 +3,13 @@
 @custom-variant light (&:where(.light, .light *));
 
 :root {
-  --background: #111827;
+  --background: #090d1c;
   --foreground: #ffffff;
   color-scheme: dark;
 }
 
 :root.light {
-  --background: #ece5da;
+  --background: #dbe9f4;
   --foreground: #2a241f;
   color-scheme: light;
 }

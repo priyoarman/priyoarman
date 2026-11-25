@@ -67,7 +67,7 @@ export default function ThemeToggle({ className = "" }) {
       title="Toggle theme"
       className={`fixed top-4 md:top-[25px] left-6 z-40 flex items-center justify-center
         w-13 h-13 rounded-full overflow-hidden
-        bg-(--background)/60 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.15)]
+        bg-(--background)/60 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.15)] light:bg-white/10 light:shadow-none
         text-gray-50 hover:text-blue-400/90 light:text-gray-800 light:hover:text-blue-600
         transition active:scale-90 cursor-pointer ${className}`}
     >

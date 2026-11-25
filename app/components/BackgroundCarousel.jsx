@@ -44,7 +44,7 @@ const BackgroundCarousel = ({ items, label }) => {
             aria-roledescription="slide"
             aria-label={`${idx + 1} of ${items.length}`}
           >
-            <div className="flex flex-col h-full items-center justify-center gap-1 md:gap-3 px-12 py-4 md:p-8 border-2 bg-blue-950/40 border-gray-800/20 rounded-2xl text-gray-100 light:bg-[#f6f0e6]/70 light:border-[#d4c6b2]/60 light:text-gray-800 cursor-default">
+            <div className="flex flex-col h-full items-center justify-center gap-1 md:gap-3 px-12 py-4 md:p-8 border-2 bg-blue-950/40 border-gray-800/20 rounded-2xl text-gray-100 light:bg-[#e3effa]/35 light:border-white/40 light:backdrop-blur-sm light:text-gray-800 cursor-default">
               <div className="relative w-10 h-10 md:w-20 md:h-20 shrink-0">
                 <Image
                   src={item.img}

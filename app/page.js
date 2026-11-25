@@ -6,10 +6,12 @@ import Skills from "./components/Skills";
 import Projects from "./components/Projects";
 import Background from "./components/Background";
 import Contact from "./components/Contact";
+import CosmicBackground from "./components/CosmicBackground";
 
 export default function Home() {
   return (
     <div className="w-full overflow-hidden">
+      <CosmicBackground/>
       <NavBar/>
       <ThemeToggle/>
       <Hero/>

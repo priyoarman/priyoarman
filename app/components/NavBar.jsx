@@ -14,7 +14,7 @@ export default function NavBar() {
 
   const navClasses = `
     fixed top-2 z-50 mt-2
-    bg-(--background)/60 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.15)] md:bg-[#141414]/20 md:border border-gray-900/10 md:light:bg-[#f6f0e6]/70 light:border-[#d4c6b2]/60
+    bg-(--background)/60 backdrop-blur-md shadow-[0_1px_3px_rgba(0,0,0,0.15)] md:bg-[#141414]/20 md:border border-gray-900/10 light:bg-white/10 md:light:bg-white/10 light:border-transparent light:shadow-none
     md:rounded-full py-2 md:px-18 md:py-5 left-2 right-2
     md:w-fit md:left-1/2 md:-translate-x-1/2 md:right-auto
     ${open ? 'mx-4 w-auto rounded-4xl px-4' : 'w-fit ml-auto mx-4 rounded-full px-2'}

@@ -39,7 +39,7 @@ const slides = [
     id: 3,
     title: "mig33 - A Social Media App",
     description:
-      "Social media app with OAuth login, posts, likes, comments and a live news feed. Built with Next.js, MongoDB, NextAuth and Tailwind CSS. Presented at Jakala in Hamburg.",
+      "Social media app with OAuth login, follows, posts, likes, comments, live news feed, notifications, and messaging. Built with Next.js, MongoDB, and Tailwind CSS. Presented at Jakala in Hamburg.",
     image: socialImg,
     mobileImage: socialMobileImg,
     viewProjectLink: "https://mig33.vercel.app/install",

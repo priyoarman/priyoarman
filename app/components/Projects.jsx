@@ -15,7 +15,7 @@ const slides = [
     id: 1,
     title: "Sayvoya - AI-Powered Travel Assistant",
     description:
-      "A full-stack travel app that uses AI to help users find and compare flights through natural language. Built with Next.js, Node.js, Express, PostgreSQL, and Groq AI, integrating the Duffel API and LiteAPI for real-time flight data. Presented at Microsoft Copenhagen as HackYourFuture's capstone project.",
+      "AI travel assistant that finds and compares real-time flights in plain language. Built with Next.js, Express, PostgreSQL and Groq AI. Presented at Microsoft Copenhagen.",
     image: sayvoyaImg,
     viewProjectLink: "https://sayvoya.onrender.com/",
     githubLink: "https://github.com/priyoarman/sayvoya",
@@ -24,7 +24,7 @@ const slides = [
     id: 2,
     title: "E-Commerce App with RAG Chatbot",
     description:
-      "An e-commerce with categorising, search filter, cart, checkout and payment flow with a Retrieval-Augmented Generation (RAG) AI chatbot. Built with React, Tailwind CSS, Groq AI, OpenAI, it retrieves relevant product data before generating accurate, context-aware responses.",
+      "Online shop with search, filters, cart and checkout, plus a RAG chatbot that answers from real product data. Built with React, Tailwind CSS, Groq AI and OpenAI.",
     image: ecomImg,
     viewProjectLink: "https://anothershop.vercel.app/",
     githubLink: "https://github.com/priyoarman/anothershop",
@@ -33,7 +33,7 @@ const slides = [
     id: 3,
     title: "mig33 - A Social Media App",
     description:
-      "A full-stack social media platform with user authentication via NextAuth, OAuth login, post creation, likes, comments, and real-time news feed integration. Built with Next.js, MongoDB, and Tailwind CSS. Presented at Jakala in Hamburg as a part of ReDI Graduation Programme.",
+      "Social media app with OAuth login, posts, likes, comments and a live news feed. Built with Next.js, MongoDB, NextAuth and Tailwind CSS. Presented at Jakala in Hamburg.",
     image: socialImg,
     viewProjectLink: "https://mig33.vercel.app/install",
     githubLink: "https://github.com/priyoarman/mig33",
@@ -42,7 +42,7 @@ const slides = [
     id: 4,
     title: "Job Radar DK - A Personal Job Alert System",
     description:
-      "Every 3 hours it reads the public job feeds of Danish tech companies, saves new jobs to Postgres, filters them by title, and emails me a short summary of new matches. It never applies to anything: every application is reviewed and sent by hand.",
+      "Reads Danish tech companies' job feeds every 3 hours, filters new jobs by title and emails me the matches. Built with Node.js, TypeScript, Postgres and GitHub Actions.",
     image: jobradarImg,
     viewProjectLink:
       "https://github.com/priyoarman/job-radar-dk/actions/workflows/pipeline.yml",

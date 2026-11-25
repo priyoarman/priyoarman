@@ -34,7 +34,7 @@ const skillsList = [
   {
     name: "Next.js",
     icon: (
-      <RiNextjsLine className="text-3xl pb-0.5 text-neutral-100 animate-[pulse_3s_infinite]" />
+      <RiNextjsLine className="text-3xl pb-0.5 text-neutral-100 light:text-neutral-900 animate-[pulse_3s_infinite]" />
     ),
   },
   {
@@ -58,13 +58,13 @@ const skillsList = [
   {
     name: "Express",
     icon: (
-      <SiExpress className="text-2xl mt-0.5 text-neutral-100 animate-[pulse_3s_infinite]" />
+      <SiExpress className="text-2xl mt-0.5 text-neutral-100 light:text-neutral-900 animate-[pulse_3s_infinite]" />
     ),
   },
   {
     name: "Socket.IO",
     icon: (
-      <SiSocketdotio className="text-2xl text-neutral-100 animate-[spin_3s_infinite]" />
+      <SiSocketdotio className="text-2xl text-neutral-100 light:text-neutral-900 animate-[spin_3s_infinite]" />
     ),
   },
   {
@@ -124,7 +124,7 @@ const skillsList = [
   {
     name: "Vercel",
     icon: (
-      <RiVercelFill className="text-2xl text-neutral-100 animate-[pulse_3s_infinite]" />
+      <RiVercelFill className="text-2xl text-neutral-100 light:text-neutral-900 animate-[pulse_3s_infinite]" />
     ),
   },
   {
@@ -154,12 +154,12 @@ export default function SkillsSection() {
       className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden px-4 pt-20 pb-6 md:py-28 text-center"
     >
       <FadeIn delay={200}>
-        <h2 className="text-2xl md:text-4xl text-gray-100 font-bold pb-6 md:py-4 md:pb-8">
+        <h2 className="text-2xl md:text-4xl text-gray-100 light:text-gray-900 font-bold pb-6 md:py-4 md:pb-8">
         Skills & Technologies
       </h2>
       </FadeIn>
       <FadeIn delay={300}>
-        <div className="text-gray-400 text-sm md:text-lg px-4 md:px-8 md:py-4">
+        <div className="text-gray-400 light:text-gray-600 text-sm md:text-lg px-4 md:px-8 md:py-4">
         <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
           {skillsList.map((skill, index) => (
             <FadeIn
@@ -169,8 +169,8 @@ export default function SkillsSection() {
               delay={index * 30}
             ><li
               key={skill.name}
-              className="flex border-2 h-13 md:h-16 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 cursor-default
-                         transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60"
+              className="flex border-2 h-13 md:h-16 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 light:bg-[#f6f0e6]/70 light:border-[#d4c6b2]/60 light:text-gray-800 cursor-default
+                         transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60 light:hover:bg-[#f6f0e6] light:focus:bg-[#f6f0e6]"
             >
               <div className="flex w-full h-full items-center justify-center gap-2 focus:scale-150 hover:scale-150 transition duration-300 ease-in-out">
                 {skill.icon}

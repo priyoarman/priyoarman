@@ -93,9 +93,9 @@ export default function Hero() {
   ];
 
   const typewriterColors = [
-    "text-blue-400",
-    "text-purple-400",
-    "text-cyan-400",
+    "text-blue-400 light:text-blue-600",
+    "text-purple-400 light:text-purple-600",
+    "text-cyan-400 light:text-cyan-600",
   ];
 
   return (
@@ -153,7 +153,7 @@ export default function Hero() {
               href="https://github.com/priyoarman"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
+              className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 light:hover:text-neutral-500 light:focus:text-neutral-500 transition duration-300 ease-in-out cursor-pointer"
             >
               <FaGithub />
             </a>
@@ -169,7 +169,7 @@ export default function Hero() {
               href="https://x.com/arman_priyo"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 transition duration-300 ease-in-out cursor-pointer"
+              className="hover:text-neutral-300 hover:scale-150 focus:scale-150 focus:text-neutral-300 light:hover:text-neutral-500 light:focus:text-neutral-500 transition duration-300 ease-in-out cursor-pointer"
             >
               <FaSquareXTwitter />
             </a>
@@ -178,7 +178,7 @@ export default function Hero() {
       </section>
       <a
         href="#skills"
-        className="text-3xl text-gray-50/40 rounded-[100%] px-3 mb-4 shadow-gray-50 animate-[bounce_3s] [animation-iteration-count:infinite] transition duration-300 ease-in-out hover:cursor-pointer"
+        className="text-3xl text-gray-50/40 light:text-gray-900/40 rounded-[100%] px-3 mb-4 shadow-gray-50 animate-[bounce_3s] [animation-iteration-count:infinite] transition duration-300 ease-in-out hover:cursor-pointer"
       >
         ↓
       </a>

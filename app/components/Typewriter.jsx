@@ -47,7 +47,7 @@ export default function Typewriter({
   return (
     <div className={`inline-flex items-center ${className}`}>
       <span className={currentColor}>{text}</span>
-      <span className="ml-1 mb-0.5 text-gray-300 animate-pulse">|</span>
+      <span className="ml-1 mb-0.5 text-gray-300 light:text-gray-500 animate-pulse">|</span>
     </div>
   );
 }

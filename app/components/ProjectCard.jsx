@@ -33,17 +33,17 @@ export default function ProjectCard({
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-linear-to-t from-gray-950 from-15% via-gray-950/85 via-50% to-gray-950/20"
+            className="absolute inset-0 bg-linear-to-t from-gray-950 from-15% via-gray-950/85 via-50% to-gray-950/20 light:from-[#f6f0e6] light:via-[#f6f0e6]/85 light:to-[#f6f0e6]/20"
           />
         </div>
       )}
 
       <div className="absolute inset-0 z-10 p-6 flex flex-col h-full">
         <div className="mt-auto">
-          <h3 className="text-xl font-semibold text-gray-50  mb-2 text-start">
+          <h3 className="text-xl font-semibold text-gray-50 light:text-gray-900 mb-2 text-start">
             {title}
           </h3>
-          <p className="text-gray-100 text-md text-start mb-4">{description}</p>
+          <p className="text-gray-100 light:text-gray-800 text-md text-start mb-4">{description}</p>
 
           <div className="flex gap-2 mt-auto">
             {viewProjectLink && (
@@ -53,7 +53,7 @@ export default function ProjectCard({
                 rel="noopener noreferrer"
                 onMouseEnter={() => onControlHoverChange?.(true)}
                 onMouseLeave={() => onControlHoverChange?.(false)}
-                className="px-4 py-2 bg-neutral-700/30 text-white text-sm font-medium rounded-4xl hover:bg-neutral-700/70 transition-colors"
+                className="px-4 py-2 bg-neutral-700/30 text-white text-sm font-medium rounded-4xl hover:bg-neutral-700/70 light:bg-[#2a241f]/10 light:text-gray-900 light:hover:bg-[#2a241f]/20 transition-colors"
               >
                 See Live
               </Link>
@@ -65,7 +65,7 @@ export default function ProjectCard({
                 rel="noopener noreferrer"
                 onMouseEnter={() => onControlHoverChange?.(true)}
                 onMouseLeave={() => onControlHoverChange?.(false)}
-                className="px-4 py-2 bg-gray-700/30 text-gray-300 text-sm font-medium rounded-4xl hover:bg-gray-700/70 transition-colors"
+                className="px-4 py-2 bg-gray-700/30 text-gray-300 text-sm font-medium rounded-4xl hover:bg-gray-700/70 light:bg-[#2a241f]/10 light:text-gray-700 light:hover:bg-[#2a241f]/20 transition-colors"
               >
                 GitHub
               </Link>

@@ -12,24 +12,24 @@ export default function ContactSection() {
       className="max-w-7xl mx-auto min-h-dvh w-full overflow-hidden px-4 md:px-0 pt-20 pb-6 md:pb-0 md:pt-28 text-center"
     >
       <FadeIn delay={200}>
-        <h2 className="text-2xl md:text-4xl text-gray-100 font-bold pb-6 md:py-4">
+        <h2 className="text-2xl md:text-4xl text-gray-100 light:text-gray-900 font-bold pb-6 md:py-4">
           Get In Touch
         </h2>
       </FadeIn>
 
       <FadeIn delay={250}>
-        <div className="flex flex-col md:flex-row gap-1 pb-2 justify-center items-center text-lg text-neutral-300 text-center mx-auto max-w-2xl">
+        <div className="flex flex-col md:flex-row gap-1 pb-2 justify-center items-center text-lg text-neutral-300 light:text-neutral-700 text-center mx-auto max-w-2xl">
           <p>Have a project in mind?</p>{" "}
           <p>Lets create something amazing together.</p>
         </div>
       </FadeIn>
 
-      <FadeIn delay={300} className="flex flex-col md:flex-row gap-1 justify-center items-center pt-4 pb-6 md:pt-8 text-lg text-neutral-300 text-center mx-auto max-w-lg">
+      <FadeIn delay={300} className="flex flex-col md:flex-row gap-1 justify-center items-center pt-4 pb-6 md:pt-8 text-lg text-neutral-300 light:text-neutral-700 text-center mx-auto max-w-lg">
         <a
           href="tel:+4552687679"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-row justify-center items-center text-md text-neutral-300 text-center mx-auto gap-2 max-w-2xl hover:text-green-500 transition-colors duration-200"
+          className="flex flex-row justify-center items-center text-md text-neutral-300 light:text-neutral-700 text-center mx-auto gap-2 max-w-2xl hover:text-green-500 transition-colors duration-200"
         >
           <FaPhone className="text-green-500" /> +45 52 68 76 79
         </a>
@@ -37,9 +37,9 @@ export default function ContactSection() {
           href="mailto:priyoarman1996@gmail.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-row justify-center items-center text-md text-neutral-300 text-center mx-auto gap-2 max-w-2xl hover:text-blue-400 transition-colors duration-200"
+          className="flex flex-row justify-center items-center text-md text-neutral-300 light:text-neutral-700 text-center mx-auto gap-2 max-w-2xl hover:text-blue-400 light:hover:text-blue-600 transition-colors duration-200"
         >
-          <FaEnvelope className="text-blue-400" /> priyoarman1996@gmail.com
+          <FaEnvelope className="text-blue-400 light:text-blue-600" /> priyoarman1996@gmail.com
         </a>
       </FadeIn>
 
@@ -57,7 +57,7 @@ export default function ContactSection() {
                 type="text"
                 id="name"
                 name="name"
-                className="shadow appearance-none border border-gray-900 rounded-xl w-full py-3 px-4 bg-gray-800 text-gray-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="shadow appearance-none border border-gray-900 rounded-xl w-full py-3 px-4 bg-gray-800 text-gray-200 light:bg-white light:border-gray-300 light:text-gray-800 light:placeholder-gray-400 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 placeholder="Enter your name"
                 required
               />
@@ -71,7 +71,7 @@ export default function ContactSection() {
                 type="email"
                 id="email"
                 name="email"
-                className="shadow appearance-none border border-gray-900 rounded-xl w-full py-3 px-4 bg-gray-800 text-gray-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                className="shadow appearance-none border border-gray-900 rounded-xl w-full py-3 px-4 bg-gray-800 text-gray-200 light:bg-white light:border-gray-300 light:text-gray-800 light:placeholder-gray-400 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 placeholder="Enter your email"
                 required
               />
@@ -84,7 +84,7 @@ export default function ContactSection() {
                 id="message"
                 name="message"
                 rows="4"
-                className="shadow appearance-none border border-gray-900 rounded-xl w-full py-3 px-4 bg-gray-800 text-gray-200 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
+                className="shadow appearance-none border border-gray-900 rounded-xl w-full py-3 px-4 bg-gray-800 text-gray-200 light:bg-white light:border-gray-300 light:text-gray-800 light:placeholder-gray-400 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                 placeholder="Type your message"
                 required
               ></textarea>

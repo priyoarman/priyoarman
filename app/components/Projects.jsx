@@ -81,11 +81,11 @@ const createCursor = (svgMarkup) =>
   `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkup)}") 16 16, pointer`;
 
 const pauseCursor = createCursor(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="9" y="7" width="5" height="18" rx="1.5" fill="white"/><rect x="18" y="7" width="5" height="18" rx="1.5" fill="white"/></svg>',
+  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="9" y="7" width="5" height="18" rx="1.5" fill="white" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round"/><rect x="18" y="7" width="5" height="18" rx="1.5" fill="white" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round"/></svg>',
 );
 
 const playCursor = createCursor(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M12 8.5L23 16L12 23.5V8.5Z" fill="white"/></svg>',
+  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M12 8.5L23 16L12 23.5V8.5Z" fill="white" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round"/></svg>',
 );
 
 export default function Projects() {
@@ -233,12 +233,12 @@ export default function Projects() {
       className="max-w-7xl mx-auto min-h-dvh md:min-h-[85dvh] w-full overflow-hidden pt-20 pb-6 md:py-28 text-center"
     >
       <FadeIn delay={200}>
-        <h2 className="text-2xl md:text-4xl text-gray-100 font-bold pb-6 md:py-4 md:pb-0">
+        <h2 className="text-2xl md:text-4xl text-gray-100 light:text-gray-900 font-bold pb-6 md:py-4 md:pb-0">
           Featured Projects
         </h2>
       </FadeIn>
       <FadeIn delay={300}>
-        <div className="bg-gray-900 w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
+        <div className="bg-gray-900 light:bg-transparent w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
           <div
             className="relative w-full max-w-4xl h-[calc(100dvh-10.5rem)] max-h-[680px] md:h-[520px] md:max-h-none"
             style={{ cursor: isPaused ? playCursor : pauseCursor }}

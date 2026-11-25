@@ -8,7 +8,6 @@ const BackgroundCarousel = ({ items, label }) => {
   const trackRef = useRef(null);
   const [active, setActive] = useState(0);
 
-  // Keep the active index in sync with manual swipes / scrolls
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
@@ -45,7 +44,7 @@ const BackgroundCarousel = ({ items, label }) => {
             aria-roledescription="slide"
             aria-label={`${idx + 1} of ${items.length}`}
           >
-            <div className="flex flex-col h-full items-center justify-center gap-1 md:gap-3 px-12 py-4 md:p-8 border-2 bg-blue-950/40 border-gray-800/20 rounded-2xl text-gray-100 cursor-default">
+            <div className="flex flex-col h-full items-center justify-center gap-1 md:gap-3 px-12 py-4 md:p-8 border-2 bg-blue-950/40 border-gray-800/20 rounded-2xl text-gray-100 light:bg-[#f6f0e6]/70 light:border-[#d4c6b2]/60 light:text-gray-800 cursor-default">
               <div className="relative w-10 h-10 md:w-20 md:h-20 shrink-0">
                 <Image
                   src={item.img}
@@ -54,19 +53,19 @@ const BackgroundCarousel = ({ items, label }) => {
                   className="object-cover rounded-xl"
                 />
               </div>
-              <h3 className="font-bold text-gray-50 text-lg md:text-2xl">
+              <h3 className="font-bold text-gray-50 light:text-gray-900 text-lg md:text-2xl">
                 {item.title}
               </h3>
-              <p className="text-gray-300 text-sm md:text-lg">
+              <p className="text-gray-300 light:text-gray-700 text-sm md:text-lg">
                 {item.subtitle}
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-400 text-xs md:text-base">
+              <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-gray-400 light:text-gray-500 text-xs md:text-base">
                 <span className="flex items-center gap-1">
                   <FaLocationDot /> {item.location}
                 </span>
                 <span>{item.date}</span>
               </div>
-              <p className="text-gray-400 text-xs md:text-base max-w-xs line-clamp-2 md:line-clamp-none">
+              <p className="text-gray-400 light:text-gray-500 text-xs md:text-base max-w-xs line-clamp-2 md:line-clamp-none">
                 {item.description}
               </p>
             </div>
@@ -78,7 +77,7 @@ const BackgroundCarousel = ({ items, label }) => {
         type="button"
         onClick={() => goTo(active - 1)}
         aria-label="Previous"
-        className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-gray-900/60 text-gray-200 hover:bg-gray-800 transition"
+        className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-gray-900/60 text-gray-200 hover:bg-gray-800 light:bg-white/80 light:text-gray-700 light:hover:bg-white light:shadow transition"
       >
         <FaChevronLeft />
       </button>
@@ -86,7 +85,7 @@ const BackgroundCarousel = ({ items, label }) => {
         type="button"
         onClick={() => goTo(active + 1)}
         aria-label="Next"
-        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-gray-900/60 text-gray-200 hover:bg-gray-800 transition"
+        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-gray-900/60 text-gray-200 hover:bg-gray-800 light:bg-white/80 light:text-gray-700 light:hover:bg-white light:shadow transition"
       >
         <FaChevronRight />
       </button>
@@ -100,7 +99,7 @@ const BackgroundCarousel = ({ items, label }) => {
             aria-label={`Go to slide ${idx + 1}`}
             aria-current={idx === active}
             className={`h-2 rounded-full transition-all duration-300 ${
-              idx === active ? "w-6 bg-gray-100" : "w-2 bg-gray-600"
+              idx === active ? "w-6 bg-gray-100 light:bg-gray-800" : "w-2 bg-gray-600 light:bg-gray-300"
             }`}
           />
         ))}

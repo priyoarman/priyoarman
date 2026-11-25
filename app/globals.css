@@ -1,16 +1,18 @@
 @import "tailwindcss";
 
+@custom-variant light (&:where(.light, .light *));
+
 :root {
   --background: #111827;
   --foreground: #ffffff;
+  color-scheme: dark;
 }
 
-/* Default:
-
-  --background: #111827;
-  --foreground: #FFFFFF;
-
-*/
+:root.light {
+  --background: #ece5da;
+  --foreground: #2a241f;
+  color-scheme: light;
+}
 
 html {
   scroll-behavior: smooth;
@@ -22,4 +24,18 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   width: 100%;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Theme switch: circular reveal driven by ThemeToggle (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* While switching, show final colors instantly (except the toggle's own icon animation) */
+.theme-switching,
+.theme-switching *:not(.theme-icon) {
+  transition: none !important;
 }

@@ -138,7 +138,8 @@ function drawSpace(ctx, s, t, scrollY, dt, animate) {
   });
 }
 
-const SUN = { x: 0.04, y: -0.12 };
+const sunPos = (w, h) => ({ x: 50 / w, y: (w >= 768 ? 51 : 42) / h });
+const HORIZON = 0.75;
 
 function mulberry32(seed) {
   return () => {
@@ -204,41 +205,190 @@ const smooth = (a, b, x) => {
   return t * t * (3 - 2 * t);
 };
 
-function makeSkyBase(w, h, dpr) {
+function makePuffSprites(fbm, lx, ly) {
+  const S = 128;
+  const variants = 8;
+  const hazeLevels = [0, 0.2, 0.4, 0.6, 0.8, 0.92];
+  const lz = 0.35;
+  const ll = Math.hypot(lx, ly, lz);
+  const L = [lx / ll, ly / ll, lz / ll];
+  const lit = [255, 255, 255];
+  const shade = [104, 128, 174];
+  const tones = [1, 0.62];
+  const sets = tones.map(() => []);
+  for (let v = 0; v < variants; v++) {
+    const out = new Float32Array(S * S * 4); 
+    for (let y = 0; y < S; y++) {
+      for (let x = 0; x < S; x++) {
+        const dx = (x + 0.5 - S / 2) / (S / 2);
+        const dy = (y + 0.5 - S / 2) / (S / 2);
+        const d = Math.hypot(dx, dy);
+        if (d >= 1) continue;
+        const n = fbm(dx * 2.4 + v * 7.3, dy * 2.4 + v * 3.1, 4);
+        const edge = 0.8 + 0.2 * n;
+        const a = 1 - smooth(edge - 0.26, edge, d);
+        if (a <= 0.003) continue;
+        const bx = dx + fbm(dx * 4 + v, dy * 4, 2) * 0.18;
+        const by = dy + fbm(dx * 4, dy * 4 + v, 2) * 0.18;
+        const nz = Math.sqrt(Math.max(0, 1 - Math.min(1, bx * bx + by * by)));
+        const ndl = bx * L[0] + by * L[1] + nz * L[2];
+        const diff = Math.max(0, Math.min(1, (ndl + 0.45) / 1.45));
+        const rim = Math.pow(1 - nz, 2) * Math.max(0, bx * L[0] + by * L[1]) * 0.55;
+        const under = 1 - 0.3 * Math.max(0, dy);
+        const lum = Math.min(1, (0.12 + 0.88 * diff + rim) * under);
+        const o = (y * S + x) * 4;
+        out[o] = lum;
+        out[o + 3] = a * 255;
+      }
+    }
+    for (let t = 0; t < tones.length; t++) {
+      const tc = document.createElement("canvas");
+      tc.width = S;
+      tc.height = S;
+      const tg = tc.getContext("2d");
+      const timg = tg.createImageData(S, S);
+      const to = timg.data;
+      for (let i = 0; i < out.length; i += 4) {
+        if (!out[i + 3]) continue;
+        const lum = Math.min(1, out[i] * tones[t]);
+        for (let ch = 0; ch < 3; ch++) to[i + ch] = shade[ch] + (lit[ch] - shade[ch]) * lum;
+        to[i + 3] = out[i + 3];
+      }
+      tg.putImageData(timg, 0, 0);
+      sets[t].push(hazed(tc));
+    }
+  }
+  return { sets, levels: hazeLevels.length };
+
+  function hazed(c) {
+    return hazeLevels.map((f) => {
+      const hc = document.createElement("canvas");
+      hc.width = S;
+      hc.height = S;
+      const hg = hc.getContext("2d");
+      hg.drawImage(c, 0, 0);
+      if (f > 0) {
+        hg.globalCompositeOperation = "source-atop";
+        hg.fillStyle = `rgba(224,233,243,${f})`;
+        hg.fillRect(0, 0, S, S);
+      }
+      return hc;
+    });
+  }
+}
+
+function makeCloudBands(w, h) {
+  const yH = h * HORIZON;
+  const rng = mulberry32(41);
+  const fbm = makeNoise(23);
+  const focal = h * 0.9;
+  const camH = 1;
+  const d0 = (camH * focal) / (h - yH) * 0.75;
+  const dMax = 90;
+  const W = Math.round(w);
+  const pad = Math.round(h * 0.04);
+  const y0 = Math.floor(yH - pad);
+  const BH = Math.ceil(h - y0);
+
+  const sun = sunPos(w, h);
+  const ldx = sun.x - 0.5;
+  const ldy = sun.y - 0.85;
+  const lm = Math.hypot(ldx, ldy);
+  const { sets, levels } = makePuffSprites(fbm, ldx / lm, ldy / lm);
+  const hazeLvl = (d) => Math.min(levels - 1, Math.round((1 - Math.exp(-(d - d0) * 0.045)) * (levels - 1) * 1.1));
+
+  const BANDS = 8;
+  const ratio = Math.pow(dMax / d0, 1 / BANDS);
+  const wind = (13 * d0) / focal;
+  const out = [];
+  for (let b = 0; b < BANDS; b++) {
+    const far = dMax / Math.pow(ratio, b);
+    const near = far / ratio;
+    const c = document.createElement("canvas");
+    c.width = W;
+    c.height = BH;
+    const g = c.getContext("2d");
+
+    for (let row = far; row >= near; row /= 1.045) {
+      const P = (W * row) / focal;
+      const K = Math.max(2, Math.round(P * 0.3));
+      for (let x = 0; x < P; x += 1.5 * (0.6 + rng() * 0.8)) {
+        const cd = row * (1 + (rng() - 0.5) * 0.04);
+        const u = (x / P) * K;
+        const roll = Math.sin(cd * 1.4 + fbm(u * 0.5 + 4, cd * 0.15, 2, Math.max(1, K >> 1)) * 4);
+        const cov = fbm(u + 1.3, cd * 0.3 + 2.7, 3, K) + roll * 0.18;
+        if (cov < -0.06) continue;
+        const R = (0.7 + rng() * 0.6) * (0.9 + cov * 0.5);
+        const Rpx = (R * focal) / cd;
+        const count = Rpx < 5 ? 2 : Rpx < 20 ? 6 : 10 + ((rng() * 6) | 0);
+        const grey = fbm(u * 1.6 + 9, cd * 0.5 + 3, 2, K * 2) < -0.05;
+        const puffs = [];
+        for (let i = 0; i < count; i++) {
+          const ang = rng() * Math.PI * 2;
+          const rr = R * Math.sqrt(rng()) * 0.9;
+          const t = rr / R;
+          puffs.push({
+            ox: Math.cos(ang) * rr,
+            oz: Math.sin(ang) * rr * 0.5,
+            oh: R * (0.03 + 0.22 * rng() * (1 - t)),
+            pr: R * (0.38 + 0.25 * rng()) * (1 - 0.25 * t),
+          });
+        }
+        puffs.sort((a, b2) => b2.oz - a.oz || a.oh - b2.oh);
+        for (const p of puffs) {
+          const pd = cd + p.oz;
+          if (pd <= 0.2) continue;
+          const rx = ((p.pr * focal) / pd) * 1.3;
+          const ry = rx * 0.55;
+          const sy = yH + ((camH - p.oh) * focal) / pd - y0;
+          let sx = ((x + p.ox) * focal) / row;
+          sx = ((sx % W) + W) % W;
+          const tone = grey || p.oh < R * 0.08 ? 1 : 0;
+          const img = sets[tone][(rng() * sets[tone].length) | 0][hazeLvl(pd)];
+          for (const ox of [-W, 0, W]) {
+            const X = sx + ox;
+            if (X + rx < 0 || X - rx > W) continue;
+            g.drawImage(img, X - rx, sy - ry, rx * 2, ry * 2);
+          }
+        }
+      }
+    }
+    const mid = Math.sqrt(far * near);
+    out.push({ canvas: c, speed: (wind * focal) / mid, offset: 0 });
+  }
+  return { bands: out, y0, height: BH, width: W };
+}
+
+function makeLayer(w, h, dpr) {
   const c = document.createElement("canvas");
   c.width = Math.round(w * dpr);
   c.height = Math.round(h * dpr);
   const g = c.getContext("2d");
   g.scale(dpr, dpr);
+  return [c, g];
+}
 
-  const sky = g.createLinearGradient(0, 0, 0, h);
-  sky.addColorStop(0, "#3a78c4");
-  sky.addColorStop(0.35, "#5b95d3");
-  sky.addColorStop(0.7, "#93bde3");
-  sky.addColorStop(1, "#d3e4ef");
+function makeSkyBase(w, h, dpr) {
+  const yH = h * HORIZON;
+  const [c, g] = makeLayer(w, h, dpr);
+
+  const sky = g.createLinearGradient(0, 0, 0, yH);
+  sky.addColorStop(0, "#1d5bb4");
+  sky.addColorStop(0.55, "#3f80cc");
+  sky.addColorStop(0.9, "#8fb9e2");
+  sky.addColorStop(1, "#c9dcec");
   g.fillStyle = sky;
   g.fillRect(0, 0, w, h);
 
-  const span = Math.hypot(w, h);
-  const sx = SUN.x * w;
-  const sy = SUN.y * h;
-  const layers = [
-    [0.9, "255,250,236", 0.38],
-    [0.38, "255,252,242", 0.55],
-    [0.16, "255,255,250", 0.9],
-  ];
-  g.globalCompositeOperation = "screen";
-  for (const [rr, col, a] of layers) {
-    const r = span * rr;
-    const grad = g.createRadialGradient(sx, sy, 0, sx, sy, r);
-    grad.addColorStop(0, `rgba(${col},${a})`);
-    grad.addColorStop(0.35, `rgba(${col},${a * 0.35})`);
-    grad.addColorStop(1, `rgba(${col},0)`);
-    g.fillStyle = grad;
-    g.fillRect(0, 0, w, h);
-  }
-  g.globalCompositeOperation = "source-over";
+  // lower haze layer seen between the clouds
+  const under = g.createLinearGradient(0, yH, 0, h);
+  under.addColorStop(0, "#e0e9f3");
+  under.addColorStop(0.25, "#c2d5ea");
+  under.addColorStop(1, "#97b2d6");
+  g.fillStyle = under;
+  g.fillRect(0, yH, w, h - yH);
 
+  // dither to kill gradient banding
   const img = g.getImageData(0, 0, c.width, c.height);
   const d = img.data;
   for (let i = 0; i < d.length; i += 4) {
@@ -248,7 +398,77 @@ function makeSkyBase(w, h, dpr) {
     d[i + 2] += n;
   }
   g.putImageData(img, 0, 0);
-  return c;
+
+  const [front, fg] = makeLayer(w, h, dpr);
+  {
+    const g = fg;
+    // horizon haze band: a pale, slightly warm stripe where the cloud deck meets the sky
+    const band = g.createLinearGradient(0, yH - h * 0.05, 0, yH + h * 0.06);
+    band.addColorStop(0, "rgba(232,236,240,0)");
+    band.addColorStop(0.42, "rgba(236,234,230,0.75)");
+    band.addColorStop(0.55, "rgba(240,240,240,0.6)");
+    band.addColorStop(1, "rgba(230,238,246,0)");
+    g.fillStyle = band;
+    g.fillRect(0, yH - h * 0.05, w, h * 0.11);
+
+    // sun: broad glow, bright core, star rays and lens-flare ghosts
+    const sun = sunPos(w, h);
+    const sx = sun.x * w;
+    const sy = sun.y * h;
+    const span = Math.hypot(w, h);
+    g.globalCompositeOperation = "screen";
+    for (const [rr, a] of [[0.7, 0.35], [0.25, 0.55], [0.06, 0.95], [0.018, 1]]) {
+      const r = span * rr;
+      const grad = g.createRadialGradient(sx, sy, 0, sx, sy, r);
+      grad.addColorStop(0, `rgba(255,253,245,${a})`);
+      grad.addColorStop(0.3, `rgba(255,250,238,${a * 0.4})`);
+      grad.addColorStop(1, "rgba(255,250,238,0)");
+      g.fillStyle = grad;
+      g.fillRect(0, 0, w, h);
+    }
+    const rng = mulberry32(3);
+    g.lineCap = "round";
+    for (let i = 0; i < 24; i++) {
+      const a = (i / 24) * Math.PI * 2 + rng() * 0.15;
+      const len = span * (i % 3 ? 0.035 : 0.075) * (0.6 + rng() * 0.7);
+      const ray = g.createLinearGradient(sx, sy, sx + Math.cos(a) * len, sy + Math.sin(a) * len);
+      ray.addColorStop(0, "rgba(255,255,250,0.35)");
+      ray.addColorStop(1, "rgba(255,255,250,0)");
+      g.strokeStyle = ray;
+      g.lineWidth = i % 3 ? 1 : 1.6;
+      g.beginPath();
+      g.moveTo(sx, sy);
+      g.lineTo(sx + Math.cos(a) * len, sy + Math.sin(a) * len);
+      g.stroke();
+    }
+    // ghosts along the line from the sun through the screen centre, plus a faint halo ring
+    const cx = w / 2;
+    const cy = h / 2;
+    for (const [t, rr, a, col] of [
+      [0.35, 0.012, 0.35, "255,255,240"],
+      [0.75, 0.03, 0.12, "180,220,255"],
+      [1.25, 0.05, 0.08, "200,255,220"],
+    ]) {
+      const x = sx + (cx - sx) * t;
+      const y = sy + (cy - sy) * t;
+      const r = span * rr;
+      const gh = g.createRadialGradient(x, y, 0, x, y, r);
+      gh.addColorStop(0, `rgba(${col},${a})`);
+      gh.addColorStop(1, `rgba(${col},0)`);
+      g.fillStyle = gh;
+      g.fillRect(x - r, y - r, r * 2, r * 2);
+    }
+    const ringR = span * 0.2;
+    const ring = g.createRadialGradient(sx, sy, ringR * 0.88, sx, sy, ringR);
+    ring.addColorStop(0, "rgba(255,255,255,0)");
+    ring.addColorStop(0.6, "rgba(220,235,255,0.08)");
+    ring.addColorStop(1, "rgba(255,255,255,0)");
+    g.fillStyle = ring;
+    g.fillRect(0, 0, w, h);
+    g.globalCompositeOperation = "source-over";
+
+  }
+  return { back: c, front };
 }
 
 const PLANET_TEXTURES = {
@@ -403,15 +623,16 @@ function makePlanets(w, h) {
     [1.28, 0.06, 0.18], [1.38, 0.1, 0.45], [1.5, 0.12, 0.7], [1.62, 0.1, 0.78],
     [1.74, 0.05, 0.08], [1.84, 0.1, 0.55], [1.95, 0.07, 0.4], [2.08, 0.04, 0.15],
   ];
+  // all in the open sky above the cloud horizon
   const defs = [
-    { kind: "moon", x: mobile ? 0.78 : 0.83, y: mobile ? 0.14 : 0.2, r: base * (mobile ? 0.1 : 0.085), phase: 0.55, gain: 0.95, alpha: 0.9 },
-    { kind: "gas", x: mobile ? 0.2 : 0.13, y: mobile ? 0.72 : 0.58, r: base * (mobile ? 0.05 : 0.045), phase: 0.75, gain: 1, alpha: 0.8, tilt: -0.38, ring: { squash: 0.3, bands: ringBands } },
-    { kind: "mars", x: mobile ? 0.52 : 0.6, y: mobile ? 0.07 : 0.1, r: base * 0.016, phase: 0.8, gain: 0.9, alpha: 0.8 },
-    { kind: "veiled", x: mobile ? 0.22 : 0.34, y: mobile ? 0.3 : 0.24, r: base * 0.02, phase: -0.35, gain: 1, alpha: 0.35 },
-    { kind: "giant", x: mobile ? 0.78 : 0.71, y: mobile ? 0.44 : 0.47, r: base * (mobile ? 0.04 : 0.034), phase: 0.65, gain: 0.85, alpha: 0.28, tilt: 0.12 },
-    { kind: "ice", x: mobile ? 0.88 : 0.92, y: mobile ? 0.6 : 0.78, r: base * 0.024, phase: 0.6, gain: 0.8, alpha: 0.7, tilt: 0.5 },
+    { kind: "moon", x: mobile ? 0.78 : 0.82, y: mobile ? 0.17 : 0.17, r: base * (mobile ? 0.09 : 0.075), phase: 0.55, gain: 0.95, alpha: 0.6 },
+    { kind: "gas", x: mobile ? 0.2 : 0.4, y: mobile ? 0.33 : 0.3, r: base * (mobile ? 0.045 : 0.038), phase: 0.75, gain: 1, alpha: 0.3, tilt: -0.38, ring: { squash: 0.3, bands: ringBands } },
+    { kind: "mars", x: mobile ? 0.62 : 0.6, y: mobile ? 0.08 : 0.08, r: base * 0.016, phase: 0.8, gain: 0.9, alpha: 0.8 },
+    { kind: "veiled", x: mobile ? 0.16 : 0.27, y: mobile ? 0.18 : 0.2, r: base * 0.02, phase: -0.35, gain: 1, alpha: 0.35 },
+    { kind: "giant", x: mobile ? 0.55 : 0.66, y: mobile ? 0.3 : 0.33, r: base * (mobile ? 0.035 : 0.03), phase: 0.65, gain: 0.85, alpha: 0.28, tilt: 0.12 },
+    { kind: "ice", x: mobile ? 0.9 : 0.93, y: mobile ? 0.37 : 0.36, r: base * 0.022, phase: 0.6, gain: 0.8, alpha: 0.7, tilt: 0.5 },
   ];
-  return placePlanets(defs, w, h, SUN, fbm);
+  return placePlanets(defs, w, h, sunPos(w, h), fbm);
 }
 
 function placePlanets(defs, w, h, sun, fbm) {
@@ -447,188 +668,29 @@ function makeSpacePlanets(w, h) {
   return placePlanets(defs, w, h, SPACE_SUN, fbm);
 }
 
-function makeSoftDot() {
-  const c = document.createElement("canvas");
-  c.width = 64;
-  c.height = 64;
-  const g = c.getContext("2d");
-  const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-  grad.addColorStop(0, "rgba(255,255,255,1)");
-  grad.addColorStop(0.4, "rgba(255,255,255,0.5)");
-  grad.addColorStop(1, "rgba(255,255,255,0)");
-  g.fillStyle = grad;
-  g.fillRect(0, 0, 64, 64);
-  return c;
-}
-
-function paintPlume(g, p, off, R, gauss, dot) {
-  const dx = Math.cos(p.ang);
-  const dy = Math.sin(p.ang);
-  const px = -dy;
-  const py = dx;
-  const spine = (t) => {
-    const along = p.len * t;
-    const side = p.len * (p.bend * Math.sin(Math.PI * t) * 0.3 + p.hook * t * t * t * 0.3);
-    return [p.x + off + dx * along + px * side, p.y + dy * along + py * side];
-  };
-  const prof = (t) => Math.pow(Math.max(0, Math.sin(Math.PI * t)), 0.6); 
-  const half = 30 * p.size;
-
-  const steps = Math.ceil(p.len / 5);
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps;
-    const [x, y] = spine(t);
-    const pr = prof(t);
-    let r = half * 2.2 * pr + 8;
-    g.globalAlpha = 0.018 * p.alpha;
-    g.drawImage(dot, x - r, y - r, r * 2, r * 2);
-    r = half * 1.0 * pr + 4;
-    g.globalAlpha = 0.024 * p.alpha;
-    g.drawImage(dot, x - r, y - r, r * 2, r * 2);
-  }
-
-  g.strokeStyle = "#fff";
-  g.lineCap = "round";
-
-  const fibres = Math.round(90 * p.size);
-  for (let j = 0; j < fibres; j++) {
-    const o = gauss() * 0.85;
-    const t0 = R() * 0.8;
-    const t1 = Math.min(1, t0 + 0.12 + R() * 0.55);
-    const ph = R() * 6.3;
-    const wig = 1 + R() * 3;
-    g.globalAlpha = (0.04 + R() * 0.09) * p.alpha * (1 - Math.min(0.7, Math.abs(o) * 0.4));
-    g.lineWidth = 0.4 + R() * 1.1;
-    g.beginPath();
-    for (let t = t0; t <= t1; t += 0.016) {
-      const [x, y] = spine(t);
-      const k = o * half * prof(t) + Math.sin(t * 24 + ph) * wig;
-      const X = x + px * k;
-      const Y = y + py * k;
-      t === t0 ? g.moveTo(X, Y) : g.lineTo(X, Y);
-    }
-    g.stroke();
-  }
-
-  const hairs = Math.round(150 * p.size);
-  for (let j = 0; j < hairs; j++) {
-    const t = 0.04 + R() * 0.92;
-    const pr = prof(t);
-    if (pr < 0.08) continue;
-    const [x, y] = spine(t);
-    const side = R() < 0.88 ? p.side : -p.side;
-    const so = side * half * pr * R() * 0.7;
-    const L = (30 + R() * 120) * p.size * (0.4 + pr);
-    const sx = x + px * so;
-    const sy = y + py * so;
-    const ex = sx + px * side * L * 0.45 - dx * L * 0.95;
-    const ey = sy + py * side * L * 0.45 - dy * L * 0.95;
-    const curl = (R() - 0.2) * L * 0.35;
-    const cx = (sx + ex) / 2 + px * side * curl;
-    const cy = (sy + ey) / 2 + py * side * curl;
-    g.globalAlpha = (0.03 + R() * 0.07) * p.alpha;
-    g.lineWidth = 0.35 + R() * 0.8;
-    g.beginPath();
-    g.moveTo(sx, sy);
-    g.quadraticCurveTo(cx, cy, ex, ey);
-    g.stroke();
-  }
-  g.globalAlpha = 1;
-}
-
-function makeClouds(w, h, dpr = 1) {
-  const k = Math.min(dpr, 1.5); 
-  const W = Math.round(w * 1.6);
-  const c = document.createElement("canvas");
-  c.width = Math.round(W * k);
-  c.height = Math.round(h * k);
-  const g = c.getContext("2d");
-  g.scale(k, k);
-
-  const R = mulberry32(11);
-  const gauss = () => (R() + R() + R() - 1.5) / 1.5;
-  const dot = makeSoftDot();
-  const span = Math.max(h, w * 0.55);
-
-  const plumes = [];
-  const n = Math.max(1, Math.round(W / 1300)); 
-  for (let i = 0; i < n; i++) {
-    plumes.push({
-      x: ((i + R() * 0.7) / n) * W,
-      y: h * (0.35 + R() * 0.7),
-      ang: -(0.5 + R() * 0.3),
-      len: span * (0.55 + R() * 0.45),
-      size: (w < 768 ? 0.6 : 0.8) + R() * 0.5,
-      bend: (R() - 0.5) * 0.6,
-      hook: (R() - 0.5) * 0.8,
-      side: R() < 0.5 ? 1 : -1,
-      alpha: 0.5 + R() * 0.15,
-    });
-    plumes.push({
-      x: ((i + 0.5 + R() * 0.5) / n) * W,
-      y: h * (0.15 + R() * 0.8),
-      ang: -(0.4 + R() * 0.4),
-      len: span * (0.3 + R() * 0.35),
-      size: 0.35 + R() * 0.35,
-      bend: (R() - 0.5) * 0.8,
-      hook: (R() - 0.5),
-      side: R() < 0.5 ? 1 : -1,
-      alpha: 0.25 + R() * 0.15,
-    });
-  }
-  const all = [];
-  for (const p of plumes) {
-    all.push(p);
-    if (p.size < 0.75) continue;
-    const branches = (R() * 2) | 0;
-    for (let b = 0; b < branches; b++) {
-      const t = 0.55 + R() * 0.35;
-      const along = p.len * t;
-      const side = p.len * (p.bend * Math.sin(Math.PI * t) * 0.3);
-      all.push({
-        ...p,
-        x: p.x + Math.cos(p.ang) * along - Math.sin(p.ang) * side,
-        y: p.y + Math.sin(p.ang) * along + Math.cos(p.ang) * side,
-        ang: p.ang + Math.PI + (R() < 0.5 ? -1 : 1) * (0.1 + R() * 0.25),
-        len: p.len * (0.35 + R() * 0.35),
-        side: -p.side,
-        size: p.size * (0.45 + R() * 0.25),
-        hook: (R() - 0.5) * 1.2,
-        alpha: p.alpha * 0.8,
-      });
-    }
-  }
-  for (const p of all) {
-    const ex = p.x + Math.cos(p.ang) * p.len;
-    const pad = p.len * 0.35 + 200 * p.size;
-    const lo = Math.min(p.x, ex) - pad;
-    const hi = Math.max(p.x, ex) + pad;
-    for (const off of [-W, 0, W]) {
-      if (hi + off < 0 || lo + off > W) continue;
-      paintPlume(g, p, off, R, gauss, dot);
-    }
-  }
-  return { tex: c, width: W, height: h, offset: 0, speed: 7 };
-}
-
 function drawSky(ctx, s, scrollY, dt, animate) {
   const { w, h } = s;
-  ctx.drawImage(s.skyBase, 0, 0, w, h);
+  ctx.drawImage(s.skyBase.back, 0, 0, w, h);
+
+  // clouds drift left, nearer bands faster; each band tiles, so draw two copies
+  const cl = s.clouds;
+  for (const b of cl.bands) {
+    if (animate) b.offset = (b.offset + b.speed * dt) % cl.width;
+    const x = -b.offset;
+    ctx.drawImage(b.canvas, x, cl.y0, cl.width, cl.height);
+    ctx.drawImage(b.canvas, x + cl.width, cl.y0, cl.width, cl.height);
+  }
+
+  ctx.drawImage(s.skyBase.front, 0, 0, w, h);
 
   ctx.globalCompositeOperation = "screen";
   for (const p of s.planets) {
-    const y = p.py - Math.min(scrollY * 0.04, h * 0.2);
+    const y = p.py - Math.min(scrollY * 0.02, h * 0.06);
     ctx.globalAlpha = p.alpha;
     ctx.drawImage(p.sprite, p.px - p.sprite.width / 2, y - p.sprite.height / 2);
   }
   ctx.globalCompositeOperation = "source-over";
   ctx.globalAlpha = 1;
-
-  const cl = s.clouds;
-  if (animate) cl.offset = (cl.offset + cl.speed * dt) % cl.width;
-  const x0 = cl.offset - cl.width;
-  ctx.drawImage(cl.tex, x0, 0, cl.width, cl.height);
-  ctx.drawImage(cl.tex, x0 + cl.width, 0, cl.width, cl.height);
 }
 
 export default function CosmicBackground() {
@@ -661,7 +723,7 @@ export default function CosmicBackground() {
     const skyParts = [
       () => s.skyBase || (s.skyBase = makeSkyBase(s.w, s.h, s.dpr)),
       () => s.planets || (s.planets = makePlanets(s.w, s.h)),
-      () => s.clouds || (s.clouds = makeClouds(s.w, s.h, s.dpr)),
+      () => s.clouds || (s.clouds = makeCloudBands(s.w, s.h)),
     ];
     const ensureSky = () => skyParts.forEach((build) => build());
     let idleId = 0;

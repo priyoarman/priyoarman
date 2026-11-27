@@ -169,6 +169,7 @@ export default function SkillsSection() {
               delay={index * 30}
             ><li
               key={skill.name}
+              data-fx-above
               className="flex border-2 h-13 md:h-16 bg-blue-950/40 border-gray-800/20 rounded-xl justify-center text-gray-100 light:bg-[#e3effa]/35 light:border-white/40 light:backdrop-blur-sm light:text-gray-800 cursor-default
                          transition duration-300 ease-in-out hover:bg-blue-950/60 focus:bg-blue-950/60 light:hover:bg-[#e3effa]/55 light:focus:bg-[#e3effa]/55"
             >

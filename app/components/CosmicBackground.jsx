@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { drawSunbeam } from "./effects/sunbeam";
 
 const rand = (min, max) => min + Math.random() * (max - min);
 
@@ -411,7 +412,7 @@ function makeSkyBase(w, h, dpr) {
     g.fillStyle = band;
     g.fillRect(0, yH - h * 0.05, w, h * 0.11);
 
-    // sun: broad glow, bright core, star rays and lens-flare ghosts
+    // sun: broad glow, bright core and star rays
     const sun = sunPos(w, h);
     const sx = sun.x * w;
     const sy = sun.y * h;
@@ -441,30 +442,6 @@ function makeSkyBase(w, h, dpr) {
       g.lineTo(sx + Math.cos(a) * len, sy + Math.sin(a) * len);
       g.stroke();
     }
-    // ghosts along the line from the sun through the screen centre, plus a faint halo ring
-    const cx = w / 2;
-    const cy = h / 2;
-    for (const [t, rr, a, col] of [
-      [0.35, 0.012, 0.35, "255,255,240"],
-      [0.75, 0.03, 0.12, "180,220,255"],
-      [1.25, 0.05, 0.08, "200,255,220"],
-    ]) {
-      const x = sx + (cx - sx) * t;
-      const y = sy + (cy - sy) * t;
-      const r = span * rr;
-      const gh = g.createRadialGradient(x, y, 0, x, y, r);
-      gh.addColorStop(0, `rgba(${col},${a})`);
-      gh.addColorStop(1, `rgba(${col},0)`);
-      g.fillStyle = gh;
-      g.fillRect(x - r, y - r, r * 2, r * 2);
-    }
-    const ringR = span * 0.2;
-    const ring = g.createRadialGradient(sx, sy, ringR * 0.88, sx, sy, ringR);
-    ring.addColorStop(0, "rgba(255,255,255,0)");
-    ring.addColorStop(0.6, "rgba(220,235,255,0.08)");
-    ring.addColorStop(1, "rgba(255,255,255,0)");
-    g.fillStyle = ring;
-    g.fillRect(0, 0, w, h);
     g.globalCompositeOperation = "source-over";
 
   }
@@ -693,11 +670,12 @@ function drawSky(ctx, s, scrollY, dt, animate) {
   ctx.globalAlpha = 1;
 }
 
-const NET_RADIUS = 560; // CSS px: how far from the cursor the net shows
+const NET_RADIUS = 400; // CSS px: how far from the cursor the net shows
 const NET_LINK = 130; // CSS px: max length of a line between two nodes
+const CURSOR_LINK = 170; // CSS px: how far the cursor's own links reach
 
 function makeNetNodes(w, h) {
-  const count = Math.round((w * h) / 4500);
+  const count = Math.round((w * h) / 9000);
   return Array.from({ length: count }, () => ({
     x: Math.random() * w,
     y: Math.random() * h,
@@ -755,6 +733,21 @@ function drawNet(ctx, s, dt) {
     }
   }
 
+  // the cursor is a node too: link it to nearby points
+  const C = s.net;
+  const ca = C.a;
+  ctx.lineWidth = 0.9;
+  for (const n of near) {
+    if (n.reveal < 0.01) continue;
+    const d = Math.hypot(n.x - C.tx, n.y - C.ty);
+    if (d > CURSOR_LINK) continue;
+    ctx.strokeStyle = `rgba(140,185,250,${Math.min(1, (1 - d / CURSOR_LINK) * 0.8 + 0.15) * ca})`;
+    ctx.beginPath();
+    ctx.moveTo(C.tx, C.ty);
+    ctx.lineTo(n.x, n.y);
+    ctx.stroke();
+  }
+
   for (const n of near) {
     if (n.reveal < 0.01) continue;
     ctx.fillStyle = n.red ? `rgba(235,95,105,${n.reveal * 0.85})` : `rgba(${line},${n.reveal * 0.9})`;
@@ -762,384 +755,37 @@ function drawNet(ctx, s, dt) {
     ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
     ctx.fill();
   }
-}
 
-// Light mode: satellite passes. A few satellites cross on gently curved orbit arcs near the
-// cursor (one runs right through it). Each track draws itself in ahead of the satellite like an
-// orbit prediction; the nearest satellite opens a downlink beam to the cursor, and a lock-on HUD
-// shows live range, elevation and signal. IDs and numbers are made up (range/elevation are
-// computed from on-screen distance).
-const SAT_LINK = 230; // CSS px within which a satellite links to the cursor
-const KM_PER_PX = 4;
-
-// Where a line through (cx, cy) at angle th leaves the screen (plus a margin), both ways.
-function lineExits(s, cx, cy, th, m) {
-  const dx = Math.cos(th);
-  const dy = Math.sin(th);
-  const hits = [];
-  if (dx) hits.push((-m - cx) / dx, (s.w + m - cx) / dx);
-  if (dy) hits.push((-m - cy) / dy, (s.h + m - cy) / dy);
-  const fwd = Math.min(...hits.filter((v) => v > 0));
-  const back = Math.max(...hits.filter((v) => v < 0));
-  return [
-    { x: cx + dx * back, y: cy + dy * back },
-    { x: cx + dx * fwd, y: cy + dy * fwd },
-  ];
-}
-
-// Quadratic arc from edge to edge whose midpoint is (cx, cy), bowed to one side.
-function satPath(s, pass, cx, cy) {
-  const nx = -Math.sin(pass.theta);
-  const ny = Math.cos(pass.theta);
-  const mx = cx + nx * pass.miss;
-  const my = cy + ny * pass.miss;
-  const [E, X] = lineExits(s, mx, my, pass.theta, 40);
-  const p0 = { x: E.x + nx * pass.bow, y: E.y + ny * pass.bow };
-  const p2 = { x: X.x + nx * pass.bow, y: X.y + ny * pass.bow };
-  const p1 = { x: 2 * mx - (p0.x + p2.x) / 2, y: 2 * my - (p0.y + p2.y) / 2 };
-  return { p0, p1, p2 };
-}
-
-const qAt = ({ p0, p1, p2 }, t) => {
-  const u = 1 - t;
-  return { x: u * u * p0.x + 2 * u * t * p1.x + t * t * p2.x, y: u * u * p0.y + 2 * u * t * p1.y + t * t * p2.y };
-};
-
-function newPass(through) {
-  return {
-    t: 0,
-    age: 0,
-    theta: rand(-0.7, 0.7) + (Math.random() < 0.5 ? 0 : Math.PI),
-    bow: rand(40, 120) * (Math.random() < 0.5 ? -1 : 1),
-    miss: through ? 0 : rand(60, 200) * (Math.random() < 0.5 ? -1 : 1),
-    speed: rand(130, 260),
-    id: `SAT-${String((1 + Math.random() * 98) | 0).padStart(2, "0")}`,
-    alt: Math.round(rand(420, 780)),
-  };
-}
-
-function drawSatellites(ctx, s, dt, time) {
-  const C = s.net;
-  if (!s.sat) s.sat = { passes: [], wait: 0.4, count: 0, pings: [], train: null, trainWait: rand(10, 18) };
-  const st = s.sat;
-  const max = s.w < 768 ? 2 : 3;
-
-  st.wait -= dt;
-  if (C.ta > 0 && st.wait <= 0 && st.passes.length < max) {
-    // every other pass runs straight through the cursor; the rest pass nearby
-    st.passes.push(newPass(st.count++ % 2 === 0));
-    st.wait = rand(0.9, 2.2);
-  }
-  if (!st.passes.length && !st.train && !st.pings.length) {
-    st.trainWait -= dt;
-    if (st.trainWait <= 0) st.train = newTrain(s);
-    if (!st.train) return;
-  }
-
-  ctx.lineWidth = 1;
-  let best = null;
-  for (const pass of st.passes) {
-    const path = satPath(s, pass, C.x, C.y);
-    const len = Math.hypot(path.p2.x - path.p0.x, path.p2.y - path.p0.y) * 1.05;
-    pass.t += (pass.speed * dt) / len;
-    pass.age += dt;
-    pass.path = path;
-    pass.fade = Math.max(0, Math.min(1, pass.t * 10, (1 - pass.t) * 10));
-    pass.pos = qAt(path, Math.min(1, pass.t));
-    const d = Math.hypot(pass.pos.x - C.x, pass.pos.y - C.y);
-    pass.dist = d;
-    if (C.ta > 0 && d < SAT_LINK && (!best || d < best.dist)) best = pass;
-  }
-  st.passes = st.passes.filter((p) => p.t < 1);
-  drawTrain(ctx, s, st, dt, time);
-
-  for (const pass of st.passes) {
-    const { path, t, fade } = pass;
-    const trace = (from, to) => {
-      if (to <= from) return;
-      ctx.beginPath();
-      for (let i = 0; i <= 40; i++) {
-        const q = qAt(path, from + ((to - from) * i) / 40);
-        if (i) ctx.lineTo(q.x, q.y);
-        else ctx.moveTo(q.x, q.y);
-      }
-      ctx.stroke();
-    };
-    // predicted track draws itself in ahead of the satellite
-    const ahead = Math.min(1, t + pass.age * 0.8);
-    ctx.strokeStyle = `rgba(40,80,140,${0.35 * fade})`;
-    ctx.setLineDash([4, 6]);
-    ctx.lineDashOffset = -time * 14;
-    trace(t, ahead);
-    ctx.setLineDash([]);
-    ctx.strokeStyle = `rgba(40,80,140,${0.16 * fade})`;
-    trace(Math.max(0, t - 0.5), t);
-  }
-
-  // downlink beam from the nearest satellite, with packets streaming to the cursor
-  if (best) {
-    const sig = 1 - best.dist / SAT_LINK;
-    const P = best.pos;
-    ctx.strokeStyle = `rgba(30,100,190,${0.45 * sig * best.fade})`;
-    ctx.beginPath();
-    ctx.moveTo(P.x, P.y);
-    ctx.lineTo(C.x, C.y);
-    ctx.stroke();
-    ctx.fillStyle = `rgba(30,100,190,${0.8 * sig * best.fade})`;
-    for (let i = 0; i < 4; i++) {
-      const f = (time * 1.6 + i / 4) % 1;
-      ctx.beginPath();
-      ctx.arc(P.x + (C.x - P.x) * f, P.y + (C.y - P.y) * f, 1.6, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  for (const pass of st.passes) {
-    const { path, t, fade, pos: P } = pass;
-    const A = qAt(path, Math.min(1, t + 0.01));
-    const dir = Math.atan2(A.y - P.y, A.x - P.x);
-    const near = pass === best ? Math.max(0, 1 - pass.dist / 90) : 0;
-
-    // sunlit glint, flaring at closest approach to the cursor
-    const flare = 0.3 + 0.7 * near;
-    const gr = 6 + 22 * near;
-    const glow = ctx.createRadialGradient(P.x, P.y, 0, P.x, P.y, gr);
-    glow.addColorStop(0, `rgba(255,255,250,${0.9 * flare * fade})`);
-    glow.addColorStop(0.3, `rgba(255,245,220,${0.45 * flare * fade})`);
-    glow.addColorStop(1, "rgba(255,245,220,0)");
-    ctx.fillStyle = glow;
-    ctx.fillRect(P.x - gr, P.y - gr, gr * 2, gr * 2);
-
-    ctx.save();
-    ctx.translate(P.x, P.y);
-    ctx.rotate(dir);
-    ctx.globalAlpha = 0.75 * fade;
-    ctx.fillStyle = "rgb(45,60,90)";
-    ctx.fillRect(-2.5, -2.5, 5, 5);
-    ctx.fillStyle = "rgb(55,85,140)";
-    ctx.fillRect(-1.6, -12, 3.2, 8);
-    ctx.fillRect(-1.6, 4, 3.2, 8);
-    ctx.strokeStyle = "rgb(45,60,90)";
-    ctx.lineWidth = 0.8;
-    ctx.beginPath();
-    ctx.moveTo(0, -4);
-    ctx.lineTo(0, 4);
-    ctx.stroke();
-    ctx.restore();
-    ctx.globalAlpha = 1;
-    ctx.lineWidth = 1;
-  }
-
-  // lock-on HUD with live telemetry for the linked satellite
-  if (best) {
-    const sig = 1 - best.dist / SAT_LINK;
-    const a = Math.min(1, sig * 2.5) * best.fade;
-    const lock = best.dist < 70;
-    const cx = C.x;
-    const cy = C.y;
-    const r = lock ? 13 + 2 * Math.sin(time * 10) : 16;
-    ctx.strokeStyle = `rgba(30,90,170,${0.75 * a})`;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.stroke();
-    // rotating outer segments
-    ctx.strokeStyle = `rgba(30,90,170,${0.4 * a})`;
-    for (let i = 0; i < 3; i++) {
-      const s0 = time * 1.8 + (i * Math.PI * 2) / 3;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r + 9, s0, s0 + 1.1);
-      ctx.stroke();
-    }
-    ctx.strokeStyle = `rgba(30,90,170,${0.75 * a})`;
-    ctx.beginPath();
-    for (const [ux, uy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-      ctx.moveTo(cx + ux * (r + 3), cy + uy * (r + 3));
-      ctx.lineTo(cx + ux * (r + (lock ? 8 : 13)), cy + uy * (r + (lock ? 8 : 13)));
-    }
-    ctx.stroke();
-
-    const ground = best.dist * KM_PER_PX;
-    const range = Math.round(Math.hypot(best.alt, ground));
-    const el = Math.round((Math.atan2(best.alt, ground) * 180) / Math.PI);
-
-    // put the readout off to the side of the track (perpendicular to it), not along it
-    ctx.font = "600 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-    ctx.textBaseline = "top";
-    const tl = Math.hypot(cx - best.pos.x, cy - best.pos.y) || 1;
-    let nx = -(cy - best.pos.y) / tl;
-    let ny = (cx - best.pos.x) / tl;
-    if (ny < 0) {
-      nx = -nx;
-      ny = -ny;
-    }
-    const ax = cx + nx * (r + 26);
-    const ay = cy + ny * (r + 26);
-    const W = 92;
-    let lx = nx >= 0 ? ax : ax - W;
-    lx = Math.min(Math.max(lx, 6), s.w - W - 6);
-    const ly = Math.min(ay - 8, s.h - 46);
-    ctx.fillStyle = `rgba(20,60,120,${0.9 * a})`;
-    ctx.fillText(`${best.id}  ${lock ? "LOCK" : "TRACK"}`, lx, ly);
-    ctx.fillStyle = `rgba(40,55,80,${0.8 * a})`;
-    ctx.fillText(`RNG ${range} km`, lx, ly + 13);
-    ctx.fillText(`EL ${String(el).padStart(2, "0")}°`, lx, ly + 26);
-    // signal bars
-    const bars = Math.ceil(sig * 5);
-    for (let i = 0; i < 5; i++) {
-      ctx.fillStyle = `rgba(30,90,170,${(i < bars ? 0.85 : 0.2) * a})`;
-      const bh = 3 + i * 2;
-      ctx.fillRect(lx + 62 + i * 5, ly + 36 - bh, 3, bh);
-    }
-  }
-
-  drawPings(ctx, st, best, dt, time);
-}
-
-// Click-to-ping: a radar pulse from the cursor; if a satellite is linked, a pulse runs up the
-// beam and the satellite answers with an ACK showing the real light round-trip time.
-const C_KM_S = 299792;
-function drawPings(ctx, st, best, dt, time) {
-  for (const pg of st.pings) {
-    pg.age += dt;
-    if (pg.target === undefined) {
-      pg.target = best || null;
-      if (!pg.target) st.wait = Math.min(st.wait, 0.2); // nothing linked: call the next pass in
-    }
-    const k = pg.age / 0.9;
-    for (const lag of [0, 0.18]) {
-      const q = (pg.age - lag) / 0.9;
-      if (q <= 0 || q >= 1) continue;
-      ctx.strokeStyle = `rgba(30,100,190,${0.55 * (1 - q)})`;
-      ctx.lineWidth = 1.5 * (1 - q) + 0.5;
-      ctx.beginPath();
-      ctx.arc(pg.x, pg.y, 8 + q * 120, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-    ctx.lineWidth = 1;
-    const sat = pg.target;
-    if (sat && sat.pos && sat.t < 1) {
-      const f = Math.min(1, pg.age / 0.35); // uplink pulse travelling up the beam
-      if (f < 1) {
-        const px = pg.x + (sat.pos.x - pg.x) * f;
-        const py = pg.y + (sat.pos.y - pg.y) * f;
-        const g = ctx.createRadialGradient(px, py, 0, px, py, 8);
-        g.addColorStop(0, "rgba(255,255,255,0.95)");
-        g.addColorStop(0.4, "rgba(80,150,240,0.7)");
-        g.addColorStop(1, "rgba(80,150,240,0)");
-        ctx.fillStyle = g;
-        ctx.fillRect(px - 8, py - 8, 16, 16);
-      } else if (!pg.acked) {
-        pg.acked = true;
-        const range = Math.hypot(sat.alt, sat.dist * KM_PER_PX);
-        sat.ack = { age: 0, ms: ((2 * range) / C_KM_S) * 1000 };
-      }
-    } else if (!sat && k < 1) {
-      ctx.font = "600 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-      ctx.textBaseline = "top";
-      ctx.fillStyle = `rgba(40,55,80,${0.8 * (1 - k)})`;
-      ctx.fillText(`SEARCHING${".".repeat(1 + (((time * 4) | 0) % 3))}`, pg.x + 14, pg.y + 14);
-    }
-  }
-  st.pings = st.pings.filter((pg) => pg.age < 1.6);
-
-  // satellite answers: a bright flash and the round-trip time
-  for (const sat of st.passes) {
-    if (!sat.ack) continue;
-    sat.ack.age += dt;
-    const a = Math.max(0, 1 - sat.ack.age / 1.8);
-    if (a <= 0) {
-      sat.ack = null;
-      continue;
-    }
-    const P = sat.pos;
-    const fl = Math.max(0, 1 - sat.ack.age / 0.45);
-    if (fl > 0) {
-      const r = 10 + 30 * fl;
-      const g = ctx.createRadialGradient(P.x, P.y, 0, P.x, P.y, r);
-      g.addColorStop(0, `rgba(255,255,255,${0.95 * fl})`);
-      g.addColorStop(0.35, `rgba(160,200,255,${0.6 * fl})`);
-      g.addColorStop(1, "rgba(160,200,255,0)");
-      ctx.fillStyle = g;
-      ctx.fillRect(P.x - r, P.y - r, r * 2, r * 2);
-    }
-    ctx.font = "600 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-    ctx.textBaseline = "bottom";
-    ctx.fillStyle = `rgba(20,60,120,${0.9 * a})`;
-    ctx.fillText(`ACK ${sat.ack.ms.toFixed(1)} ms`, P.x + 12, P.y - 10 - sat.ack.age * 8);
-  }
-}
-
-// Constellation train: a rare single-file line of freshly launched satellites crossing the sky.
-const TRAIN_GAP = 0.022; // spacing along the track, as a fraction of it
-function newTrain(s) {
-  const n = s.w < 768 ? 6 : 9;
-  const pass = {
-    theta: rand(-0.5, 0.5) + (Math.random() < 0.5 ? 0 : Math.PI),
-    bow: rand(60, 140) * (Math.random() < 0.5 ? -1 : 1),
-    miss: 0,
-  };
-  const path = satPath(s, pass, s.w * rand(0.3, 0.7), s.h * rand(0.18, 0.45));
-  const len = Math.hypot(path.p2.x - path.p0.x, path.p2.y - path.p0.y) * 1.05;
-  return { path, n, t: 0, speed: rand(90, 120) / len, age: 0, batch: (10 + Math.random() * 89) | 0 };
-}
-
-function drawTrain(ctx, s, st, dt, time) {
-  if (!st.train) {
-    st.trainWait -= dt;
-    if (st.trainWait <= 0) st.train = newTrain(s);
-    return;
-  }
-  const tr = st.train;
-  tr.t += tr.speed * dt;
-  tr.age += dt;
-  const end = 1 + TRAIN_GAP * (tr.n - 1);
-  if (tr.t > end) {
-    st.train = null;
-    st.trainWait = rand(30, 60);
-    return;
-  }
-
-  // faint track
-  ctx.strokeStyle = "rgba(40,80,140,0.12)";
-  ctx.lineWidth = 1;
-  ctx.setLineDash([2, 7]);
+  // the cursor's own point, with a soft glow
+  const glow = ctx.createRadialGradient(C.tx, C.ty, 0, C.tx, C.ty, 10);
+  glow.addColorStop(0, `rgba(160,200,255,${0.32 * ca})`);
+  glow.addColorStop(1, "rgba(160,200,255,0)");
+  ctx.fillStyle = glow;
+  ctx.fillRect(C.tx - 10, C.ty - 10, 20, 20);
+  ctx.fillStyle = `rgba(175,205,250,${0.7 * ca})`;
   ctx.beginPath();
-  for (let i = 0; i <= 40; i++) {
-    const q = qAt(tr.path, i / 40);
-    if (i) ctx.lineTo(q.x, q.y);
-    else ctx.moveTo(q.x, q.y);
-  }
-  ctx.stroke();
-  ctx.setLineDash([]);
+  ctx.arc(C.tx, C.ty, 2.4, 0, Math.PI * 2);
+  ctx.fill();
+}
 
-  // string of pearls: each a small sunlit point, twinkling slightly out of step
-  let lead = null;
-  for (let i = 0; i < tr.n; i++) {
-    const ti = tr.t - i * TRAIN_GAP;
-    if (ti <= 0 || ti >= 1) continue;
-    const P = qAt(tr.path, ti);
-    if (!lead) lead = P;
-    const edge = Math.min(1, ti * 12, (1 - ti) * 12);
-    const tw = 0.75 + 0.25 * Math.sin(time * 3 + i * 1.3);
-    const r = 5;
-    const g = ctx.createRadialGradient(P.x, P.y, 0, P.x, P.y, r);
-    g.addColorStop(0, `rgba(255,255,250,${0.95 * tw * edge})`);
-    g.addColorStop(0.35, `rgba(255,248,225,${0.5 * tw * edge})`);
-    g.addColorStop(1, "rgba(255,248,225,0)");
-    ctx.fillStyle = g;
-    ctx.fillRect(P.x - r, P.y - r, r * 2, r * 2);
-    ctx.fillStyle = `rgba(45,60,90,${0.7 * edge})`;
-    ctx.fillRect(P.x - 1, P.y - 1, 2, 2);
+// Elements marked `data-fx-above` (the skill cards) sit above the cursor effects: the effects are
+// clipped so they never draw inside those elements' rounded shapes.
+function clipOutMarked(ctx, s, now) {
+  if (!s.above || now - s.aboveAt > 1000) {
+    s.above = [...document.querySelectorAll("[data-fx-above]")].map((el) => ({
+      el,
+      radius: parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0,
+    }));
+    s.aboveAt = now;
   }
-
-  // label rides along with the lead for the first few seconds
-  if (lead && tr.age < 7) {
-    const a = Math.min(1, tr.age * 2, (7 - tr.age) / 1.5);
-    ctx.font = "600 10px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
-    ctx.textBaseline = "bottom";
-    ctx.fillStyle = `rgba(20,60,120,${0.8 * a})`;
-    ctx.fillText(`BATCH ${tr.batch} · ${tr.n} SATS`, lead.x + 10, lead.y - 8);
+  ctx.beginPath();
+  ctx.rect(0, 0, s.w, s.h);
+  for (const { el, radius } of s.above) {
+    const r = el.getBoundingClientRect();
+    if (r.width < 1 || r.bottom < 0 || r.top > s.h || r.right < 0 || r.left > s.w) continue;
+    ctx.roundRect(r.left, r.top, r.width, r.height, Math.min(radius, r.width / 2, r.height / 2));
   }
+  ctx.clip("evenodd");
 }
 
 export default function CosmicBackground() {
@@ -1166,7 +812,9 @@ export default function CosmicBackground() {
       // Cursor net: position and strength (0..1) eased toward their targets.
       net: { x: 0, y: 0, a: 0, tx: 0, ty: 0, ta: 0 },
       netNodes: null,
-      sat: null,
+      sunbeam: null,
+      above: null,
+      aboveAt: 0,
     };
     let raf = 0;
     let last = performance.now();
@@ -1210,8 +858,11 @@ export default function CosmicBackground() {
         N.x += (N.tx - N.x) * kPos;
         N.y += (N.ty - N.y) * kPos;
         N.a += (N.ta - N.a) * kFade;
-        if (isLight()) drawSatellites(ctx, s, dt, now / 1000);
+        ctx.save();
+        clipOutMarked(ctx, s, now);
+        if (isLight()) drawSunbeam(ctx, s, dt, now / 1000, sunPos);
         else if (N.a > 0.01) drawNet(ctx, s, dt);
+        ctx.restore();
       }
     };
 
@@ -1243,7 +894,6 @@ export default function CosmicBackground() {
         s.planets = null;
         s.clouds = null;
         s.netNodes = null;
-        s.sat = null;
         cancelIdle(idleId);
         if (!isLight()) prewarmSky();
       }
@@ -1269,12 +919,6 @@ export default function CosmicBackground() {
       N.ty = e.clientY;
       N.ta = 1;
     };
-    const onPointerDown = (e) => {
-      if (e.pointerType !== "mouse" || !isLight() || motionQuery.matches || !s.sat) return;
-      // clicks on real controls are for the page, not the sky
-      if (e.target.closest?.("a, button, input, textarea, select, label, [role='button']")) return;
-      s.sat.pings.push({ x: e.clientX, y: e.clientY, age: 0, target: undefined, acked: false });
-    };
     const onPointerLeave = () => {
       s.net.ta = 0;
     };
@@ -1282,7 +926,6 @@ export default function CosmicBackground() {
     resize();
     window.addEventListener("resize", resize);
     window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("pointerdown", onPointerDown, { passive: true });
     document.documentElement.addEventListener("pointerleave", onPointerLeave);
     window.addEventListener("blur", onPointerLeave);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -1295,7 +938,6 @@ export default function CosmicBackground() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("pointerdown", onPointerDown);
       document.documentElement.removeEventListener("pointerleave", onPointerLeave);
       window.removeEventListener("blur", onPointerLeave);
       motionQuery.removeEventListener("change", start);

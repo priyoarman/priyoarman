@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ProjectCard from "./ProjectCard";
 import sayvoyaImg from "../assets/sayvoya.png";
 import socialImg from "../assets/mig33.png";
@@ -11,7 +11,6 @@ import socialMobileImg from "../assets/mig33-mobile.png";
 import ecomMobileImg from "../assets/anothershop-mobile.png";
 import jobradarMobileImg from "../assets/jobradar-mobile.jpg";
 import bsnLandingImg from "../assets/aaveq-home.png";
-import stpLandingImg from "../assets/waveriders-home.png";
 import FadeIn from "./FadeIn";
 
 const slides = [
@@ -22,6 +21,7 @@ const slides = [
       "AI travel assistant that finds and compares real-time flights in plain language. Built with Next.js, Express, PostgreSQL and Groq AI. Presented at Microsoft Copenhagen.",
     image: sayvoyaImg,
     mobileImage: sayvoyaMobileImg,
+    video: "/videos/sayvoya-walkthrough.mp4",
     viewProjectLink: "https://sayvoya.onrender.com/",
     githubLink: "https://github.com/priyoarman/sayvoya",
   },
@@ -77,21 +77,11 @@ const slides = [
   // },
 ];
 
-const createCursor = (svgMarkup) =>
-  `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkup)}") 16 16, pointer`;
-
-const pauseCursor = createCursor(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="9" y="7" width="5" height="18" rx="1.5" fill="white" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round"/><rect x="18" y="7" width="5" height="18" rx="1.5" fill="white" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-);
-
-const playCursor = createCursor(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M12 8.5L23 16L12 23.5V8.5Z" fill="white" stroke="#1d1d1f" stroke-width="1.5" stroke-linejoin="round"/></svg>',
-);
+const arrowButtonClass =
+  "pointer-events-auto flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-gray-950/40 text-gray-100 backdrop-blur-sm transition-colors hover:bg-gray-950/70 light:border-[#2a241f]/15 light:bg-[#f6f0e6]/60 light:text-gray-900 light:hover:bg-[#f6f0e6]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40";
 
 export default function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [manualPaused, setManualPaused] = useState(false);
-  const [hoverPaused, setHoverPaused] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const gestureRef = useRef({
@@ -99,21 +89,6 @@ export default function Projects() {
     startX: 0,
     hasDragged: false,
   });
-  const isPaused = manualPaused || hoverPaused || isDragging;
-
-  useEffect(() => {
-    if (isPaused) {
-      return undefined;
-    }
-
-    const intervalId = window.setInterval(() => {
-      setActiveIndex((prevIndex) =>
-        prevIndex === slides.length - 1 ? 0 : prevIndex + 1,
-      );
-    }, 4500);
-
-    return () => window.clearInterval(intervalId);
-  }, [isPaused]);
 
   const goToPrev = () => {
     setActiveIndex((prevIndex) =>
@@ -127,16 +102,12 @@ export default function Projects() {
     );
   };
 
-  const togglePlayback = () => {
-    setManualPaused((previous) => !previous);
-  };
-
   const handlePointerDown = (event) => {
     if (event.button !== undefined && event.button !== 0) {
       return;
     }
 
-    if (event.target.closest("a")) {
+    if (event.target.closest("a, button")) {
       return;
     }
 
@@ -197,14 +168,7 @@ export default function Projects() {
     if (gestureRef.current.hasDragged) {
       event.preventDefault();
       event.stopPropagation();
-      return;
     }
-
-    if (event.target.closest("a")) {
-      return;
-    }
-
-    togglePlayback();
   };
 
   const getSlidePosition = (index) => {
@@ -241,7 +205,7 @@ export default function Projects() {
         <div className="w-full px-4 md:px-0 flex items-center justify-center font-sans text-white overflow-hidden">
           <div
             className="relative w-full max-w-4xl h-[calc(100dvh-10.5rem)] max-h-[680px] md:h-[520px] md:max-h-none"
-            style={{ cursor: isPaused ? playCursor : pauseCursor }}
+            style={{ cursor: isDragging ? "grabbing" : "grab" }}
             onClick={handleClick}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
@@ -272,11 +236,33 @@ export default function Projects() {
                     <ProjectCard
                       project={slide}
                       className="w-full max-w-3xl h-full"
-                      onControlHoverChange={setHoverPaused}
                     />
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-between px-2 md:px-0 md:pt-10 md:pb-18">
+              <button
+                type="button"
+                onClick={goToPrev}
+                aria-label="Previous project"
+                className={arrowButtonClass}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={goToNext}
+                aria-label="Next project"
+                className={arrowButtonClass}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" />
+                </svg>
+              </button>
             </div>
           </div>
         </div>

@@ -4,10 +4,10 @@ import Image from "next/image";
 export default function ProjectCard({
   project,
   className = "",
-  onControlHoverChange,
 }) {
-  const { title, description, image, mobileImage, viewProjectLink, githubLink } =
+  const { title, description, image, mobileImage, video, viewProjectLink, githubLink } =
     project;
+  const desktopHidden = mobileImage ? "hidden md:block" : "";
 
   return (
     <div
@@ -24,13 +24,27 @@ export default function ProjectCard({
               className="object-cover object-top md:hidden"
             />
           )}
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="(min-width: 768px) 768px, 100vw"
-            className={`object-cover ${mobileImage ? "hidden md:block" : ""}`}
-          />
+          {video ? (
+            <video
+              src={video}
+              poster={image.src}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label={`${title} walkthrough`}
+              className={`absolute inset-0 h-full w-full object-cover object-top ${desktopHidden}`}
+            />
+          ) : (
+            <Image
+              src={image}
+              alt={title}
+              fill
+              sizes="(min-width: 768px) 768px, 100vw"
+              className={`object-cover ${desktopHidden}`}
+            />
+          )}
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-linear-to-t from-gray-950 from-15% via-gray-950/85 via-50% to-gray-950/20 light:from-[#f6f0e6]/85 light:from-0% light:via-[#f6f0e6]/55 light:via-35% light:to-transparent light:to-60%"
@@ -55,8 +69,6 @@ export default function ProjectCard({
                 href={viewProjectLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={() => onControlHoverChange?.(true)}
-                onMouseLeave={() => onControlHoverChange?.(false)}
                 className="px-4 py-2 bg-neutral-700/30 text-white text-sm font-medium rounded-4xl hover:bg-neutral-700/70 light:bg-[#2a241f]/10 light:text-gray-900 light:hover:bg-[#2a241f]/20 transition-colors"
               >
                 See Live
@@ -67,8 +79,6 @@ export default function ProjectCard({
                 href={githubLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={() => onControlHoverChange?.(true)}
-                onMouseLeave={() => onControlHoverChange?.(false)}
                 className="px-4 py-2 bg-gray-700/30 text-gray-300 text-sm font-medium rounded-4xl hover:bg-gray-700/70 light:bg-[#2a241f]/10 light:text-gray-700 light:hover:bg-[#2a241f]/20 transition-colors"
               >
                 GitHub

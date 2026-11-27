@@ -670,102 +670,83 @@ function drawSky(ctx, s, scrollY, dt, animate) {
   ctx.globalAlpha = 1;
 }
 
-const NET_RADIUS = 400; // CSS px: how far from the cursor the net shows
-const NET_LINK = 130; // CSS px: max length of a line between two nodes
-const CURSOR_LINK = 170; // CSS px: how far the cursor's own links reach
+// Dark mode: a particle network. Points drift and bounce around the whole screen, fading with
+// distance from the cursor; within a square around the cursor, nearby points link up with fine
+// blue lines, and the cursor itself is a point in the net.
+const NET_BLUE = "81,162,233";
+const NET_RED = "255,77,90";
+const NET_OPACITY = 0.65; // overall strength of the net lines
+
+function netConfig(w) {
+  if (w > 1600) return { count: 600, link: 70, reach: 250 };
+  if (w > 1300) return { count: 575, link: 60, reach: 235 };
+  if (w > 1100) return { count: 500, link: 55, reach: 210 };
+  return { count: 300, link: 50, reach: 185 };
+}
 
 function makeNetNodes(w, h) {
-  const count = Math.round((w * h) / 9000);
-  return Array.from({ length: count }, () => ({
+  return Array.from({ length: netConfig(w).count }, () => ({
     x: Math.random() * w,
     y: Math.random() * h,
-    vx: rand(-9, 9),
-    vy: rand(-9, 9),
-    red: Math.random() < 0.12,
+    vx: (Math.random() - 0.5) * 30, // px/s
+    vy: (Math.random() - 0.5) * 30,
+    r: Math.random() * 1.5,
+    col: Math.random() < 0.2 ? NET_RED : NET_BLUE,
   }));
 }
 
-// Moves the shared drifting nodes and returns those near the cursor, with their reveal.
-function updateNetNodes(s, dt) {
-  const reach = NET_RADIUS + NET_LINK;
-  const { w, h, net: N } = s;
+function drawNet(ctx, s, dt) {
+  const { w, h, net: C } = s;
   if (!s.netNodes) s.netNodes = makeNetNodes(w, h);
+  const nodes = s.netNodes;
+  const { link, reach } = netConfig(w);
+  // until the mouse has moved, the points fade out from the screen centre
+  const mx = C.seen ? C.tx : w / 2;
+  const my = C.seen ? C.ty : h / 2;
 
-  const near = [];
-  for (const n of s.netNodes) {
+  for (const n of nodes) {
     n.x += n.vx * dt;
     n.y += n.vy * dt;
-    if (n.x < -20) n.x += w + 40;
-    else if (n.x > w + 20) n.x -= w + 40;
-    if (n.y < -20) n.y += h + 40;
-    else if (n.y > h + 20) n.y -= h + 40;
-
-    const d = Math.hypot(n.x - N.x, n.y - N.y);
-    if (d > reach) continue;
-    const t = Math.max(0, 1 - d / NET_RADIUS);
-    n.reveal = t * t * (3 - 2 * t) * N.a;
-    near.push(n);
+    if (n.y < 0 || n.y > h) n.vy = -n.vy;
+    else if (n.x < 0 || n.x > w) n.vx = -n.vx;
   }
-  return near;
-}
 
-// Slowly drifting nodes that link into a net, revealed only around the cursor.
-function drawNet(ctx, s, dt) {
-  const near = updateNetNodes(s, dt);
-
-  const line = "110,160,235";
-  ctx.lineWidth = 0.8;
-  for (let i = 0; i < near.length; i++) {
-    const a = near[i];
-    for (let j = i + 1; j < near.length; j++) {
-      const b = near[j];
-      const alpha = Math.min(a.reveal, b.reveal);
-      if (alpha < 0.01) continue;
-      const dx = a.x - b.x;
-      const dy = a.y - b.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist > NET_LINK) continue;
-      ctx.strokeStyle = `rgba(${line},${alpha * (1 - dist / NET_LINK) * 0.6})`;
+  // lines: from points inside the square around the cursor to any point within `link`
+  if (C.a > 0.01) {
+    const pts = [{ x: mx, y: my }, ...nodes]; // the cursor is a point in the net
+    ctx.lineWidth = 0.3;
+    for (const a of pts) {
+      if (Math.abs(a.x - mx) >= reach || Math.abs(a.y - my) >= reach) continue;
+      const fade = Math.max(0, Math.hypot(a.x - mx, a.y - my) / reach - 0.3);
+      const alpha = (1 - fade) * C.a * NET_OPACITY;
+      if (alpha <= 0) continue;
+      ctx.strokeStyle = `rgba(${NET_BLUE},${alpha})`;
       ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(b.x, b.y);
+      for (const b of pts) {
+        if (b === a || Math.abs(a.x - b.x) >= link || Math.abs(a.y - b.y) >= link) continue;
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+      }
       ctx.stroke();
     }
   }
 
-  // the cursor is a node too: link it to nearby points
-  const C = s.net;
-  const ca = C.a;
-  ctx.lineWidth = 0.9;
-  for (const n of near) {
-    if (n.reveal < 0.01) continue;
-    const d = Math.hypot(n.x - C.tx, n.y - C.ty);
-    if (d > CURSOR_LINK) continue;
-    ctx.strokeStyle = `rgba(140,185,250,${Math.min(1, (1 - d / CURSOR_LINK) * 0.8 + 0.15) * ca})`;
+  // points fade out with distance from the cursor, so they only gather around the net
+  const span = Math.max(reach * 2, w / 3.2);
+  for (const n of nodes) {
+    const a = 1 - Math.hypot(n.x - mx, n.y - my) / span;
+    if (a <= 0 || n.r < 0.05) continue;
+    ctx.fillStyle = `rgba(${n.col},${a})`;
     ctx.beginPath();
-    ctx.moveTo(C.tx, C.ty);
-    ctx.lineTo(n.x, n.y);
-    ctx.stroke();
-  }
-
-  for (const n of near) {
-    if (n.reveal < 0.01) continue;
-    ctx.fillStyle = n.red ? `rgba(235,95,105,${n.reveal * 0.85})` : `rgba(${line},${n.reveal * 0.9})`;
-    ctx.beginPath();
-    ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
     ctx.fill();
   }
-
-  // the cursor's own point, with a soft glow
-  const glow = ctx.createRadialGradient(C.tx, C.ty, 0, C.tx, C.ty, 10);
-  glow.addColorStop(0, `rgba(160,200,255,${0.32 * ca})`);
-  glow.addColorStop(1, "rgba(160,200,255,0)");
-  ctx.fillStyle = glow;
-  ctx.fillRect(C.tx - 10, C.ty - 10, 20, 20);
-  ctx.fillStyle = `rgba(175,205,250,${0.7 * ca})`;
-  ctx.beginPath();
-  ctx.arc(C.tx, C.ty, 2.4, 0, Math.PI * 2);
-  ctx.fill();
+  if (C.a > 0.01) {
+    ctx.fillStyle = `rgba(${NET_BLUE},${C.a})`;
+    ctx.beginPath();
+    ctx.arc(mx, my, 1.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
 }
 
 // Elements marked `data-fx-above` (the skill cards) sit above the cursor effects: the effects are
@@ -861,7 +842,7 @@ export default function CosmicBackground() {
         ctx.save();
         clipOutMarked(ctx, s, now);
         if (isLight()) drawSunbeam(ctx, s, dt, now / 1000, sunPos);
-        else if (N.a > 0.01) drawNet(ctx, s, dt);
+        else drawNet(ctx, s, dt);
         ctx.restore();
       }
     };
@@ -918,6 +899,7 @@ export default function CosmicBackground() {
       N.tx = e.clientX;
       N.ty = e.clientY;
       N.ta = 1;
+      N.seen = true;
     };
     const onPointerLeave = () => {
       s.net.ta = 0;

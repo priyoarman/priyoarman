@@ -235,6 +235,7 @@ export default function Projects() {
                   <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-0.5 py-2 md:px-16 md:pb-18 md:pt-10">
                     <ProjectCard
                       project={slide}
+                      isActive={index === activeIndex}
                       className="w-full max-w-3xl h-full"
                     />
                   </div>

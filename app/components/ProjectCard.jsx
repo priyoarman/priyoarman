@@ -1,13 +1,47 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function ProjectCard({
   project,
+  isActive = true,
   className = "",
 }) {
   const { title, description, image, mobileImage, video, viewProjectLink, githubLink } =
     project;
   const desktopHidden = mobileImage ? "hidden md:block" : "";
+  const videoRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const shouldPlay = isActive && inView;
+
+  // Track whether the video is on screen (at least half visible).
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.5 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [video]);
+
+  // Play only while this slide is in front and on screen; otherwise stop and
+  // rewind so it starts from 0:00 the next time it comes into view.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+
+    if (shouldPlay) {
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+      el.currentTime = 0;
+    }
+  }, [shouldPlay]);
 
   return (
     <div
@@ -26,9 +60,9 @@ export default function ProjectCard({
           )}
           {video ? (
             <video
+              ref={videoRef}
               src={video}
               poster={image.src}
-              autoPlay
               loop
               muted
               playsInline

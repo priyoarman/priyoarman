@@ -1,6 +1,6 @@
 ### Hi there, I'm Arman 👋
 
-I'm a Full-Stack Developer based in Copenhagen, Denmark. I build and ship web apps end-to-end with React, Next.js, TypeScript, and Node.js, including LLM features like RAG, MCP, and AI assistants. My background helps me build products with real users in mind.
+I'm a Full-Stack Developer based in Copenhagen. I build and ship web apps end-to-end with React, Next.js, TypeScript, and Node.js, including LLM features like RAG, MCP, and AI assistants. My background helps me build products with real users in mind.
 
 You can visit my [portfolio here.](https://priyoarman.dk/)
 

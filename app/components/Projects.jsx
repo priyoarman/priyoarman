@@ -32,6 +32,7 @@ const slides = [
       "Online shop with search, filters, cart and checkout, plus a RAG chatbot that answers from real product data. Built with React, Tailwind CSS, Groq AI and OpenAI.",
     image: ecomImg,
     mobileImage: ecomMobileImg,
+    video: "/videos/anothershop-walkthrough.mp4",
     viewProjectLink: "https://anothershop.vercel.app/",
     githubLink: "https://github.com/priyoarman/anothershop",
   },

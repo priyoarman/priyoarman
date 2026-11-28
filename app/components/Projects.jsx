@@ -27,7 +27,7 @@ const slides = [
   },
   {
     id: 2,
-    title: "AnotherShop - eCommerce with RAG Chatbot",
+    title: "AnotherShop - E-Commerce with RAG Chatbot",
     description:
       "Online shop with search, filters, cart and checkout, plus a RAG chatbot that answers from real product data. Built with React, Tailwind CSS, Groq AI and OpenAI.",
     image: ecomImg,
@@ -38,7 +38,7 @@ const slides = [
   },
   {
     id: 3,
-    title: "mig33 - Full-Stack Social Media App",
+    title: "mig33 - Fullstack Social Media App",
     description:
       "Social media app with OAuth login, follows, posts, likes, comments, live news feed, notifications, and messaging. Built with Next.js, MongoDB, and Tailwind CSS. Presented at Jakala in Hamburg.",
     image: socialImg,
@@ -49,7 +49,7 @@ const slides = [
   },
   {
     id: 4,
-    title: "JobRadarDK - A Personal Job Alert System",
+    title: "JobRadarDK - Personal Job Alert System",
     description:
       "Reads Danish tech companies' job feeds every 3 hours, filters new jobs by title and emails me the matches. Built with Node.js, TypeScript, Postgres and GitHub Actions.",
     image: jobradarImg,

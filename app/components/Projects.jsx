@@ -42,6 +42,7 @@ const slides = [
       "Social media app with OAuth login, follows, posts, likes, comments, live news feed, notifications, and messaging. Built with Next.js, MongoDB, and Tailwind CSS. Presented at Jakala in Hamburg.",
     image: socialImg,
     mobileImage: socialMobileImg,
+    video: "/videos/mig33-walkthrough.mp4",
     viewProjectLink: "https://mig33.vercel.app/install",
     githubLink: "https://github.com/priyoarman/mig33",
   },

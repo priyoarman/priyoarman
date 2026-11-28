@@ -89,7 +89,7 @@ export default function Hero() {
   const typewriterWords = [
     "Full-Stack Developer",
     "AI Integration Engineer",
-    "React & Next.js Developer",
+    "React & TypeScript Developer",
   ];
 
   const typewriterColors = [
